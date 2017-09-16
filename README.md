@@ -9,7 +9,9 @@ Xavier is an object-oriented package to work with XML.
 This API is being written in [Free Pascal](https://freepascal.org/) and [Lazarus](http://www.lazarus-ide.org/). However, it is compatible with [Delphi](https://www.embarcadero.com/products/delphi) too.
 
 **Why**. Nowadays, all XML libraries are very complex. Each class has so many methods that could be hard to use and understand them. These implementations are very procedural too.
-The major goal of this project is to replace common procedural code in our projects, which has so many conditionals and variables, to a declarative and object-oriented code to work more easily with XML.
+
+The major goal of this project is to replace common procedural code in our projects, which could have so many conditionals and variables, to a declarative and object-oriented code to work more easily with XML.
+
 We want to write elegant, clean, and maintainable code using OOP.
 
 ## How to contribute?
