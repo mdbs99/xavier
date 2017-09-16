@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/mdbs99/xavier/blob/master/README.md)
 
-Xavier is an object-oriented package to work with XML.
+Xavier is an object-oriented library for working with XML.
 
 **ATTENTION:** We're still in a very early alpha version, the API may and will change frequently. Please, use it at your own risk, until we release version 1.0.
 
