@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="xavier.tests"/>
+    <Type Value="RunTimeOnly"/>
+    <AddToProjectUsesSection Value="True"/>
+    <Author Value="mdbs99"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\inc"/>
+        <OtherUnitFiles Value="..\test"/>
+        <UnitOutputDirectory Value="..\lib\tests\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <License Value="Xavier, Tests Package
+Copyright (C) 2017 by Marcos Douglas B. Santos
+
+See the file LICENSE.txt, included in this distribution,
+for details about the copyright.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."/>
+    <Version Minor="1"/>
+    <Files Count="0">
+    </Files>
+    <RequiredPkgs Count="4">
+      <Item1>
+        <PackageName Value="xavier"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
