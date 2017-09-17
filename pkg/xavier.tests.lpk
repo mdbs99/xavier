@@ -5,7 +5,7 @@
     <Name Value="xavier.tests"/>
     <Type Value="RunTimeOnly"/>
     <AddToProjectUsesSection Value="True"/>
-    <Author Value="mdbs99"/>
+    <Author Value="Marcos Douglas B. Santos"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
@@ -15,6 +15,7 @@
         <UnitOutputDirectory Value="..\lib\tests\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
+    <Description Value="Xavier is an object-oriented package to work with XML."/>
     <License Value="Xavier, Tests Package
 Copyright (C) 2017 by Marcos Douglas B. Santos
 
@@ -24,10 +25,14 @@ for details about the copyright.
 This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."/>
-    <Version Minor="1"/>
-    <Files Count="0">
+    <Version Release="1"/>
+    <Files Count="1">
+      <Item1>
+        <Filename Value="..\test\xavier.core.tests.pas"/>
+        <UnitName Value="Xavier.Core.Tests"/>
+      </Item1>
     </Files>
-    <RequiredPkgs Count="4">
+    <RequiredPkgs Count="3">
       <Item1>
         <PackageName Value="xavier"/>
       </Item1>

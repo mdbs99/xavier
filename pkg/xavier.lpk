@@ -25,6 +25,20 @@ This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."/>
     <Version Release="1"/>
+    <Files Count="3">
+      <Item1>
+        <Filename Value="..\src\xavier.core.clss.pas"/>
+        <UnitName Value="Xavier.Core.Clss"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\src\xavier.core.pas"/>
+        <UnitName Value="Xavier.Core"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\src\xavier.core.fpc.pas"/>
+        <UnitName Value="Xavier.Core.FPC"/>
+      </Item3>
+    </Files>
     <RequiredPkgs Count="3">
       <Item1>
         <PackageName Value="james"/>
