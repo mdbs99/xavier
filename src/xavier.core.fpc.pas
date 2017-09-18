@@ -43,7 +43,8 @@ type
     constructor Create(ANode: TDOMNode);
     class function New(ANode: TDOMNode): IXMLAttribute;
     function Name: XMLString;
-    function Value: XMLString;
+    function Value: XMLString; overload;
+    function Value(const AValue: XMLString): IXMLAttribute; overload;
   end;
 
   TXMLAttributes = class(TInterfacedObject, IXMLAttributes)
@@ -113,6 +114,12 @@ end;
 function TXMLAttribute.Value: XMLString;
 begin
   Result := FNode.NodeValue;
+end;
+
+function TXMLAttribute.Value(const AValue: XMLString): IXMLAttribute;
+begin
+  Result := Self;
+  FNode.NodeValue := AValue;
 end;
 
 { TXMLAttributes }

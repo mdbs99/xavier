@@ -42,7 +42,8 @@ type
   IXMLAttribute = interface
   ['{5CEC1117-80DA-4FBC-8D55-AFED800B05ED}']
     function Name: XMLString;
-    function Value: XMLString;
+    function Value: XMLString; overload;
+    function Value(const AValue: XMLString): IXMLAttribute; overload;
   end;
 
   IXMLAttributes = interface

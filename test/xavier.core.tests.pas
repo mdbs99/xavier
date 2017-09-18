@@ -66,7 +66,8 @@ type
   TXMLAttributeTest = class(TTestCase)
   published
     procedure Name;
-    procedure Value;
+    procedure GetValue;
+    procedure SetValue;
   end;
 
 implementation
@@ -194,13 +195,26 @@ begin
   );
 end;
 
-procedure TXMLAttributeTest.Value;
+procedure TXMLAttributeTest.GetValue;
 begin
   CheckEquals(
     UnicodeString('xavier'),
     TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
       '/CONFIG/Package/Name'
     ).Attrs.Item(0).Value
+  );
+end;
+
+procedure TXMLAttributeTest.SetValue;
+var
+  S: UnicodeString;
+begin
+  S := 'cyclop';
+  CheckEquals(
+    S,
+    TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
+      '/CONFIG/Package/Name'
+    ).Attrs.Item(0).Value(S).Value
   );
 end;
 
