@@ -56,7 +56,8 @@ type
   TXMLNodeTest = class(TTestCase)
   published
     procedure Name;
-    procedure Value;
+    procedure GetValue;
+    procedure SetValue;
     procedure Attrs;
     procedure Childs;
     procedure Up;
@@ -126,13 +127,28 @@ begin
   );
 end;
 
-procedure TXMLNodeTest.Value;
+procedure TXMLNodeTest.GetValue;
 begin
   CheckEquals(
     UnicodeString('foo'),
     TXMLPack.New(TXMLStreamForTest.New).XPath(
       '/root/group/item/name'
     ).Value
+  );
+end;
+
+procedure TXMLNodeTest.SetValue;
+var
+  S: UnicodeString;
+begin
+  S := 'xavier';
+  CheckEquals(
+    S,
+    TXMLPack.New(TXMLStreamForTest.New).XPath(
+      '/root/group/item/name'
+    )
+    .Value(S)
+    .Value
   );
 end;
 
