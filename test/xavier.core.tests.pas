@@ -76,6 +76,12 @@ type
     procedure SetValue;
   end;
 
+  TXMLAttributesTest = class(TTestCase)
+  published
+    procedure Item;
+    procedure Count;
+  end;
+
 implementation
 
 { TXMLFileForTest }
@@ -93,11 +99,11 @@ begin
       '<?xml version="1.0" encoding="UTF-8"?>'
       + '<root>'
       + '  <group>'
-      + '    <item>'
+      + '    <item a="1" b="2">'
       + '      <name>foo</name>'
       + '      <value>bar</value>'
       + '    </item>'
-      + '    <item>'
+      + '    <item a="1" b="2">'
       + '      <name>foo2</name>'
       + '      <value>bar2</value>'
       + '    </item>'
@@ -269,12 +275,40 @@ begin
   );
 end;
 
+{ TXMLAttributesTest }
+
+procedure TXMLAttributesTest.Item;
+begin
+  CheckEquals(
+    UnicodeString('1'),
+    TXMLPack.New(TXMLStreamForTest.New).XPath(
+      '/root/group/item'
+    )
+    .Attrs
+    .Item(0)
+    .Value
+  );
+end;
+
+procedure TXMLAttributesTest.Count;
+begin
+  CheckEquals(
+    2,
+    TXMLPack.New(TXMLStreamForTest.New).XPath(
+      '/root/group/item'
+    )
+    .Attrs
+    .Count
+  );
+end;
+
 initialization
   TTestSuite.New('Core')
     .Add(TTest.New(TXMLPackTest))
     .Add(TTest.New(TXMLNodeTest))
     .Add(TTest.New(TXMLNodesTest))
     .Add(TTest.New(TXMLAttributeTest))
+    .Add(TTest.New(TXMLAttributesTest))
 
 end.
 
