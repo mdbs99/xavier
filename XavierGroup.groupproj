@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{1A2600C0-EAF7-4D49-BB19-7A1AED24AC59}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="pkg\xavier.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="test\xavierTests.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="xavier">
+        <MSBuild Projects="pkg\xavier.dproj"/>
+    </Target>
+    <Target Name="xavier:Clean">
+        <MSBuild Projects="pkg\xavier.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="xavier:Make">
+        <MSBuild Projects="pkg\xavier.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="xavierTests">
+        <MSBuild Projects="test\xavierTests.dproj"/>
+    </Target>
+    <Target Name="xavierTests:Clean">
+        <MSBuild Projects="test\xavierTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="xavierTests:Make">
+        <MSBuild Projects="test\xavierTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="xavier;xavierTests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="xavier:Clean;xavierTests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="xavier:Make;xavierTests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
