@@ -6,7 +6,7 @@
         <Projects Include="pkg\xavier.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="test\xavierTests.dproj">
+        <Projects Include="test\xavier.tests.gui.delphi.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -26,23 +26,23 @@
     <Target Name="xavier:Make">
         <MSBuild Projects="pkg\xavier.dproj" Targets="Make"/>
     </Target>
-    <Target Name="xavierTests">
-        <MSBuild Projects="test\xavierTests.dproj"/>
+    <Target Name="xavier_tests_gui_delphi">
+        <MSBuild Projects="test\xavier.tests.gui.delphi.dproj"/>
     </Target>
-    <Target Name="xavierTests:Clean">
-        <MSBuild Projects="test\xavierTests.dproj" Targets="Clean"/>
+    <Target Name="xavier_tests_gui_delphi:Clean">
+        <MSBuild Projects="test\xavier.tests.gui.delphi.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="xavierTests:Make">
-        <MSBuild Projects="test\xavierTests.dproj" Targets="Make"/>
+    <Target Name="xavier_tests_gui_delphi:Make">
+        <MSBuild Projects="test\xavier.tests.gui.delphi.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="xavier;xavierTests"/>
+        <CallTarget Targets="xavier;xavier_tests_gui_delphi"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="xavier:Clean;xavierTests:Clean"/>
+        <CallTarget Targets="xavier:Clean;xavier_tests_gui_delphi:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="xavier:Make;xavierTests:Make"/>
+        <CallTarget Targets="xavier:Make;xavier_tests_gui_delphi:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

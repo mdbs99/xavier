@@ -1,4 +1,4 @@
-program xavierTests;
+program xavier.tests.gui.delphi;
 {
 
   Delphi DUnit Test Project
