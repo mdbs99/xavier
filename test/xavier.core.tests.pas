@@ -50,7 +50,7 @@ type
   TXMLPackTest = class(TTestCase)
   published
     procedure Load;
-    procedure XPath;
+    procedure Node;
   end;
 
   TXMLNodeTest = class(TTestCase)
@@ -119,7 +119,7 @@ begin
   TXMLPack.New(TXMLFileForTest.New.Stream)
 end;
 
-procedure TXMLPackTest.XPath;
+procedure TXMLPackTest.Node;
 begin
   CheckNotNull(
     TXMLPack.New(TXMLFileForTest.New.Stream).Node(
