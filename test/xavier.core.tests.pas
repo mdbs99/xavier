@@ -130,7 +130,8 @@ begin
     UnicodeString('CompilerOptions'),
     TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
       '/CONFIG/Package/CompilerOptions'
-    ).Name
+    )
+    .Name
   );
 end;
 
@@ -140,7 +141,8 @@ begin
     UnicodeString('foo'),
     TXMLPack.New(TXMLStreamForTest.New).XPath(
       '/root/group/item/name'
-    ).Value
+    )
+    .Value
   );
 end;
 
@@ -165,7 +167,9 @@ begin
     1,
     TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
       '/CONFIG/Package/CompilerOptions/Version'
-    ).Attrs.Count
+    )
+    .Attrs
+    .Count
   );
 end;
 
@@ -185,7 +189,9 @@ begin
     UnicodeString('Package'),
     TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
       '/CONFIG/Package/CompilerOptions'
-    ).Up.Name
+    )
+    .Up
+    .Name
   );
 end;
 
@@ -226,7 +232,10 @@ begin
     UnicodeString('Value'),
     TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
       '/CONFIG/Package/Name'
-    ).Attrs.Item(0).Name
+    )
+    .Attrs
+    .Item(0)
+    .Name
   );
 end;
 
@@ -236,7 +245,10 @@ begin
     UnicodeString('xavier'),
     TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
       '/CONFIG/Package/Name'
-    ).Attrs.Item(0).Value
+    )
+    .Attrs
+    .Item(0)
+    .Value
   );
 end;
 
@@ -249,7 +261,11 @@ begin
     S,
     TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
       '/CONFIG/Package/Name'
-    ).Attrs.Item(0).Value(S).Value
+    )
+    .Attrs
+    .Item(0)
+    .Value(S)
+    .Value
   );
 end;
 
