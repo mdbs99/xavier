@@ -122,7 +122,7 @@ end;
 procedure TXMLPackTest.XPath;
 begin
   CheckNotNull(
-    TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
   );
@@ -134,7 +134,7 @@ procedure TXMLNodeTest.Name;
 begin
   CheckEquals(
     UnicodeString('CompilerOptions'),
-    TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
     .Name
@@ -145,7 +145,7 @@ procedure TXMLNodeTest.GetValue;
 begin
   CheckEquals(
     UnicodeString('foo'),
-    TXMLPack.New(TXMLStreamForTest.New).XPath(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item/name'
     )
     .Value
@@ -159,7 +159,7 @@ begin
   S := 'xavier';
   CheckEquals(
     S,
-    TXMLPack.New(TXMLStreamForTest.New).XPath(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item/name'
     )
     .Value(S)
@@ -171,7 +171,7 @@ procedure TXMLNodeTest.Attrs;
 begin
   CheckEquals(
     1,
-    TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions/Version'
     )
     .Attrs
@@ -182,7 +182,7 @@ end;
 procedure TXMLNodeTest.Childs;
 begin
   CheckNotNull(
-    TXMLPack.New(TXMLStreamForTest.New).XPath(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
     )
     .Childs
@@ -193,7 +193,7 @@ procedure TXMLNodeTest.Up;
 begin
   CheckEquals(
     UnicodeString('Package'),
-    TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
     .Up
@@ -207,7 +207,7 @@ procedure TXMLNodesTest.Item;
 begin
   CheckEquals(
     UnicodeString('foo2'),
-    TXMLPack.New(TXMLStreamForTest.New).XPath(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
     )
     .Childs
@@ -222,7 +222,7 @@ procedure TXMLNodesTest.Count;
 begin
   CheckEquals(
     2,
-    TXMLPack.New(TXMLStreamForTest.New).XPath(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
     )
     .Childs
@@ -236,7 +236,7 @@ procedure TXMLAttributeTest.Name;
 begin
   CheckEquals(
     UnicodeString('Value'),
-    TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
     .Attrs
@@ -249,7 +249,7 @@ procedure TXMLAttributeTest.GetValue;
 begin
   CheckEquals(
     UnicodeString('xavier'),
-    TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
     .Attrs
@@ -265,7 +265,7 @@ begin
   S := 'cyclop';
   CheckEquals(
     S,
-    TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
     .Attrs
@@ -281,7 +281,7 @@ procedure TXMLAttributesTest.Item;
 begin
   CheckEquals(
     UnicodeString('1'),
-    TXMLPack.New(TXMLStreamForTest.New).XPath(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
     .Attrs
@@ -294,7 +294,7 @@ procedure TXMLAttributesTest.Count;
 begin
   CheckEquals(
     2,
-    TXMLPack.New(TXMLStreamForTest.New).XPath(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
     .Attrs

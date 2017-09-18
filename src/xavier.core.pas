@@ -72,7 +72,7 @@ type
 
   IXMLPack = interface
   ['{35E1DA6D-6022-47BB-B7B0-E651E209F12A}']
-    function XPath(const AExpr: XMLString): IXMLNode;
+    function Node(const XPath: XMLString): IXMLNode;
     function Stream: IDataStream;
   end;
 

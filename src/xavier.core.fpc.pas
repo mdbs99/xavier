@@ -87,7 +87,7 @@ type
   public
     constructor Create(AStream: TStream); reintroduce;
     destructor Destroy; override;
-    function XPath(const AExpr: XMLString): IXMLNode;
+    function Node(const XPath: XMLString): IXMLNode;
     function Stream: IDataStream;
   end;
 
@@ -227,14 +227,14 @@ begin
   inherited Destroy;
 end;
 
-function TXMLPack.XPath(const AExpr: XMLString): IXMLNode;
+function TXMLPack.Node(const XPath: XMLString): IXMLNode;
 var
   R: TXPathVariable;
 begin
-  R := EvaluateXPathExpression(AExpr, FDocument.DocumentElement);
+  R := EvaluateXPathExpression(XPath, FDocument.DocumentElement);
   try
     if not Assigned(R) then
-      raise Exception.Create('Invalid expression: ' + AnsiString(AExpr));
+      raise Exception.Create('Invalid expression: ' + AnsiString(XPath));
     Result := TXMLNode.New(TDOMNode(R.AsNodeSet[0]));
   finally
     R.Free;
