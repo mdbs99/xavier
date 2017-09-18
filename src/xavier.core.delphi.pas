@@ -29,7 +29,7 @@ interface
 
 uses
   Classes, SysUtils,
-  xmlDoc, xmlIntf,
+  xmlDoc, xmlIntf, xmlDom,
   James.Data,
   James.Data.Clss,
   Xavier.Core;
@@ -163,13 +163,13 @@ end;
 
 function TXMLNode.Value: XMLString;
 begin
-  Result := FNode.Text;
+  Result := FNode.nodeValue;
 end;
 
 function TXMLNode.Value(const AValue: XMLString): IXMLNode;
 begin
   Result := Self;
-  FNode.Text := AValue;
+  FNode.nodeValue := AValue;
 end;
 
 function TXMLNode.Attrs: IXMLAttributes;
@@ -207,7 +207,7 @@ end;
 
 function TXMLNodes.Count: Integer;
 begin
-  Result := FNode.ChildNodes.Count;
+  Result := FNode.childNodes.length;
 end;
 
 { TXMLPack }
