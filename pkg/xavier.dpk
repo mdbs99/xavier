@@ -29,7 +29,9 @@ package xavier;
 
 requires
   rtl,
-  xmlrtl;
+  xmlrtl,
+  dbrtl,
+  james;
 
 contains
   xavier.core in '..\src\xavier.core.pas',
