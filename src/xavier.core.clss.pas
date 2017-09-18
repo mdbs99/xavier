@@ -34,15 +34,29 @@ uses
   Xavier.Core,
   {$ifdef FPC}
     Xavier.Core.FPC
+  {$else}
+    Xavier.Core.Delphi
   {$endif}
   ;
 
 type
   {$ifdef FPC}
+    AXMLAttribute = Xavier.Core.FPC.TXMLAttribute;
+    AXMLAttributes = Xavier.Core.FPC.TXMLAttributes;
     AXMLNode = Xavier.Core.FPC.TXMLNode;
     AXMLNodes = Xavier.Core.FPC.TXMLNodes;
     AXMLPack = Xavier.Core.FPC.TXMLPack;
+  {$else}
+    AXMLAttribute = Xavier.Core.Delphi.TXMLAttribute;
+    AXMLAttributes = Xavier.Core.Delphi.TXMLAttributes;
+    AXMLNode = Xavier.Core.Delphi.TXMLNode;
+    AXMLNodes = Xavier.Core.Delphi.TXMLNodes;
+    AXMLPack = Xavier.Core.Delphi.TXMLPack;
   {$endif}
+
+  TXMLAttribute = AXMLAttribute;
+
+  TXMLAttributes = AXMLAttributes;
 
   TXMLNode = AXMLNode;
 
