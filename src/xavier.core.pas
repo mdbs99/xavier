@@ -28,7 +28,11 @@ unit Xavier.Core;
 interface
 
 uses
-  DOM,
+  {$ifdef FPC}
+    DOM,
+  {$else}
+    XMLDOM,
+  {$endif}
   James.Data;
 
 type
