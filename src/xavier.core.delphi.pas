@@ -85,7 +85,7 @@ type
     FDocument: IXMLDocument;
   public
     constructor Create(AStream: TStream); reintroduce;
-    function XPath(const AExpr: XMLString): IXMLNode;
+    function Node(const XPath: XMLString): IXMLNode;
     function Stream: IDataStream;
   end;
 
@@ -220,9 +220,9 @@ begin
   FDocument.LoadFromStream(AStream);
 end;
 
-function TXMLPack.XPath(const AExpr: XMLString): IXMLNode;
+function TXMLPack.Node(const XPath: XMLString): IXMLNode;
 begin
-  raise Exception.Create('Not implemented');
+  raise Exception.Create('Not implemented yet');
 end;
 
 function TXMLPack.Stream: IDataStream;
