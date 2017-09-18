@@ -63,6 +63,12 @@ type
     procedure Up;
   end;
 
+  TXMLNodesTest = class(TTestCase)
+  published
+    procedure Item;
+    procedure Count;
+  end;
+
   TXMLAttributeTest = class(TTestCase)
   published
     procedure Name;
@@ -165,11 +171,11 @@ end;
 
 procedure TXMLNodeTest.Childs;
 begin
-  CheckEquals(
-    2,
+  CheckNotNull(
     TXMLPack.New(TXMLStreamForTest.New).XPath(
       '/root/group'
-    ).Childs.Count
+    )
+    .Childs
   );
 end;
 
@@ -180,6 +186,35 @@ begin
     TXMLPack.New(TXMLFileForTest.New.Stream).XPath(
       '/CONFIG/Package/CompilerOptions'
     ).Up.Name
+  );
+end;
+
+{ TXMLNodesTest }
+
+procedure TXMLNodesTest.Item;
+begin
+  CheckEquals(
+    UnicodeString('foo2'),
+    TXMLPack.New(TXMLStreamForTest.New).XPath(
+      '/root/group'
+    )
+    .Childs
+      .Item(1)
+      .Childs
+        .Item(0)
+        .Value
+  );
+end;
+
+procedure TXMLNodesTest.Count;
+begin
+  CheckEquals(
+    2,
+    TXMLPack.New(TXMLStreamForTest.New).XPath(
+      '/root/group'
+    )
+    .Childs
+    .Count
   );
 end;
 
@@ -222,6 +257,7 @@ initialization
   TTestSuite.New('Core')
     .Add(TTest.New(TXMLPackTest))
     .Add(TTest.New(TXMLNodeTest))
+    .Add(TTest.New(TXMLNodesTest))
     .Add(TTest.New(TXMLAttributeTest))
 
 end.
