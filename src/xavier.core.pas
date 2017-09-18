@@ -52,7 +52,8 @@ type
   IXMLNode = interface
   ['{78CF296B-3F7E-4324-A8E2-28CA7D2A6DF5}']
     function Name: XMLString;
-    function Value: XMLString;
+    function Value: XMLString; overload;
+    function Value(const AValue: XMLString): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Childs: IXMLNodes;
     function Up: IXMLNode;

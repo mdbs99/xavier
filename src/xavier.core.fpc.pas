@@ -63,7 +63,8 @@ type
     constructor Create(ANode: TDOMNode);
     class function New(ANode: TDOMNode): IXMLNode;
     function Name: XMLString;
-    function Value: XMLString;
+    function Value: XMLString; overload;
+    function Value(const AValue: XMLString): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Childs: IXMLNodes;
     function Up: IXMLNode;
@@ -158,6 +159,12 @@ end;
 function TXMLNode.Value: XMLString;
 begin
   Result := FNode.TextContent;
+end;
+
+function TXMLNode.Value(const AValue: XMLString): IXMLNode;
+begin
+  Result := Self;
+  FNode.TextContent := AValue;
 end;
 
 function TXMLNode.Attrs: IXMLAttributes;
