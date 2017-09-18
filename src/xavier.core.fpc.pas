@@ -229,15 +229,15 @@ end;
 
 function TXMLPack.Node(const XPath: XMLString): IXMLNode;
 var
-  R: TXPathVariable;
+  V: TXPathVariable;
 begin
-  R := EvaluateXPathExpression(XPath, FDocument.DocumentElement);
+  V := EvaluateXPathExpression(XPath, FDocument.DocumentElement);
   try
-    if not Assigned(R) then
+    if not Assigned(V) then
       raise Exception.Create('Invalid expression: ' + AnsiString(XPath));
-    Result := TXMLNode.New(TDOMNode(R.AsNodeSet[0]));
+    Result := TXMLNode.New(TDOMNode(V.AsNodeSet[0]));
   finally
-    R.Free;
+    V.Free;
   end;
 end;
 
