@@ -43,7 +43,7 @@ type
   ['{5CEC1117-80DA-4FBC-8D55-AFED800B05ED}']
     function Name: XMLString;
     function Value: XMLString; overload;
-    function Value(const AValue: XMLString): IXMLAttribute; overload;
+    function Value(const V: XMLString): IXMLAttribute; overload;
   end;
 
   IXMLAttributes = interface
@@ -58,7 +58,7 @@ type
   ['{78CF296B-3F7E-4324-A8E2-28CA7D2A6DF5}']
     function Name: XMLString;
     function Value: XMLString; overload;
-    function Value(const AValue: XMLString): IXMLNode; overload;
+    function Value(const V: XMLString): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Childs: IXMLNodes;
     function Up: IXMLNode;
@@ -66,7 +66,7 @@ type
 
   IXMLNodes = interface
   ['{4AE9A045-B1FA-46C5-B90E-0FB05BAF13A4}']
-    function Item(AIndex: Integer): IXMLNode;
+    function Item(Idx: Integer): IXMLNode;
     function Count: Integer;
   end;
 

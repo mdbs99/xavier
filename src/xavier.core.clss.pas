@@ -41,30 +41,22 @@ uses
 
 type
   {$ifdef FPC}
-    AXMLAttribute = Xavier.Core.FPC.TXMLAttribute;
-    AXMLAttributes = Xavier.Core.FPC.TXMLAttributes;
-    AXMLNode = Xavier.Core.FPC.TXMLNode;
-    AXMLNodes = Xavier.Core.FPC.TXMLNodes;
+    TXMLAttribute = Xavier.Core.FPC.TXMLAttribute;
+    TXMLAttributes = Xavier.Core.FPC.TXMLAttributes;
+    TXMLNode = Xavier.Core.FPC.TXMLNode;
+    TXMLNodes = Xavier.Core.FPC.TXMLNodes;
     AXMLPack = Xavier.Core.FPC.TXMLPack;
   {$else}
-    AXMLAttribute = Xavier.Core.Delphi.TXMLAttribute;
-    AXMLAttributes = Xavier.Core.Delphi.TXMLAttributes;
-    AXMLNode = Xavier.Core.Delphi.TXMLNode;
-    AXMLNodes = Xavier.Core.Delphi.TXMLNodes;
+    TXMLAttribute = Xavier.Core.Delphi.TXMLAttribute;
+    TXMLAttributes = Xavier.Core.Delphi.TXMLAttributes;
+    TXMLNode = Xavier.Core.Delphi.TXMLNode;
+    TXMLNodes = Xavier.Core.Delphi.TXMLNodes;
     AXMLPack = Xavier.Core.Delphi.TXMLPack;
   {$endif}
 
-  TXMLAttribute = AXMLAttribute;
-
-  TXMLAttributes = AXMLAttributes;
-
-  TXMLNode = AXMLNode;
-
-  TXMLNodes = AXMLNodes;
-
   TXMLPack = class(AXMLPack)
   public
-    class function New(AStream: IDataStream): IXMLPack; overload;
+    class function New(Stream: IDataStream): IXMLPack; overload;
     class function New: IXMLPack; overload;
   end;
 
@@ -72,13 +64,13 @@ implementation
 
 { TXMLPack }
 
-class function TXMLPack.New(AStream: IDataStream): IXMLPack;
+class function TXMLPack.New(Stream: IDataStream): IXMLPack;
 var
   Buf: TMemoryStream;
 begin
   Buf := TMemoryStream.Create;
   try
-    AStream.Save(Buf);
+    Stream.Save(Buf);
     Result := Create(Buf);
   finally
     Buf.Free;

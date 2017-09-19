@@ -30,7 +30,6 @@ interface
 uses
   Classes, SysUtils,
   DOM, XPath, XMLRead, XMLWrite,
-  //Laz2_DOM, laz2_XMLRead, laz2_XMLWrite,
   James.Data,
   James.Data.Clss,
   Xavier.Core;
@@ -40,20 +39,20 @@ type
   private
     FNode: TDOMNode;
   public
-    constructor Create(ANode: TDOMNode);
-    class function New(ANode: TDOMNode): IXMLAttribute;
+    constructor Create(Node: TDOMNode);
+    class function New(Node: TDOMNode): IXMLAttribute;
     function Name: XMLString;
     function Value: XMLString; overload;
-    function Value(const AValue: XMLString): IXMLAttribute; overload;
+    function Value(const V: XMLString): IXMLAttribute; overload;
   end;
 
   TXMLAttributes = class(TInterfacedObject, IXMLAttributes)
   private
     FNode: TDOMNode;
   public
-    constructor Create(ANode: TDOMNode);
-    class function New(ANode: TDOMNode): IXMLAttributes;
-    function Item(AIndex: Integer): IXMLAttribute;
+    constructor Create(Node: TDOMNode);
+    class function New(Node: TDOMNode): IXMLAttributes;
+    function Item(Idx: Integer): IXMLAttribute;
     function Count: Integer;
   end;
 
@@ -61,11 +60,11 @@ type
   private
     FNode: TDOMNode;
   public
-    constructor Create(ANode: TDOMNode);
-    class function New(ANode: TDOMNode): IXMLNode;
+    constructor Create(Node: TDOMNode);
+    class function New(Node: TDOMNode): IXMLNode;
     function Name: XMLString;
     function Value: XMLString; overload;
-    function Value(const AValue: XMLString): IXMLNode; overload;
+    function Value(const V: XMLString): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Childs: IXMLNodes;
     function Up: IXMLNode;
@@ -75,9 +74,9 @@ type
   private
     FNode: TDOMNode;
   public
-    constructor Create(ANode: TDOMNode);
-    class function New(ANode: TDOMNode): IXMLNodes;
-    function Item(AIndex: Integer): IXMLNode;
+    constructor Create(Node: TDOMNode);
+    class function New(Node: TDOMNode): IXMLNodes;
+    function Item(Idx: Integer): IXMLNode;
     function Count: Integer;
   end;
 
@@ -85,7 +84,7 @@ type
   private
     FDocument: TXMLDocument;
   public
-    constructor Create(AStream: TStream); reintroduce;
+    constructor Create(Stream: TStream); reintroduce;
     destructor Destroy; override;
     function Node(const XPath: XMLString): IXMLNode;
     function Stream: IDataStream;
@@ -95,15 +94,15 @@ implementation
 
 { TXMLAttribute }
 
-constructor TXMLAttribute.Create(ANode: TDOMNode);
+constructor TXMLAttribute.Create(Node: TDOMNode);
 begin
   inherited Create;
-  FNode := ANode;
+  FNode := Node;
 end;
 
-class function TXMLAttribute.New(ANode: TDOMNode): IXMLAttribute;
+class function TXMLAttribute.New(Node: TDOMNode): IXMLAttribute;
 begin
-  Result := Create(ANode);
+  Result := Create(Node);
 end;
 
 function TXMLAttribute.Name: XMLString;
@@ -116,28 +115,28 @@ begin
   Result := FNode.NodeValue;
 end;
 
-function TXMLAttribute.Value(const AValue: XMLString): IXMLAttribute;
+function TXMLAttribute.Value(const V: XMLString): IXMLAttribute;
 begin
   Result := Self;
-  FNode.NodeValue := AValue;
+  FNode.NodeValue := V;
 end;
 
 { TXMLAttributes }
 
-constructor TXMLAttributes.Create(ANode: TDOMNode);
+constructor TXMLAttributes.Create(Node: TDOMNode);
 begin
   inherited Create;
-  FNode := ANode;
+  FNode := Node;
 end;
 
-class function TXMLAttributes.New(ANode: TDOMNode): IXMLAttributes;
+class function TXMLAttributes.New(Node: TDOMNode): IXMLAttributes;
 begin
-  Result := Create(ANode);
+  Result := Create(Node);
 end;
 
-function TXMLAttributes.Item(AIndex: Integer): IXMLAttribute;
+function TXMLAttributes.Item(Idx: Integer): IXMLAttribute;
 begin
-  Result := TXMLAttribute.New(FNode.Attributes.Item[AIndex]);
+  Result := TXMLAttribute.New(FNode.Attributes.Item[Idx]);
 end;
 
 function TXMLAttributes.Count: Integer;
@@ -147,15 +146,15 @@ end;
 
 { TXMLNode }
 
-constructor TXMLNode.Create(ANode: TDOMNode);
+constructor TXMLNode.Create(Node: TDOMNode);
 begin
   inherited Create;
-  FNode := ANode;
+  FNode := Node;
 end;
 
-class function TXMLNode.New(ANode: TDOMNode): IXMLNode;
+class function TXMLNode.New(Node: TDOMNode): IXMLNode;
 begin
-  Result := Create(ANode);
+  Result := Create(Node);
 end;
 
 function TXMLNode.Name: XMLString;
@@ -168,10 +167,10 @@ begin
   Result := FNode.TextContent;
 end;
 
-function TXMLNode.Value(const AValue: XMLString): IXMLNode;
+function TXMLNode.Value(const V: XMLString): IXMLNode;
 begin
   Result := Self;
-  FNode.TextContent := AValue;
+  FNode.TextContent := V;
 end;
 
 function TXMLNode.Attrs: IXMLAttributes;
@@ -191,20 +190,20 @@ end;
 
 { TXMLNodes }
 
-constructor TXMLNodes.Create(ANode: TDOMNode);
+constructor TXMLNodes.Create(Node: TDOMNode);
 begin
   inherited Create;
-  FNode := ANode;
+  FNode := Node;
 end;
 
-class function TXMLNodes.New(ANode: TDOMNode): IXMLNodes;
+class function TXMLNodes.New(Node: TDOMNode): IXMLNodes;
 begin
-  Result := Create(ANode);
+  Result := Create(Node);
 end;
 
-function TXMLNodes.Item(AIndex: Integer): IXMLNode;
+function TXMLNodes.Item(Idx: Integer): IXMLNode;
 begin
-  Result := TXMLNode.New(FNode.ChildNodes.Item[AIndex]);
+  Result := TXMLNode.New(FNode.ChildNodes.Item[Idx]);
 end;
 
 function TXMLNodes.Count: Integer;
@@ -214,11 +213,11 @@ end;
 
 { TXMLPack }
 
-constructor TXMLPack.Create(AStream: TStream);
+constructor TXMLPack.Create(Stream: TStream);
 begin
   inherited Create;
-  AStream.Position := 0;
-  ReadXMLFile(FDocument, AStream);
+  Stream.Position := 0;
+  ReadXMLFile(FDocument, Stream);
 end;
 
 destructor TXMLPack.Destroy;
