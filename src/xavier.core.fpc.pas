@@ -86,6 +86,7 @@ type
   public
     constructor Create(Stream: TStream); reintroduce;
     destructor Destroy; override;
+    function Nodes(const XPath: XMLString): IXMLNodes;
     function Node(const XPath: XMLString): IXMLNode;
     function Stream: IDataStream;
   end;
@@ -226,18 +227,34 @@ begin
   inherited Destroy;
 end;
 
-function TXMLPack.Node(const XPath: XMLString): IXMLNode;
+function TXMLPack.Nodes(const XPath: XMLString): IXMLNodes;
 var
   V: TXPathVariable;
+  L: IInterfaceList;
+  I: Integer;
 begin
+  L := TInterfaceList.Create;
   V := EvaluateXPathExpression(XPath, FDocument.DocumentElement);
   try
-    if not Assigned(V) then
-      raise Exception.Create('Invalid expression: ' + AnsiString(XPath));
-    Result := TXMLNode.New(TDOMNode(V.AsNodeSet[0]));
+    if Assigned(V) then
+    begin
+      for I := 0 to V.AsNodeSet.Count -1 do
+        L.Add(TXMLNode.New(TDOMNode(V.AsNodeSet[I])));
+    end;
+    Result := TXMLNodes.New(L);
   finally
     V.Free;
   end;
+end;
+
+function TXMLPack.Node(const XPath: XMLString): IXMLNode;
+var
+  L: IXMLNodes;
+begin
+  L := Nodes(XPath);
+  if L.Count = 0 then
+    raise EXMLError.Create('Node not found.');
+  Result := L.Item(0);
 end;
 
 function TXMLPack.Stream: IDataStream;
