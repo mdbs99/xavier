@@ -32,6 +32,7 @@ uses
   James.Data,
   James.Data.Clss,
   Xavier.Core,
+  Xavier.Core.Cross,
   {$ifdef FPC}
     Xavier.Core.FPC
   {$else}
@@ -44,15 +45,17 @@ type
     TXMLAttribute = Xavier.Core.FPC.TXMLAttribute;
     TXMLAttributes = Xavier.Core.FPC.TXMLAttributes;
     TXMLNode = Xavier.Core.FPC.TXMLNode;
-    TXMLNodes = Xavier.Core.FPC.TXMLNodes;
+    TXMLChilds = Xavier.Core.FPC.TXMLChilds;
     AXMLPack = Xavier.Core.FPC.TXMLPack;
   {$else}
     TXMLAttribute = Xavier.Core.Delphi.TXMLAttribute;
     TXMLAttributes = Xavier.Core.Delphi.TXMLAttributes;
     TXMLNode = Xavier.Core.Delphi.TXMLNode;
-    TXMLNodes = Xavier.Core.Delphi.TXMLNodes;
+    TXMLChilds = Xavier.Core.Delphi.TXMLChilds;
     AXMLPack = Xavier.Core.Delphi.TXMLPack;
   {$endif}
+
+  TXMLNodes = Xavier.Core.Cross.TXMLNodes;
 
   TXMLPack = class(AXMLPack)
   public
