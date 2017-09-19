@@ -154,6 +154,7 @@
         <DCCReference Include="..\src\xavier.core.pas"/>
         <DCCReference Include="..\src\xavier.core.clss.pas"/>
         <DCCReference Include="..\src\xavier.core.delphi.pas"/>
+        <DCCReference Include="..\src\xavier.core.cross.pas"/>
         <None Include="..\inc\xavier.inc"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

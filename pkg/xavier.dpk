@@ -36,6 +36,7 @@ requires
 contains
   xavier.core in '..\src\xavier.core.pas',
   xavier.core.clss in '..\src\xavier.core.clss.pas',
-  xavier.core.delphi in '..\src\xavier.core.delphi.pas';
+  xavier.core.delphi in '..\src\xavier.core.delphi.pas',
+  xavier.core.delphi in '..\src\xavier.core.cross.pas';
 
 end.
