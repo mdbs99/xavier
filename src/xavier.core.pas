@@ -50,7 +50,8 @@ type
 
   IXMLAttributes = interface
   ['{6D64F5F4-BF46-4A45-8014-A72DFA8E8F29}']
-    function Item(AIndex: Integer): IXMLAttribute;
+    function Item(Idx: Integer): IXMLAttribute; overload;
+    function Item(const Name: XMLString): IXMLAttribute; overload;
     function Count: Integer;
   end;
 

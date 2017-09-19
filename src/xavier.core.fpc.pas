@@ -53,7 +53,8 @@ type
   public
     constructor Create(Node: TDOMNode);
     class function New(Node: TDOMNode): IXMLAttributes;
-    function Item(Idx: Integer): IXMLAttribute;
+    function Item(Idx: Integer): IXMLAttribute; overload;
+    function Item(const Name: XMLString): IXMLAttribute; overload;
     function Count: Integer;
   end;
 
@@ -139,6 +140,15 @@ end;
 function TXMLAttributes.Item(Idx: Integer): IXMLAttribute;
 begin
   Result := TXMLAttribute.New(FNode.Attributes.Item[Idx]);
+  if not Assigned(Result) then
+    raise EXMLError.CreateFmt('Node not found on index %d.', [Idx]);
+end;
+
+function TXMLAttributes.Item(const Name: XMLString): IXMLAttribute;
+begin
+  Result := TXMLAttribute.New(FNode.Attributes.GetNamedItem(Name));
+  if not Assigned(Result) then
+    raise EXMLError.CreateFmt('Node "%s" not found.', [Name]);
 end;
 
 function TXMLAttributes.Count: Integer;
