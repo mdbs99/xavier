@@ -67,6 +67,8 @@ type
   published
     procedure Item;
     procedure Count;
+    procedure Empty;
+  end;
   end;
 
   TXMLAttributeTest = class(TTestCase)
@@ -99,11 +101,11 @@ begin
       '<?xml version="1.0" encoding="UTF-8"?>'
       + '<root>'
       + '  <group>'
-      + '    <item a="1" b="2">'
+      + '    <item id="1" a="1" b="2">'
       + '      <name>foo</name>'
       + '      <value>bar</value>'
       + '    </item>'
-      + '    <item a="1" b="2">'
+      + '    <item id="2" a="1" b="2">'
       + '      <name>foo2</name>'
       + '      <value>bar2</value>'
       + '    </item>'
@@ -206,6 +208,38 @@ end;
 procedure TXMLNodesTest.Item;
 begin
   CheckEquals(
+    3,
+    TXMLPack.New(TXMLStreamForTest.New).Nodes(
+      '/root/group/item[@id=''1'']'
+    )
+    .Item(0)
+    .Attrs
+    .Count
+  );
+end;
+
+procedure TXMLNodesTest.Count;
+begin
+  CheckEquals(
+    2,
+    TXMLPack.New(TXMLStreamForTest.New).Nodes(
+      '/root/group/item[@a=''1'']'
+    )
+    .Count
+  );
+end;
+
+procedure TXMLNodesTest.Empty;
+begin
+  CheckEquals(
+    0,
+    TXMLPack.New(TXMLStreamForTest.New).Nodes(
+      '/root/group/item[@xpto=''otpx'']'
+    )
+    .Count
+  );
+end;
+
     UnicodeString('foo2'),
     TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
