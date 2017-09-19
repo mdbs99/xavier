@@ -69,6 +69,11 @@ type
     procedure Count;
     procedure Empty;
   end;
+
+  TXMLChildsTest = class(TTestCase)
+  published
+    procedure Item;
+    procedure Count;
   end;
 
   TXMLAttributeTest = class(TTestCase)
@@ -240,6 +245,11 @@ begin
   );
 end;
 
+{ TXMLChildsTest }
+
+procedure TXMLChildsTest.Item;
+begin
+  CheckEquals(
     UnicodeString('foo2'),
     TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
@@ -252,7 +262,7 @@ end;
   );
 end;
 
-procedure TXMLNodesTest.Count;
+procedure TXMLChildsTest.Count;
 begin
   CheckEquals(
     2,
@@ -327,7 +337,7 @@ end;
 procedure TXMLAttributesTest.Count;
 begin
   CheckEquals(
-    2,
+    3,
     TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
@@ -341,6 +351,7 @@ initialization
     .Add(TTest.New(TXMLPackTest))
     .Add(TTest.New(TXMLNodeTest))
     .Add(TTest.New(TXMLNodesTest))
+    .Add(TTest.New(TXMLChildsTest))
     .Add(TTest.New(TXMLAttributeTest))
     .Add(TTest.New(TXMLAttributesTest))
 
