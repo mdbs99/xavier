@@ -85,7 +85,8 @@ type
 
   TXMLAttributesTest = class(TTestCase)
   published
-    procedure Item;
+    procedure ItemByIndex;
+    procedure ItemByName;
     procedure Count;
   end;
 
@@ -321,7 +322,7 @@ end;
 
 { TXMLAttributesTest }
 
-procedure TXMLAttributesTest.Item;
+procedure TXMLAttributesTest.ItemByIndex;
 begin
   CheckEquals(
     UnicodeString('1'),
@@ -330,6 +331,19 @@ begin
     )
     .Attrs
     .Item(0)
+    .Value
+  );
+end;
+
+procedure TXMLAttributesTest.ItemByName;
+begin
+  CheckEquals(
+    UnicodeString('1'),
+    TXMLPack.New(TXMLStreamForTest.New).Node(
+      '/root/group/item'
+    )
+    .Attrs
+    .Item('id')
     .Value
   );
 end;
