@@ -32,7 +32,8 @@ uses
   DOM, XPath, XMLRead, XMLWrite,
   James.Data,
   James.Data.Clss,
-  Xavier.Core;
+  Xavier.Core,
+  Xavier.Core.Cross;
 
 type
   TXMLAttribute = class(TInterfacedObject, IXMLAttribute)
@@ -70,7 +71,7 @@ type
     function Up: IXMLNode;
   end;
 
-  TXMLNodes = class(TInterfacedObject, IXMLNodes)
+  TXMLChilds = class(TInterfacedObject, IXMLNodes)
   private
     FNode: TDOMNode;
   public
@@ -181,7 +182,7 @@ end;
 
 function TXMLNode.Childs: IXMLNodes;
 begin
-  Result := TXMLNodes.New(FNode);
+  Result := TXMLChilds.New(FNode);
 end;
 
 function TXMLNode.Up: IXMLNode;
@@ -189,25 +190,25 @@ begin
   Result := TXMLNode.New(FNode.ParentNode);
 end;
 
-{ TXMLNodes }
+{ TXMLChilds }
 
-constructor TXMLNodes.Create(Node: TDOMNode);
+constructor TXMLChilds.Create(Node: TDOMNode);
 begin
   inherited Create;
   FNode := Node;
 end;
 
-class function TXMLNodes.New(Node: TDOMNode): IXMLNodes;
+class function TXMLChilds.New(Node: TDOMNode): IXMLNodes;
 begin
   Result := Create(Node);
 end;
 
-function TXMLNodes.Item(Idx: Integer): IXMLNode;
+function TXMLChilds.Item(Idx: Integer): IXMLNode;
 begin
   Result := TXMLNode.New(FNode.ChildNodes.Item[Idx]);
 end;
 
-function TXMLNodes.Count: Integer;
+function TXMLChilds.Count: Integer;
 begin
   Result := FNode.ChildNodes.Count;
 end;
