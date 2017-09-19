@@ -28,6 +28,7 @@ unit Xavier.Core;
 interface
 
 uses
+  SysUtils,
   {$ifdef FPC}
     DOM,
   {$else}
@@ -37,6 +38,7 @@ uses
 
 type
   XMLString = DOMString;
+  EXMLError = class(Exception);
 
 type
   IXMLAttribute = interface
@@ -72,6 +74,7 @@ type
 
   IXMLPack = interface
   ['{35E1DA6D-6022-47BB-B7B0-E651E209F12A}']
+    function Nodes(const XPath: XMLString): IXMLNodes;
     function Node(const XPath: XMLString): IXMLNode;
     function Stream: IDataStream;
   end;
