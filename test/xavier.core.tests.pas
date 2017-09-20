@@ -51,6 +51,7 @@ type
   published
     procedure Load;
     procedure Node;
+    procedure Nodes;
   end;
 
   TXMLNodeTest = class(TTestCase)
@@ -124,7 +125,9 @@ end;
 
 procedure TXMLPackTest.Load;
 begin
-  TXMLPack.New(TXMLFileForTest.New.Stream)
+  CheckNotNull(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Stream
+  );
 end;
 
 procedure TXMLPackTest.Node;
@@ -133,6 +136,17 @@ begin
     TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
+  );
+end;
+
+procedure TXMLPackTest.Nodes;
+begin
+  CheckEquals(
+    3,
+    TXMLPack.New(TXMLFileForTest.New.Stream).Nodes(
+      '/CONFIG/Package/CompilerOptions/*'
+    )
+    .Count
   );
 end;
 
