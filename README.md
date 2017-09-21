@@ -14,6 +14,14 @@ The major goal of this project is to replace common procedural code in our proje
 
 We want to write elegant, clean, and maintainable code using OOP.
 
+**Principles**. The code has some design principles:
+
+* Fully interface-based
+* Memory is released automatically
+* No usage of `nil`/`NULL` in arguments or returns
+* No type casting or reflection
+* No procedures or functions, only Interfaces and Objects
+
 ## Dependencies
 
 Internally, this project uses other built-in XML library for each compiler.
