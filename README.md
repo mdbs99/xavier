@@ -14,6 +14,13 @@ The major goal of this project is to replace common procedural code in our proje
 
 We want to write elegant, clean, and maintainable code using OOP.
 
+## Dependencies
+
+Internally, this project uses other built-in XML library for each compiler.
+Besides that, we are using other packages:
+
+* [James](https://github.com/mdbs99/james) — is a collection of classes and interfaces for truly object-oriented projects.
+
 ## How to contribute?
 
 To contribute we suggest following these steps:
