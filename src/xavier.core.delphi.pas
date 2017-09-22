@@ -72,6 +72,16 @@ type
     function Up: IXMLNode;
   end;
 
+  TXMLNodes = class(TInterfacedObject, IXMLNodes)
+  private
+    FList: IInterfaceList;
+  public
+    constructor Create(List: IInterfaceList);
+    class function New(List: IInterfaceList): IXMLNodes;
+    function Item(Idx: Integer): IXMLNode;
+    function Count: Integer;
+  end;
+
   TXMLChilds = class(TInterfacedObject, IXMLNodes)
   private
     FNode: IDOMNode;
@@ -197,6 +207,29 @@ end;
 function TXMLNode.Up: IXMLNode;
 begin
   Result := TXMLNode.New(FNode.ParentNode);
+end;
+
+{ TXMLNodes }
+
+constructor TXMLNodes.Create(List: IInterfaceList);
+begin
+  inherited Create;
+  FList := List;
+end;
+
+class function TXMLNodes.New(List: IInterfaceList): IXMLNodes;
+begin
+  Result := Create(List);
+end;
+
+function TXMLNodes.Item(Idx: Integer): IXMLNode;
+begin
+  Result := FList.Items[Idx] as IXMLNode;
+end;
+
+function TXMLNodes.Count: Integer;
+begin
+  Result := FList.Count;
 end;
 
 { TXMLChilds }

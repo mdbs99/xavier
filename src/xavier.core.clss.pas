@@ -32,7 +32,6 @@ uses
   James.Data,
   James.Data.Clss,
   Xavier.Core,
-  Xavier.Core.Cross,
   {$ifdef FPC}
     Xavier.Core.FPC
   {$else}
