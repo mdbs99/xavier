@@ -78,7 +78,8 @@ type
     constructor Create(List: IInterfaceList);
     class function New(List: IInterfaceList): IXMLNodes;
     function Add(const {%H-}Name: string): IXMLNodes;
-    function Item(Idx: Integer): IXMLNode;
+    function Item(Idx: Integer): IXMLNode; overload;
+    function Item(const Name: XMLString): IXMLNode; overload;
     function Count: Integer;
   end;
 
@@ -89,7 +90,8 @@ type
     constructor Create(Node: IDOMNode);
     class function New(Node: IDOMNode): IXMLNodes;
     function Add(const Name: string): IXMLNodes;
-    function Item(Idx: Integer): IXMLNode;
+    function Item(Idx: Integer): IXMLNode; overload;
+    function Item(const Name: XMLString): IXMLNode; overload;
     function Count: Integer;
   end;
 
@@ -234,6 +236,23 @@ begin
   Result := FList.Items[Idx] as IXMLNode;
 end;
 
+function TCNodes.Item(const Name: XMLString): IXMLNode;
+var
+  I: Integer;
+  N: IXMLNode;
+begin
+  for I := 0 to FList.Count -1 do
+  begin
+    N := Item(I);
+    if N.Name = Name then
+    begin
+      Result := N;
+      Exit;
+    end;
+  end;
+  raise EXMLError.CreateFmt('Node "%s" not found.', [Name]);
+end;
+
 function TCNodes.Count: Integer;
 begin
   Result := FList.Count;
@@ -263,6 +282,16 @@ end;
 function TCChilds.Item(Idx: Integer): IXMLNode;
 begin
   Result := TCNode.New(FNode.ChildNodes.Item[Idx]);
+end;
+
+function TCChilds.Item(const Name: XMLString): IXMLNode;
+var
+  N: TDOMNode;
+begin
+  N := FNode.FindNode(Name);
+  if not Assigned(N) then
+    raise EXMLError.CreateFmt('Node "%s" not found.', [Name]);
+  Result := TCNode.New(N);
 end;
 
 function TCChilds.Count: Integer;
