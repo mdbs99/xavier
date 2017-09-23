@@ -34,7 +34,8 @@ uses
   James.IO,
   James.IO.Clss,
   James.Testing.Clss,
-  Xavier.Core.Clss, Xavier.Core;
+  Xavier.Core,
+  Xavier.Core.Clss;
 
 type
   TXMLFileForTest = class(TFile)
