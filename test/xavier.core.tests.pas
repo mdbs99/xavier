@@ -49,6 +49,7 @@ type
 
   TXMLPackTest = class(TTestCase)
   published
+    procedure New;
     procedure Load;
     procedure Node;
     procedure Nodes;
@@ -128,6 +129,17 @@ begin
 end;
 
 { TXMLPackTest }
+
+procedure TXMLPackTest.New;
+var
+  N: XMLString;
+begin
+  N := 'root';
+  CheckEquals(
+    N,
+    TXMLPack.New(N).Node('/' + N).Name
+  );
+end;
 
 procedure TXMLPackTest.Load;
 begin
