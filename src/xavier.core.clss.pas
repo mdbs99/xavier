@@ -28,7 +28,7 @@ unit Xavier.Core.Clss;
 interface
 
 uses
-  Classes,
+  Classes, SysUtils,
   James.Data,
   James.Data.Clss,
   Xavier.Core,
@@ -49,7 +49,7 @@ type
   TXMLPack = class(TCPack)
   public
     class function New(Stream: IDataStream): IXMLPack; overload;
-    class function New: IXMLPack; overload;
+    class function New(const RootName: XMLString): IXMLPack; overload;
   end;
 
 implementation
@@ -69,9 +69,15 @@ begin
   end;
 end;
 
-class function TXMLPack.New: IXMLPack;
+class function TXMLPack.New(const RootName: XMLString): IXMLPack;
 begin
-  Result := New(TDataStream.New);
+  Result := New(
+    TDataStream.New(
+      Format(
+        '<?xml version="1.0" encoding="UTF-8"?><%s />', [RootName]
+      )
+    )
+  );
 end;
 
 end.
