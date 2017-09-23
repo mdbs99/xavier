@@ -40,23 +40,13 @@ uses
   ;
 
 type
-  {$ifdef FPC}
-    TXMLAttribute = Xavier.Core.FPC.TXMLAttribute;
-    TXMLAttributes = Xavier.Core.FPC.TXMLAttributes;
-    TXMLNode = Xavier.Core.FPC.TXMLNode;
-    TXMLChilds = Xavier.Core.FPC.TXMLChilds;
-    AXMLPack = Xavier.Core.FPC.TXMLPack;
-  {$else}
-    TXMLAttribute = Xavier.Core.Delphi.TXMLAttribute;
-    TXMLAttributes = Xavier.Core.Delphi.TXMLAttributes;
-    TXMLNode = Xavier.Core.Delphi.TXMLNode;
-    TXMLChilds = Xavier.Core.Delphi.TXMLChilds;
-    AXMLPack = Xavier.Core.Delphi.TXMLPack;
-  {$endif}
+  TXMLAttribute = TCAttribute;
+  TXMLAttributes = TCAttributes;
+  TXMLNode = TCNode;
+  TXMLNodes = TCNodes;
+  TXMLChilds = TCChilds;
 
-  TXMLNodes = Xavier.Core.Cross.TXMLNodes;
-
-  TXMLPack = class(AXMLPack)
+  TXMLPack = class(TCPack)
   public
     class function New(Stream: IDataStream): IXMLPack; overload;
     class function New: IXMLPack; overload;
