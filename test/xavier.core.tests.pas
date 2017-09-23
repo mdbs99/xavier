@@ -69,7 +69,8 @@ type
     procedure RunAdd;
   published
     procedure Add;
-    procedure Item;
+    procedure ItemByIndex;
+    procedure ItemByName;
     procedure Count;
     procedure Empty;
   end;
@@ -77,7 +78,8 @@ type
   TXMLChildsTest = class(TTestCase)
   published
     procedure Add;
-    procedure Item;
+    procedure ItemByIndex;
+    procedure ItemByName;
     procedure Count;
   end;
 
@@ -159,7 +161,7 @@ end;
 procedure TXMLNodeTest.Name;
 begin
   CheckEquals(
-    UnicodeString('CompilerOptions'),
+    XMLString('CompilerOptions'),
     TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
@@ -170,7 +172,7 @@ end;
 procedure TXMLNodeTest.GetValue;
 begin
   CheckEquals(
-    UnicodeString('foo'),
+    XMLString('foo'),
     TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item/name'
     )
@@ -180,7 +182,7 @@ end;
 
 procedure TXMLNodeTest.SetValue;
 var
-  S: UnicodeString;
+  S: XMLString;
 begin
   S := 'xavier';
   CheckEquals(
@@ -218,7 +220,7 @@ end;
 procedure TXMLNodeTest.Up;
 begin
   CheckEquals(
-    UnicodeString('Package'),
+    XMLString('Package'),
     TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
@@ -242,7 +244,7 @@ begin
   CheckException(RunAdd, EXMLError);
 end;
 
-procedure TXMLNodesTest.Item;
+procedure TXMLNodesTest.ItemByIndex;
 begin
   CheckEquals(
     3,
@@ -252,6 +254,18 @@ begin
     .Item(0)
     .Attrs
     .Count
+  );
+end;
+
+procedure TXMLNodesTest.ItemByName;
+begin
+  CheckEquals(
+    XMLString('item'),
+    TXMLPack.New(TXMLStreamForTest.New).Nodes(
+      '/root/group/item[@id=''1'']'
+    )
+    .Item('item')
+    .Name
   );
 end;
 
@@ -295,10 +309,10 @@ begin
   );
 end;
 
-procedure TXMLChildsTest.Item;
+procedure TXMLChildsTest.ItemByIndex;
 begin
   CheckEquals(
-    UnicodeString('foo2'),
+    XMLString('foo2'),
     TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
     )
@@ -307,6 +321,19 @@ begin
       .Childs
         .Item(0)
         .Value
+  );
+end;
+
+procedure TXMLChildsTest.ItemByName;
+begin
+  CheckEquals(
+    XMLString('item'),
+    TXMLPack.New(TXMLStreamForTest.New).Node(
+      '/root/group'
+    )
+    .Childs
+    .Item('item')
+    .Name
   );
 end;
 
@@ -327,7 +354,7 @@ end;
 procedure TXMLAttributeTest.Name;
 begin
   CheckEquals(
-    UnicodeString('Value'),
+    XMLString('Value'),
     TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
@@ -340,7 +367,7 @@ end;
 procedure TXMLAttributeTest.GetValue;
 begin
   CheckEquals(
-    UnicodeString('xavier'),
+    XMLString('xavier'),
     TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
@@ -352,7 +379,7 @@ end;
 
 procedure TXMLAttributeTest.SetValue;
 var
-  S: UnicodeString;
+  S: XMLString;
 begin
   S := 'cyclop';
   CheckEquals(
@@ -372,7 +399,7 @@ end;
 procedure TXMLAttributesTest.ItemByIndex;
 begin
   CheckEquals(
-    UnicodeString('1'),
+    XMLString('1'),
     TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
@@ -385,7 +412,7 @@ end;
 procedure TXMLAttributesTest.ItemByName;
 begin
   CheckEquals(
-    UnicodeString('1'),
+    XMLString('1'),
     TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
