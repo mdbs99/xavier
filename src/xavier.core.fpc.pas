@@ -77,6 +77,7 @@ type
   public
     constructor Create(List: IInterfaceList);
     class function New(List: IInterfaceList): IXMLNodes;
+    function Add(const {%H-}Name: string): IXMLNodes;
     function Item(Idx: Integer): IXMLNode;
     function Count: Integer;
   end;
@@ -87,6 +88,7 @@ type
   public
     constructor Create(Node: TDOMNode);
     class function New(Node: TDOMNode): IXMLNodes;
+    function Add(const Name: string): IXMLNodes;
     function Item(Idx: Integer): IXMLNode;
     function Count: Integer;
   end;
@@ -204,7 +206,7 @@ begin
   Result := TXMLChilds.New(FNode);
 end;
 
-function TXMLNode.Up: IXMLNode;
+function TXMLNode.Parent: IXMLNode;
 begin
   Result := TXMLNode.New(FNode.ParentNode);
 end;
@@ -220,6 +222,12 @@ end;
 class function TXMLNodes.New(List: IInterfaceList): IXMLNodes;
 begin
   Result := Create(List);
+end;
+
+function TXMLNodes.Add(const Name: string): IXMLNodes;
+begin
+  Result := Self;
+  raise EXMLError.Create('This list is read only');
 end;
 
 function TXMLNodes.Item(Idx: Integer): IXMLNode;
@@ -243,6 +251,14 @@ end;
 class function TXMLChilds.New(Node: TDOMNode): IXMLNodes;
 begin
   Result := Create(Node);
+end;
+
+function TXMLChilds.Add(const Name: string): IXMLNodes;
+begin
+  Result := Self;
+  FNode.AppendChild(
+    FNode.OwnerDocument.CreateElement(Name)
+  );
 end;
 
 function TXMLChilds.Item(Idx: Integer): IXMLNode;

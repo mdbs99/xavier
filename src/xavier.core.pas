@@ -69,6 +69,7 @@ type
 
   IXMLNodes = interface
   ['{4AE9A045-B1FA-46C5-B90E-0FB05BAF13A4}']
+    function Add(const Name: string): IXMLNodes;
     function Item(Idx: Integer): IXMLNode;
     function Count: Integer;
   end;
