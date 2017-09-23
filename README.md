@@ -52,6 +52,7 @@ If you have questions or general suggestions, don't hesitate to submit a new [Gi
 ## Contributors
 
   - [@mdbs99](https://github.com/mdbs99) as Marcos Douglas B. Santos ([Blog](http://mdbs99.com/))
+  - [@nunopicado](https://github.com/nunopicado) as Nuno Picado
   
 ## License (MIT)
 
