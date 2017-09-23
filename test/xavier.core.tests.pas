@@ -34,7 +34,7 @@ uses
   James.IO,
   James.IO.Clss,
   James.Testing.Clss,
-  Xavier.Core.Clss;
+  Xavier.Core.Clss, Xavier.Core;
 
 type
   TXMLFileForTest = class(TFile)
@@ -65,7 +65,10 @@ type
   end;
 
   TXMLNodesTest = class(TTestCase)
+  private
+    procedure RunAdd;
   published
+    procedure Add;
     procedure Item;
     procedure Count;
     procedure Empty;
@@ -73,6 +76,7 @@ type
 
   TXMLChildsTest = class(TTestCase)
   published
+    procedure Add;
     procedure Item;
     procedure Count;
   end;
@@ -218,12 +222,25 @@ begin
     TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
-    .Up
+    .Parent
     .Name
   );
 end;
 
 { TXMLNodesTest }
+
+procedure TXMLNodesTest.RunAdd;
+begin
+  TXMLPack.New(TXMLStreamForTest.New).Nodes(
+    '/root/group/item[@a=''1'']'
+  )
+  .Add('new')
+end;
+
+procedure TXMLNodesTest.Add;
+begin
+  CheckException(RunAdd, EXMLError);
+end;
 
 procedure TXMLNodesTest.Item;
 begin
@@ -261,6 +278,22 @@ begin
 end;
 
 { TXMLChildsTest }
+
+procedure TXMLChildsTest.Add;
+var
+  N: IXMLNode;
+  C: Integer;
+begin
+  N := TXMLPack.New(TXMLStreamForTest.New).Node('/root/group/item');
+  C := N.Childs.Count;
+  CheckEquals(
+    C + 2,
+    N.Childs
+      .Add('item')
+      .Add('item')
+      .Count
+  );
+end;
 
 procedure TXMLChildsTest.Item;
 begin
