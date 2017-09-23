@@ -69,7 +69,7 @@ type
     function Value(const V: XMLString): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Childs: IXMLNodes;
-    function Up: IXMLNode;
+    function Parent: IXMLNode;
   end;
 
   TXMLNodes = class(TInterfacedObject, IXMLNodes)
