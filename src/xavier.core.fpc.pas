@@ -77,7 +77,6 @@ type
   public
     constructor Create(List: IInterfaceList);
     class function New(List: IInterfaceList): IXMLNodes;
-    function Add(const {%H-}Name: string): IXMLNodes;
     function Item(Idx: Integer): IXMLNode; overload;
     function Item(const Name: XMLString): IXMLNode; overload;
     function Count: Integer;
@@ -89,7 +88,6 @@ type
   public
     constructor Create(Node: TDOMNode);
     class function New(Node: TDOMNode): IXMLNodes;
-    function Add(const Name: string): IXMLNodes;
     function Item(Idx: Integer): IXMLNode; overload;
     function Item(const Name: XMLString): IXMLNode; overload;
     function Count: Integer;
@@ -226,12 +224,6 @@ begin
   Result := Create(List);
 end;
 
-function TCNodes.Add(const Name: string): IXMLNodes;
-begin
-  Result := Self;
-  raise EXMLError.Create('This list is read only');
-end;
-
 function TCNodes.Item(Idx: Integer): IXMLNode;
 begin
   Result := FList.Items[Idx] as IXMLNode;
@@ -270,14 +262,6 @@ end;
 class function TCChilds.New(Node: TDOMNode): IXMLNodes;
 begin
   Result := Create(Node);
-end;
-
-function TCChilds.Add(const Name: string): IXMLNodes;
-begin
-  Result := Self;
-  FNode.AppendChild(
-    FNode.OwnerDocument.CreateElement(XMLString(Name))
-  );
 end;
 
 function TCChilds.Item(Idx: Integer): IXMLNode;
