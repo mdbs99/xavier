@@ -62,15 +62,14 @@ type
     procedure GetValue;
     procedure SetValue;
     procedure Attrs;
+    procedure Add;
+    procedure AddTwoLevels;
     procedure Childs;
-    procedure Up;
+    procedure Parent;
   end;
 
   TXMLNodesTest = class(TTestCase)
-  private
-    procedure RunAdd;
   published
-    procedure Add;
     procedure ItemByIndex;
     procedure ItemByName;
     procedure Count;
@@ -79,7 +78,6 @@ type
 
   TXMLChildsTest = class(TTestCase)
   published
-    procedure Add;
     procedure ItemByIndex;
     procedure ItemByName;
     procedure Count;
@@ -220,6 +218,33 @@ begin
   );
 end;
 
+procedure TXMLNodeTest.Add;
+var
+  N: IXMLNode;
+  C: Integer;
+begin
+  N := TXMLPack.New(TXMLStreamForTest.New).Node('/root/group/item');
+  C := N.Childs.Count;
+  CheckEquals(
+    C + 2,
+    N.Add('item').Parent
+      .Add('item').Parent
+      .Childs
+      .Count
+  );
+end;
+
+procedure TXMLNodeTest.AddTwoLevels;
+var
+  P: IXMLPack;
+begin
+  P := TXMLPack.New('root');
+  P.Node('/root')
+    .Add('level-1')
+    .Add('level-2');
+  CheckNotNull(P.Node('/root/level-1/level-2'));
+end;
+
 procedure TXMLNodeTest.Childs;
 begin
   CheckNotNull(
@@ -230,7 +255,7 @@ begin
   );
 end;
 
-procedure TXMLNodeTest.Up;
+procedure TXMLNodeTest.Parent;
 begin
   CheckEquals(
     XMLString('Package'),
@@ -243,19 +268,6 @@ begin
 end;
 
 { TXMLNodesTest }
-
-procedure TXMLNodesTest.RunAdd;
-begin
-  TXMLPack.New(TXMLStreamForTest.New).Nodes(
-    '/root/group/item[@a=''1'']'
-  )
-  .Add('new')
-end;
-
-procedure TXMLNodesTest.Add;
-begin
-  CheckException(RunAdd, EXMLError);
-end;
 
 procedure TXMLNodesTest.ItemByIndex;
 begin
@@ -305,22 +317,6 @@ begin
 end;
 
 { TXMLChildsTest }
-
-procedure TXMLChildsTest.Add;
-var
-  N: IXMLNode;
-  C: Integer;
-begin
-  N := TXMLPack.New(TXMLStreamForTest.New).Node('/root/group/item');
-  C := N.Childs.Count;
-  CheckEquals(
-    C + 2,
-    N.Childs
-      .Add('item')
-      .Add('item')
-      .Count
-  );
-end;
 
 procedure TXMLChildsTest.ItemByIndex;
 begin
