@@ -37,48 +37,48 @@ uses
   James.Data;
 
 type
-  XMLString = DOMString;
-  EXMLError = class(Exception);
+  XavierString = DOMString;
+  EXavierError = class(Exception);
 
 type
-  IXMLAttribute = interface
+  IXavierAttribute = interface
   ['{5CEC1117-80DA-4FBC-8D55-AFED800B05ED}']
-    function Name: XMLString;
-    function Value: XMLString; overload;
-    function Value(const V: XMLString): IXMLAttribute; overload;
+    function Name: XavierString;
+    function Value: XavierString; overload;
+    function Value(const V: XavierString): IXavierAttribute; overload;
   end;
 
-  IXMLAttributes = interface
+  IXavierAttributes = interface
   ['{6D64F5F4-BF46-4A45-8014-A72DFA8E8F29}']
-    function Item(Idx: Integer): IXMLAttribute; overload;
-    function Item(const Name: XMLString): IXMLAttribute; overload;
+    function Item(Idx: Integer): IXavierAttribute; overload;
+    function Item(const Name: XavierString): IXavierAttribute; overload;
     function Count: Integer;
   end;
 
-  IXMLNodes = interface;
+  IXavierNodes = interface;
 
-  IXMLNode = interface
+  IXavierNode = interface
   ['{78CF296B-3F7E-4324-A8E2-28CA7D2A6DF5}']
-    function Name: XMLString;
-    function Value: XMLString; overload;
-    function Value(const V: XMLString): IXMLNode; overload;
-    function Attrs: IXMLAttributes;
-    function Add(const Name: XMLString): IXMLNode;
-    function Childs: IXMLNodes;
-    function Parent: IXMLNode;
+    function Name: XavierString;
+    function Value: XavierString; overload;
+    function Value(const V: XavierString): IXavierNode; overload;
+    function Attrs: IXavierAttributes;
+    function Add(const Name: XavierString): IXavierNode;
+    function Childs: IXavierNodes;
+    function Parent: IXavierNode;
   end;
 
-  IXMLNodes = interface
+  IXavierNodes = interface
   ['{4AE9A045-B1FA-46C5-B90E-0FB05BAF13A4}']
-    function Item(Idx: Integer): IXMLNode; overload;
-    function Item(const Name: XMLString): IXMLNode; overload;
+    function Item(Idx: Integer): IXavierNode; overload;
+    function Item(const Name: XavierString): IXavierNode; overload;
     function Count: Integer;
   end;
 
-  IXMLPack = interface
+  IXavierPack = interface
   ['{35E1DA6D-6022-47BB-B7B0-E651E209F12A}']
-    function Nodes(const XPath: XMLString): IXMLNodes;
-    function Node(const XPath: XMLString): IXMLNode;
+    function Nodes(const XPath: XavierString): IXavierNodes;
+    function Node(const XPath: XavierString): IXavierNode;
     function Stream: IDataStream;
   end;
 

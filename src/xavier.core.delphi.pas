@@ -35,213 +35,213 @@ uses
   Xavier.Core;
 
 type
-  TCAttribute = class(TInterfacedObject, IXMLAttribute)
+  TXAttribute = class(TInterfacedObject, IXavierAttribute)
   private
     FNode: IDOMNode;
   public
     constructor Create(Node: IDOMNode);
-    class function New(Node: IDOMNode): IXMLAttribute;
-    function Name: XMLString;
-    function Value: XMLString; overload;
-    function Value(const V: XMLString): IXMLAttribute; overload;
+    class function New(Node: IDOMNode): IXavierAttribute;
+    function Name: XavierString;
+    function Value: XavierString; overload;
+    function Value(const V: XavierString): IXavierAttribute; overload;
   end;
 
-  TCAttributes = class(TInterfacedObject, IXMLAttributes)
+  TXAttributes = class(TInterfacedObject, IXavierAttributes)
   private
     FNode: IDOMNode;
   public
     constructor Create(Node: IDOMNode);
-    class function New(Node: IDOMNode): IXMLAttributes;
-    function Item(Idx: Integer): IXMLAttribute; overload;
-    function Item(const Name: XMLString): IXMLAttribute; overload;
+    class function New(Node: IDOMNode): IXavierAttributes;
+    function Item(Idx: Integer): IXavierAttribute; overload;
+    function Item(const Name: XavierString): IXavierAttribute; overload;
     function Count: Integer;
   end;
 
-  TCNode = class(TInterfacedObject, IXMLNode)
+  TXNode = class(TInterfacedObject, IXavierNode)
   private
     FNode: IDOMNode;
   public
     constructor Create(Node: IDOMNode);
-    class function New(Node: IDOMNode): IXMLNode;
-    function Name: XMLString;
-    function Value: XMLString; overload;
-    function Value(const V: XMLString): IXMLNode; overload;
-    function Attrs: IXMLAttributes;
-    function Add(const Name: XMLString): IXMLNode;
-    function Childs: IXMLNodes;
-    function Parent: IXMLNode;
+    class function New(Node: IDOMNode): IXavierNode;
+    function Name: XavierString;
+    function Value: XavierString; overload;
+    function Value(const V: XavierString): IXavierNode; overload;
+    function Attrs: IXavierAttributes;
+    function Add(const Name: XavierString): IXavierNode;
+    function Childs: IXavierNodes;
+    function Parent: IXavierNode;
   end;
 
-  TCNodes = class(TInterfacedObject, IXMLNodes)
+  TXNodes = class(TInterfacedObject, IXavierNodes)
   private
     FList: IInterfaceList;
   public
     constructor Create(List: IInterfaceList);
-    class function New(List: IInterfaceList): IXMLNodes;
-    function Item(Idx: Integer): IXMLNode; overload;
-    function Item(const Name: XMLString): IXMLNode; overload;
+    class function New(List: IInterfaceList): IXavierNodes;
+    function Item(Idx: Integer): IXavierNode; overload;
+    function Item(const Name: XavierString): IXavierNode; overload;
     function Count: Integer;
   end;
 
-  TCChilds = class(TInterfacedObject, IXMLNodes)
+  TXChilds = class(TInterfacedObject, IXavierNodes)
   private
     FNode: IDOMNode;
   public
     constructor Create(Node: IDOMNode);
-    class function New(Node: IDOMNode): IXMLNodes;
-    function Item(Idx: Integer): IXMLNode; overload;
-    function Item(const Name: XMLString): IXMLNode; overload;
+    class function New(Node: IDOMNode): IXavierNodes;
+    function Item(Idx: Integer): IXavierNode; overload;
+    function Item(const Name: XavierString): IXavierNode; overload;
     function Count: Integer;
   end;
 
-  TCPack = class(TInterfacedObject, IXMLPack)
+  TXPack = class(TInterfacedObject, IXavierPack)
   private
     FDocument: IXMLDocument;
   public
     constructor Create(Stream: TStream); reintroduce;
-    function Nodes(const XPath: XMLString): IXMLNodes;
-    function Node(const XPath: XMLString): IXMLNode;
+    function Nodes(const XPath: XavierString): IXavierNodes;
+    function Node(const XPath: XavierString): IXavierNode;
     function Stream: IDataStream;
   end;
 
 implementation
 
-{ TCAttribute }
+{ TXAttribute }
 
-constructor TCAttribute.Create(Node: IDOMNode);
+constructor TXAttribute.Create(Node: IDOMNode);
 begin
   inherited Create;
   FNode := Node;
 end;
 
-class function TCAttribute.New(Node: IDOMNode): IXMLAttribute;
+class function TXAttribute.New(Node: IDOMNode): IXavierAttribute;
 begin
   Result := Create(Node);
 end;
 
-function TCAttribute.Name: XMLString;
+function TXAttribute.Name: XavierString;
 begin
   Result := FNode.NodeName;
 end;
 
-function TCAttribute.Value: XMLString;
+function TXAttribute.Value: XavierString;
 begin
   Result := FNode.NodeValue;
 end;
 
-function TCAttribute.Value(const V: XMLString): IXMLAttribute;
+function TXAttribute.Value(const V: XavierString): IXavierAttribute;
 begin
   Result := Self;
   FNode.NodeValue := V;
 end;
 
-{ TCAttributes }
+{ TXAttributes }
 
-constructor TCAttributes.Create(Node: IDOMNode);
+constructor TXAttributes.Create(Node: IDOMNode);
 begin
   inherited Create;
   FNode := Node;
 end;
 
-class function TCAttributes.New(Node: IDOMNode): IXMLAttributes;
+class function TXAttributes.New(Node: IDOMNode): IXavierAttributes;
 begin
   Result := Create(Node);
 end;
 
-function TCAttributes.Item(Idx: Integer): IXMLAttribute;
+function TXAttributes.Item(Idx: Integer): IXavierAttribute;
 begin
-  Result := TCAttribute.New(FNode.Attributes.Item[Idx]);
+  Result := TXAttribute.New(FNode.Attributes.Item[Idx]);
   if not Assigned(Result) then
-    raise EXMLError.CreateFmt('Node not found on index %d.', [Idx]);
+    raise EXavierError.CreateFmt('Node not found on index %d.', [Idx]);
 end;
 
-function TCAttributes.Item(const Name: XMLString): IXMLAttribute;
+function TXAttributes.Item(const Name: XavierString): IXavierAttribute;
 begin
-  Result := TCAttribute.New(FNode.GetNamedItem(Name));
+  Result := TXAttribute.New(FNode.GetNamedItem(Name));
   if not Assigned(Result) then
-    raise EXMLError.CreateFmt('Node "%s" not found.', [Name]);
+    raise EXavierError.CreateFmt('Node "%s" not found.', [Name]);
 end;
 
-function TCAttributes.Count: Integer;
+function TXAttributes.Count: Integer;
 begin
   Result := FNode.Attributes.Length;
 end;
 
-{ TCNode }
+{ TXNode }
 
-constructor TCNode.Create(Node: IDOMNode);
+constructor TXNode.Create(Node: IDOMNode);
 begin
   inherited Create;
   FNode := Node;
 end;
 
-class function TCNode.New(Node: IDOMNode): IXMLNode;
+class function TXNode.New(Node: IDOMNode): IXavierNode;
 begin
   Result := Create(Node);
 end;
 
-function TCNode.Name: XMLString;
+function TXNode.Name: XavierString;
 begin
   Result := FNode.NodeName;
 end;
 
-function TCNode.Value: XMLString;
+function TXNode.Value: XavierString;
 begin
   Result := FNode.nodeValue;
 end;
 
-function TCNode.Value(const V: XMLString): IXMLNode;
+function TXNode.Value(const V: XavierString): IXavierNode;
 begin
   Result := Self;
   FNode.NodeValue := V;
 end;
 
-function TCNode.Attrs: IXMLAttributes;
+function TXNode.Attrs: IXavierAttributes;
 begin
-  Result := TCAttributes.New(FNode);
+  Result := TXAttributes.New(FNode);
 end;
 
-function TCNode.Add(const Name: XMLString): IXMLNode;
+function TXNode.Add(const Name: XavierString): IXavierNode;
 begin
-  Result := TCNode.New(
+  Result := TXNode.New(
     FNode.AppendChild(
-      FNode.OwnerDocument.CreateElement(XMLString(Name))
+      FNode.OwnerDocument.CreateElement(XavierString(Name))
     )
   );
 end;
 
-function TCNode.Childs: IXMLNodes;
+function TXNode.Childs: IXavierNodes;
 begin
-  Result := TCNodes.New(FNode);
+  Result := TXNodes.New(FNode);
 end;
 
-function TCNode.Parent: IXMLNode;
+function TXNode.Parent: IXavierNode;
 begin
-  Result := TCNode.New(FNode.ParentNode);
+  Result := TXNode.New(FNode.ParentNode);
 end;
 
-{ TCNodes }
+{ TXNodes }
 
-constructor TCNodes.Create(List: IInterfaceList);
+constructor TXNodes.Create(List: IInterfaceList);
 begin
   inherited Create;
   FList := List;
 end;
 
-class function TCNodes.New(List: IInterfaceList): IXMLNodes;
+class function TXNodes.New(List: IInterfaceList): IXavierNodes;
 begin
   Result := Create(List);
 end;
 
-function TCNodes.Item(Idx: Integer): IXMLNode;
+function TXNodes.Item(Idx: Integer): IXavierNode;
 begin
-  Result := FList.Items[Idx] as IXMLNode;
+  Result := FList.Items[Idx] as IXavierNode;
 end;
 
-function TCNodes.Item(const Name: XMLString): IXMLNode;
+function TXNodes.Item(const Name: XavierString): IXavierNode;
 var
   I: Integer;
-  N: IXMLNode;
+  N: IXavierNode;
 begin
   for I := 0 to FList.Count -1 do
   begin
@@ -252,73 +252,73 @@ begin
       Exit;
     end;
   end;
-  raise EXMLError.CreateFmt('Node "%s" not found.', [Name]);
+  raise EXavierError.CreateFmt('Node "%s" not found.', [Name]);
 end;
 
-function TCNodes.Count: Integer;
+function TXNodes.Count: Integer;
 begin
   Result := FList.Count;
 end;
 
-{ TCChilds }
+{ TXChilds }
 
-constructor TCChilds.Create(Node: IDOMNode);
+constructor TXChilds.Create(Node: IDOMNode);
 begin
   inherited Create;
   FNode := Node;
 end;
 
-class function TCChilds.New(Node: IDOMNode): IXMLNodes;
+class function TXChilds.New(Node: IDOMNode): IXavierNodes;
 begin
   Result := Create(Node);
 end;
 
-function TCChilds.Item(Idx: Integer): IXMLNode;
+function TXChilds.Item(Idx: Integer): IXavierNode;
 begin
-  Result := TCNode.New(FNode.ChildNodes.Item[Idx]);
+  Result := TXNode.New(FNode.ChildNodes.Item[Idx]);
 end;
 
-function TCChilds.Item(const Name: XMLString): IXMLNode;
+function TXChilds.Item(const Name: XavierString): IXavierNode;
 var
-  N: TDOMNode;
+  N: IDOMNode;
 begin
   N := FNode.FindNode(Name);
   if not Assigned(N) then
-    raise EXMLError.CreateFmt('Node "%s" not found.', [Name]);
-  Result := TCNode.New(N);
+    raise EXavierError.CreateFmt('Node "%s" not found.', [Name]);
+  Result := TXNode.New(N);
 end;
 
-function TCChilds.Count: Integer;
+function TXChilds.Count: Integer;
 begin
   Result := FNode.ChildNodes.Length;
 end;
 
-{ TCPack }
+{ TXPack }
 
-constructor TCPack.Create(Stream: TStream);
+constructor TXPack.Create(Stream: TStream);
 begin
   inherited Create;
-  FDocument := TCDocument.Create(nil);
+  FDocument := TXMLDocument.Create(nil);
   Stream.Position := 0;
   FDocument.LoadFromStream(Stream);
 end;
 
-function TCPack.Nodes(const XPath: XMLString): IXMLNodes;
+function TXPack.Nodes(const XPath: XavierString): IXavierNodes;
 begin
   raise Exception.Create('Not implemented yet');
 end;
 
-function TCPack.Node(const XPath: XMLString): IXMLNode;
+function TXPack.Node(const XPath: XavierString): IXavierNode;
 var
-  L: IXMLNodes;
+  L: IXavierNodes;
 begin
   L := Nodes(XPath);
   if L.Count = 0 then
-    raise EXMLError.Create('Node not found.');
+    raise EXavierError.Create('Node not found.');
   Result := L.Item(0);
 end;
 
-function TCPack.Stream: IDataStream;
+function TXPack.Stream: IDataStream;
 var
   Stream: TStream;
 begin

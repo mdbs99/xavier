@@ -40,23 +40,23 @@ uses
   ;
 
 type
-  TXMLAttribute = TCAttribute;
-  TXMLAttributes = TCAttributes;
-  TXMLNode = TCNode;
-  TXMLNodes = TCNodes;
-  TXMLChilds = TCChilds;
+  TXavierAttribute = TXAttribute;
+  TXavierAttributes = TXAttributes;
+  TXavierNode = TXNode;
+  TXavierNodes = TXNodes;
+  TXavierChilds = TXChilds;
 
-  TXMLPack = class(TCPack)
+  TXavierPack = class(TXPack)
   public
-    class function New(Stream: IDataStream): IXMLPack; overload;
-    class function New(const RootName: XMLString): IXMLPack; overload;
+    class function New(Stream: IDataStream): IXavierPack; overload;
+    class function New(const RootName: XavierString): IXavierPack; overload;
   end;
 
 implementation
 
-{ TXMLPack }
+{ TXavierPack }
 
-class function TXMLPack.New(Stream: IDataStream): IXMLPack;
+class function TXavierPack.New(Stream: IDataStream): IXavierPack;
 var
   Buf: TMemoryStream;
 begin
@@ -69,7 +69,7 @@ begin
   end;
 end;
 
-class function TXMLPack.New(const RootName: XMLString): IXMLPack;
+class function TXavierPack.New(const RootName: XavierString): IXavierPack;
 begin
   Result := New(
     TDataStream.New(
