@@ -50,6 +50,7 @@ type
 
   IXavierAttributes = interface
   ['{6D64F5F4-BF46-4A45-8014-A72DFA8E8F29}']
+    function Add(const Name, Value: XavierString): IXavierAttribute;
     function Item(Idx: Integer): IXavierAttribute; overload;
     function Item(const Name: XavierString): IXavierAttribute; overload;
     function Count: Integer;

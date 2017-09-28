@@ -52,6 +52,7 @@ type
   public
     constructor Create(Node: TDOMNode);
     class function New(Node: TDOMNode): IXavierAttributes;
+    function Add(const Name, Value: XavierString): IXavierAttribute;
     function Item(Idx: Integer): IXavierAttribute; overload;
     function Item(const Name: XavierString): IXavierAttribute; overload;
     function Count: Integer;
@@ -147,6 +148,12 @@ end;
 class function TXAttributes.New(Node: TDOMNode): IXavierAttributes;
 begin
   Result := Create(Node);
+end;
+
+function TXAttributes.Add(const Name, Value: XavierString): IXavierAttribute;
+begin
+  TDOMElement(FNode).SetAttribute(Name, Value);
+  Result := TXAttribute.New(FNode.Attributes.GetNamedItem(Name));
 end;
 
 function TXAttributes.Item(Idx: Integer): IXavierAttribute;

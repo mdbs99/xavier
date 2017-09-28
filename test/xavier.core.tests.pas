@@ -92,6 +92,7 @@ type
 
   TXavierAttributesTest = class(TTestCase)
   published
+    procedure Add;
     procedure ItemByIndex;
     procedure ItemByName;
     procedure Count;
@@ -404,6 +405,19 @@ begin
 end;
 
 { TXavierAttributesTest }
+
+procedure TXavierAttributesTest.Add;
+begin
+  CheckEquals(
+    XavierString('1'),
+    TXavierPack.New(TXMLStreamForTest.New).Node(
+      '/root/group/item'
+    )
+    .Attrs
+    .Add('foo', '1')
+    .Value
+  );
+end;
 
 procedure TXavierAttributesTest.ItemByIndex;
 begin
