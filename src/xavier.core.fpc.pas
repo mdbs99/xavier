@@ -67,6 +67,7 @@ type
     function Value: XMLString; overload;
     function Value(const V: XMLString): IXMLNode; overload;
     function Attrs: IXMLAttributes;
+    function Add(const Name: XMLString): IXMLNode;
     function Childs: IXMLNodes;
     function Parent: IXMLNode;
   end;
@@ -199,6 +200,15 @@ end;
 function TCNode.Attrs: IXMLAttributes;
 begin
   Result := TCAttributes.New(FNode);
+end;
+
+function TCNode.Add(const Name: XMLString): IXMLNode;
+begin
+  Result := TCNode.New(
+    FNode.AppendChild(
+      FNode.OwnerDocument.CreateElement(XMLString(Name))
+    )
+  );
 end;
 
 function TCNode.Childs: IXMLNodes;
