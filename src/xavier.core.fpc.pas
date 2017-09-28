@@ -153,7 +153,7 @@ end;
 function TXAttributes.Add(const Name, Value: XavierString): IXavierAttribute;
 begin
   TDOMElement(FNode).SetAttribute(Name, Value);
-  Result := TXAttribute.New(FNode.Attributes.GetNamedItem(Name));
+  Result := Item(Name);
 end;
 
 function TXAttributes.Item(Idx: Integer): IXavierAttribute;
