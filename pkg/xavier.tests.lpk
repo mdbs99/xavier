@@ -14,6 +14,11 @@
         <OtherUnitFiles Value="..\test"/>
         <UnitOutputDirectory Value="..\lib\tests\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
+      <Linking>
+        <Debugging>
+          <DebugInfoType Value="dsDwarf2"/>
+        </Debugging>
+      </Linking>
     </CompilerOptions>
     <Description Value="Xavier is an object-oriented package to work with XML."/>
     <License Value="Xavier, Tests Package
