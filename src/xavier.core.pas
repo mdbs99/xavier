@@ -41,11 +41,15 @@ type
   EXavierError = class(Exception);
 
 type
+  IXavierNode = interface;
+  IXavierNodes = interface;
+
   IXavierAttribute = interface
   ['{5CEC1117-80DA-4FBC-8D55-AFED800B05ED}']
     function Name: XavierString;
     function Value: XavierString; overload;
     function Value(const V: XavierString): IXavierAttribute; overload;
+    function Node: IXavierNode;
   end;
 
   IXavierAttributes = interface
@@ -55,8 +59,6 @@ type
     function Item(const Name: XavierString): IXavierAttribute; overload;
     function Count: Integer;
   end;
-
-  IXavierNodes = interface;
 
   IXavierNode = interface
   ['{78CF296B-3F7E-4324-A8E2-28CA7D2A6DF5}']
