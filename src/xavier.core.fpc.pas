@@ -167,17 +167,23 @@ begin
 end;
 
 function TXAttributes.Item(Idx: Integer): IXavierAttribute;
+var
+  A: TDOMNode;
 begin
-  Result := TXAttribute.New(FNode.Attributes.Item[Idx]);
-  if not Assigned(Result) then
+  A := FNode.Attributes.Item[Idx];
+  if not Assigned(A) then
     raise EXavierError.CreateFmt('Node not found on index %d.', [Idx]);
+  Result := TXAttribute.New(FNode, A);
 end;
 
 function TXAttributes.Item(const Name: XavierString): IXavierAttribute;
+var
+  A: TDOMNode;
 begin
-  Result := TXAttribute.New(FNode.Attributes.GetNamedItem(Name));
-  if not Assigned(Result) then
+  A := FNode.Attributes.GetNamedItem(Name);
+  if not Assigned(A) then
     raise EXavierError.CreateFmt('Node "%s" not found.', [Name]);
+  Result := TXAttribute.New(FNode, A);
 end;
 
 function TXAttributes.Count: Integer;
