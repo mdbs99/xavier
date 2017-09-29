@@ -44,6 +44,7 @@ type
     function Name: XavierString;
     function Value: XavierString; overload;
     function Value(const V: XavierString): IXavierAttribute; overload;
+    function Node: IXavierNode;
   end;
 
   TXAttributes = class(TInterfacedObject, IXavierAttributes)
@@ -134,6 +135,11 @@ function TXAttribute.Value(const V: XavierString): IXavierAttribute;
 begin
   Result := Self;
   FNode.NodeValue := V;
+end;
+
+function TXAttribute.Node: IXavierNode;
+begin
+  Result := TXNode.New(FNode.ParentNode);
 end;
 
 { TXAttributes }

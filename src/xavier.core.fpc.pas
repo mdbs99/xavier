@@ -37,13 +37,15 @@ uses
 type
   TXAttribute = class(TInterfacedObject, IXavierAttribute)
   private
-    FNode: TDOMNode;
+    FParent: TDOMNode;
+    FAttr: TDOMNode;
   public
-    constructor Create(Node: TDOMNode);
-    class function New(Node: TDOMNode): IXavierAttribute;
+    constructor Create(Parent, Attr: TDOMNode);
+    class function New(Parent, Attr: TDOMNode): IXavierAttribute;
     function Name: XavierString;
     function Value: XavierString; overload;
     function Value(const V: XavierString): IXavierAttribute; overload;
+    function Node: IXavierNode;
   end;
 
   TXAttributes = class(TInterfacedObject, IXavierAttributes)
@@ -110,31 +112,39 @@ implementation
 
 { TXAttribute }
 
-constructor TXAttribute.Create(Node: TDOMNode);
+constructor TXAttribute.Create(Parent, Attr: TDOMNode);
 begin
   inherited Create;
-  FNode := Node;
+  { I need to keep the ParentNode and the Attribute itself.
+    I do not know why, but using Attr.ParentNode does not work. }
+  FParent := Parent;
+  FAttr := Attr;
 end;
 
-class function TXAttribute.New(Node: TDOMNode): IXavierAttribute;
+class function TXAttribute.New(Parent, Attr: TDOMNode): IXavierAttribute;
 begin
-  Result := Create(Node);
+  Result := Create(Parent, Attr);
 end;
 
 function TXAttribute.Name: XavierString;
 begin
-  Result := FNode.NodeName;
+  Result := FAttr.NodeName;
 end;
 
 function TXAttribute.Value: XavierString;
 begin
-  Result := FNode.NodeValue;
+  Result := FAttr.NodeValue;
 end;
 
 function TXAttribute.Value(const V: XavierString): IXavierAttribute;
 begin
   Result := Self;
-  FNode.NodeValue := V;
+  FAttr.NodeValue := V;
+end;
+
+function TXAttribute.Node: IXavierNode;
+begin
+  Result := TXNode.New(FParent);
 end;
 
 { TXAttributes }
