@@ -88,6 +88,7 @@ type
     procedure Name;
     procedure GetValue;
     procedure SetValue;
+    procedure Node;
   end;
 
   TXavierAttributesTest = class(TTestCase)
@@ -401,6 +402,20 @@ begin
     .Item(0)
     .Value(S)
     .Value
+  );
+end;
+
+procedure TXavierAttributeTest.Node;
+begin
+  CheckEquals(
+    XavierString('Name'),
+    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
+      '/CONFIG/Package/Name'
+    )
+    .Attrs
+    .Item(0) // goto item
+    .Node    // and return to owner node
+    .Name
   );
 end;
 
