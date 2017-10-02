@@ -61,10 +61,10 @@ type
     procedure Name;
     procedure GetValue;
     procedure SetValue;
-    procedure Attrs;
+    procedure AttrsNotNull;
     procedure Add;
     procedure AddTwoLevels;
-    procedure Childs;
+    procedure ChildsNotNull;
     procedure Parent;
   end;
 
@@ -125,6 +125,9 @@ begin
       + '      <value>bar2</value>'
       + '    </item>'
       + '  </group>'
+      + '  <footer>'
+      + '    <name>foo</name>'
+      + '  </footer>'
       + '</root>'
   );
 end;
@@ -208,12 +211,12 @@ begin
   );
 end;
 
-procedure TXavierNodeTest.Attrs;
+procedure TXavierNodeTest.AttrsNotNull;
 begin
   CheckEquals(
-    1,
-    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
-      '/CONFIG/Package/CompilerOptions/Version'
+    0,
+    TXavierPack.New(TXMLStreamForTest.New).Node(
+      '/root/footer'
     )
     .Attrs
     .Count
@@ -247,7 +250,7 @@ begin
   CheckNotNull(P.Node('/root/level-1/level-2'));
 end;
 
-procedure TXavierNodeTest.Childs;
+procedure TXavierNodeTest.ChildsNotNull;
 begin
   CheckNotNull(
     TXavierPack.New(TXMLStreamForTest.New).Node(
