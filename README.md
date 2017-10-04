@@ -22,6 +22,64 @@ We want to write elegant, clean, and maintainable code using OOP.
 * No type casting or reflection
 * No procedures or functions, only Interfaces and Objects
 
+## Quick Start
+
+- [Load Stream](#load-stream)
+- [Load File](#load-file)
+- [Add Node](#add-node)
+- [Childs Count](#childs-count)
+- [Find Attribute](#find-attribute)
+
+### Load Stream
+
+```pascal
+TXavierPack.New(
+  TDataStream.New(TheStream)
+);
+```
+### Load File
+
+```pascal
+TXavierPack.New(TFile.New('file.xml').Stream);
+```
+
+### Add Node
+
+```pascal
+// add a new node: name="item" value="a"
+TXavierPack.New(TFile.New('file.xml').Stream)
+  .Node('/root')
+  .Add('item')
+  .Value('a')
+```
+### Childs Count
+
+```pascal
+// How many childs
+TXavierPack.New(TFile.New('file.xml').Stream)
+  .Node('/root')
+  .Childs
+  .Count
+```
+### Find Attribute
+
+```pascal
+// Find by name
+TXavierPack.New(TFile.New('file.xml').Stream)
+  .Node('/root')
+  .Attrs
+  .Item('id')
+```
+### Add Attribute
+
+```pascal
+// Add an attribute: name="foo" value="bar"
+TXavierPack.New(TFile.New('file.xml').Stream)
+  .Node('/root')
+  .Attrs
+  .Add('foo', 'bar')
+```
+
 ## Dependencies
 
 Internally, this project uses other built-in XML library for each compiler.
