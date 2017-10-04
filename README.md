@@ -29,6 +29,7 @@ We want to write elegant, clean, and maintainable code using OOP.
 - [Add Node](#add-node)
 - [Childs Count](#childs-count)
 - [Find Attribute](#find-attribute)
+- [Add Attribute](#add-attribute)
 
 ### Load Stream
 
