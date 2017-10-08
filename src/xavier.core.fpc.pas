@@ -43,8 +43,8 @@ type
     constructor Create(Parent, Attr: TDOMNode);
     class function New(Parent, Attr: TDOMNode): IXavierAttribute;
     function Name: XavierString;
-    function Value: XavierString; overload;
-    function Value(const V: XavierString): IXavierAttribute; overload;
+    function Text: XavierString; overload;
+    function Text(const Value: XavierString): IXavierAttribute; overload;
     function Node: IXavierNode;
   end;
 
@@ -131,15 +131,15 @@ begin
   Result := FAttr.NodeName;
 end;
 
-function TXAttribute.Value: XavierString;
+function TXAttribute.Text: XavierString;
 begin
   Result := FAttr.NodeValue;
 end;
 
-function TXAttribute.Value(const V: XavierString): IXavierAttribute;
+function TXAttribute.Text(const Value: XavierString): IXavierAttribute;
 begin
   Result := Self;
-  FAttr.NodeValue := V;
+  FAttr.NodeValue := Value;
 end;
 
 function TXAttribute.Node: IXavierNode;

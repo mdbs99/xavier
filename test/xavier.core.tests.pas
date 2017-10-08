@@ -387,7 +387,7 @@ begin
     )
     .Attrs
     .Item(0)
-    .Value
+    .Text
   );
 end;
 
@@ -403,8 +403,8 @@ begin
     )
     .Attrs
     .Item(0)
-    .Value(S)
-    .Value
+    .Text(S)
+    .Text
   );
 end;
 
@@ -433,7 +433,7 @@ begin
     )
     .Attrs
     .Add('foo', '1')
-    .Value
+    .Text
   );
 end;
 
@@ -446,7 +446,7 @@ begin
     )
     .Attrs
     .Item(0)
-    .Value
+    .Text
   );
 end;
 
@@ -459,7 +459,7 @@ begin
     )
     .Attrs
     .Item('id')
-    .Value
+    .Text
   );
 end;
 
