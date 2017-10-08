@@ -67,8 +67,8 @@ type
     constructor Create(Node: TDOMNode);
     class function New(Node: TDOMNode): IXavierNode;
     function Name: XavierString;
-    function Value: XavierString; overload;
-    function Value(const V: XavierString): IXavierNode; overload;
+    function Text: XavierString; overload;
+    function Text(const Value: XavierString): IXavierNode; overload;
     function Attrs: IXavierAttributes;
     function Add(const Name: XavierString): IXavierNode;
     function Childs: IXavierNodes;
@@ -209,15 +209,15 @@ begin
   Result := FNode.NodeName;
 end;
 
-function TXNode.Value: XavierString;
+function TXNode.Text: XavierString;
 begin
   Result := FNode.TextContent;
 end;
 
-function TXNode.Value(const V: XavierString): IXavierNode;
+function TXNode.Text(const Value: XavierString): IXavierNode;
 begin
   Result := Self;
-  FNode.TextContent := V;
+  FNode.TextContent := Value;
 end;
 
 function TXNode.Attrs: IXavierAttributes;

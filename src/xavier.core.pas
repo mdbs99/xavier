@@ -63,8 +63,8 @@ type
   IXavierNode = interface
   ['{78CF296B-3F7E-4324-A8E2-28CA7D2A6DF5}']
     function Name: XavierString;
-    function Value: XavierString; overload;
-    function Value(const V: XavierString): IXavierNode; overload;
+    function Text: XavierString; overload;
+    function Text(const Value: XavierString): IXavierNode; overload;
     function Attrs: IXavierAttributes;
     function Add(const Name: XavierString): IXavierNode;
     function Childs: IXavierNodes;

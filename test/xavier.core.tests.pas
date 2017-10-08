@@ -192,7 +192,7 @@ begin
     TXavierPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item/name'
     )
-    .Value
+    .Text
   );
 end;
 
@@ -206,8 +206,8 @@ begin
     TXavierPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item/name'
     )
-    .Value(S)
-    .Value
+    .Text(S)
+    .Text
   );
 end;
 
@@ -334,7 +334,7 @@ begin
       .Item(1)
       .Childs
         .Item(0)
-        .Value
+        .Text
   );
 end;
 
