@@ -28,7 +28,6 @@ unit Xavier.Core.Tests;
 interface
 
 uses
-  Classes, SysUtils,
   James.Data,
   James.Data.Clss,
   James.IO,
