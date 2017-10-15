@@ -33,9 +33,10 @@ uses
   Xavier.XML.Clss;
 
 type
-
-{ XML Module }
-
+{
+  XML Module
+  It provides the basics XML Objects.
+}
   // Types
   TXMLString = TXString;
 
