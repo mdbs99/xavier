@@ -37,9 +37,9 @@ uses
   James.Data;
 
 type
-  EXError = class(Exception);
-
   TXString = DOMString;
+
+  EXError = class(Exception);
 
   IXNode = interface;
   IXNodes = interface;
