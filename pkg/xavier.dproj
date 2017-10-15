@@ -151,10 +151,10 @@
         <DCCReference Include="xmlrtl.dcp"/>
         <DCCReference Include="dbrtl.dcp"/>
         <DCCReference Include="james.dcp"/>
-        <DCCReference Include="..\src\xavier.core.pas"/>
-        <DCCReference Include="..\src\xavier.core.clss.pas"/>
-        <DCCReference Include="..\src\xavier.core.delphi.pas"/>
-        <DCCReference Include="..\src\xavier.core.cross.pas"/>
+        <DCCReference Include="..\src\xavier.xml.pas"/>
+        <DCCReference Include="..\src\xavier.xml.clss.pas"/>
+        <DCCReference Include="..\src\xavier.xml.delphi.pas"/>
+        <DCCReference Include="..\src\xavier.api.pas"/>
         <None Include="..\inc\xavier.inc"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
