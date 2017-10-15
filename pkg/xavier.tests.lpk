@@ -30,11 +30,10 @@ for details about the copyright.
 This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."/>
-    <Version Minor="2"/>
     <Files Count="1">
       <Item1>
-        <Filename Value="..\test\xavier.core.tests.pas"/>
-        <UnitName Value="Xavier.Core.Tests"/>
+        <Filename Value="..\test\xavier.xml.tests.pas"/>
+        <UnitName Value="xavier.xml.tests"/>
       </Item1>
     </Files>
     <RequiredPkgs Count="3">

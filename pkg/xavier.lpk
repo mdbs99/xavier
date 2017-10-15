@@ -24,20 +24,24 @@ for details about the copyright.
 This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."/>
-    <Version Minor="3"/>
-    <Files Count="3">
+    <Version Minor="4"/>
+    <Files Count="4">
       <Item1>
-        <Filename Value="..\src\xavier.core.clss.pas"/>
-        <UnitName Value="Xavier.Core.Clss"/>
+        <Filename Value="..\src\xavier.xml.clss.pas"/>
+        <UnitName Value="Xavier.XML.Clss"/>
       </Item1>
       <Item2>
-        <Filename Value="..\src\xavier.core.pas"/>
-        <UnitName Value="Xavier.Core"/>
+        <Filename Value="..\src\xavier.xml.pas"/>
+        <UnitName Value="Xavier.XML"/>
       </Item2>
       <Item3>
-        <Filename Value="..\src\xavier.core.fpc.pas"/>
-        <UnitName Value="Xavier.Core.FPC"/>
+        <Filename Value="..\src\xavier.xml.fpc.pas"/>
+        <UnitName Value="Xavier.XML.FPC"/>
       </Item3>
+      <Item4>
+        <Filename Value="..\src\xavier.api.pas"/>
+        <UnitName Value="Xavier.API"/>
+      </Item4>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

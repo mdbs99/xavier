@@ -21,7 +21,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 }
-unit Xavier.Core.Tests;
+unit Xavier.XML.Tests;
 
 {$include xavier.inc}
 
@@ -33,8 +33,7 @@ uses
   James.IO,
   James.IO.Clss,
   James.Testing.Clss,
-  Xavier.Core,
-  Xavier.Core.Clss;
+  Xavier.API;
 
 type
   TXMLFileForTest = class(TFile)
@@ -47,7 +46,7 @@ type
     class function New: IDataStream; reintroduce;
   end;
 
-  TXavierPackTest = class(TTestCase)
+  TXMLPackTest = class(TTestCase)
   published
     procedure New;
     procedure Load;
@@ -55,7 +54,7 @@ type
     procedure Nodes;
   end;
 
-  TXavierNodeTest = class(TTestCase)
+  TXMLNodeTest = class(TTestCase)
   published
     procedure Name;
     procedure GetValue;
@@ -67,7 +66,7 @@ type
     procedure Parent;
   end;
 
-  TXavierNodesTest = class(TTestCase)
+  TXMLNodesTest = class(TTestCase)
   published
     procedure ItemByIndex;
     procedure ItemByName;
@@ -75,14 +74,14 @@ type
     procedure Empty;
   end;
 
-  TXavierChildsTest = class(TTestCase)
+  TXMLChildsTest = class(TTestCase)
   published
     procedure ItemByIndex;
     procedure ItemByName;
     procedure Count;
   end;
 
-  TXavierAttributeTest = class(TTestCase)
+  TXMLAttributeTest = class(TTestCase)
   published
     procedure Name;
     procedure GetValue;
@@ -90,7 +89,7 @@ type
     procedure Node;
   end;
 
-  TXavierAttributesTest = class(TTestCase)
+  TXMLAttributesTest = class(TTestCase)
   published
     procedure Add;
     procedure ItemByIndex;
@@ -131,78 +130,78 @@ begin
   );
 end;
 
-{ TXavierPackTest }
+{ TXMLPackTest }
 
-procedure TXavierPackTest.New;
+procedure TXMLPackTest.New;
 var
-  N: XavierString;
+  N: TXMLString;
 begin
   N := 'root';
   CheckEquals(
     N,
-    TXavierPack.New(N).Node('/' + N).Name
+    TXMLPack.New(N).Node('/' + N).Name
   );
 end;
 
-procedure TXavierPackTest.Load;
+procedure TXMLPackTest.Load;
 begin
   CheckNotNull(
-    TXavierPack.New(TXMLFileForTest.New.Stream).Stream
+    TXMLPack.New(TXMLFileForTest.New.Stream).Stream
   );
 end;
 
-procedure TXavierPackTest.Node;
+procedure TXMLPackTest.Node;
 begin
   CheckNotNull(
-    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
   );
 end;
 
-procedure TXavierPackTest.Nodes;
+procedure TXMLPackTest.Nodes;
 begin
   CheckEquals(
     3,
-    TXavierPack.New(TXMLFileForTest.New.Stream).Nodes(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Nodes(
       '/CONFIG/Package/CompilerOptions/*'
     )
     .Count
   );
 end;
 
-{ TXavierNodeTest }
+{ TXMLNodeTest }
 
-procedure TXavierNodeTest.Name;
+procedure TXMLNodeTest.Name;
 begin
   CheckEquals(
-    XavierString('CompilerOptions'),
-    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
+    TXMLString('CompilerOptions'),
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
     .Name
   );
 end;
 
-procedure TXavierNodeTest.GetValue;
+procedure TXMLNodeTest.GetValue;
 begin
   CheckEquals(
-    XavierString('foo'),
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLString('foo'),
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item/name'
     )
     .Text
   );
 end;
 
-procedure TXavierNodeTest.SetValue;
+procedure TXMLNodeTest.SetValue;
 var
-  S: XavierString;
+  S: TXMLString;
 begin
   S := 'xavier';
   CheckEquals(
     S,
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item/name'
     )
     .Text(S)
@@ -210,11 +209,11 @@ begin
   );
 end;
 
-procedure TXavierNodeTest.AttrsNotNull;
+procedure TXMLNodeTest.AttrsNotNull;
 begin
   CheckEquals(
     0,
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/footer'
     )
     .Attrs
@@ -222,12 +221,12 @@ begin
   );
 end;
 
-procedure TXavierNodeTest.Add;
+procedure TXMLNodeTest.Add;
 var
-  N: IXavierNode;
+  N: IXMLNode;
   C: Integer;
 begin
-  N := TXavierPack.New(TXMLStreamForTest.New).Node('/root/group/item');
+  N := TXMLPack.New(TXMLStreamForTest.New).Node('/root/group/item');
   C := N.Childs.Count;
   CheckEquals(
     C + 2,
@@ -238,32 +237,32 @@ begin
   );
 end;
 
-procedure TXavierNodeTest.AddTwoLevels;
+procedure TXMLNodeTest.AddTwoLevels;
 var
-  P: IXavierPack;
+  P: IXMLPack;
 begin
-  P := TXavierPack.New('root');
+  P := TXMLPack.New('root');
   P.Node('/root')
     .Add('level-1')
     .Add('level-2');
   CheckNotNull(P.Node('/root/level-1/level-2'));
 end;
 
-procedure TXavierNodeTest.ChildsNotNull;
+procedure TXMLNodeTest.ChildsNotNull;
 begin
   CheckNotNull(
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
     )
     .Childs
   );
 end;
 
-procedure TXavierNodeTest.Parent;
+procedure TXMLNodeTest.Parent;
 begin
   CheckEquals(
-    XavierString('Package'),
-    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
+    TXMLString('Package'),
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/CompilerOptions'
     )
     .Parent
@@ -271,13 +270,13 @@ begin
   );
 end;
 
-{ TXavierNodesTest }
+{ TXMLNodesTest }
 
-procedure TXavierNodesTest.ItemByIndex;
+procedure TXMLNodesTest.ItemByIndex;
 begin
   CheckEquals(
     3,
-    TXavierPack.New(TXMLStreamForTest.New).Nodes(
+    TXMLPack.New(TXMLStreamForTest.New).Nodes(
       '/root/group/item[@id=''1'']'
     )
     .Item(0)
@@ -286,11 +285,11 @@ begin
   );
 end;
 
-procedure TXavierNodesTest.ItemByName;
+procedure TXMLNodesTest.ItemByName;
 begin
   CheckEquals(
-    XavierString('item'),
-    TXavierPack.New(TXMLStreamForTest.New).Nodes(
+    TXMLString('item'),
+    TXMLPack.New(TXMLStreamForTest.New).Nodes(
       '/root/group/item[@id=''1'']'
     )
     .Item('item')
@@ -298,35 +297,35 @@ begin
   );
 end;
 
-procedure TXavierNodesTest.Count;
+procedure TXMLNodesTest.Count;
 begin
   CheckEquals(
     2,
-    TXavierPack.New(TXMLStreamForTest.New).Nodes(
+    TXMLPack.New(TXMLStreamForTest.New).Nodes(
       '/root/group/item[@a=''1'']'
     )
     .Count
   );
 end;
 
-procedure TXavierNodesTest.Empty;
+procedure TXMLNodesTest.Empty;
 begin
   CheckEquals(
     0,
-    TXavierPack.New(TXMLStreamForTest.New).Nodes(
+    TXMLPack.New(TXMLStreamForTest.New).Nodes(
       '/root/group/item[@xpto=''otpx'']'
     )
     .Count
   );
 end;
 
-{ TXavierChildsTest }
+{ TXMLChildsTest }
 
-procedure TXavierChildsTest.ItemByIndex;
+procedure TXMLChildsTest.ItemByIndex;
 begin
   CheckEquals(
-    XavierString('foo2'),
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLString('foo2'),
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
     )
     .Childs
@@ -337,11 +336,11 @@ begin
   );
 end;
 
-procedure TXavierChildsTest.ItemByName;
+procedure TXMLChildsTest.ItemByName;
 begin
   CheckEquals(
-    XavierString('item'),
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLString('item'),
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
     )
     .Childs
@@ -350,11 +349,11 @@ begin
   );
 end;
 
-procedure TXavierChildsTest.Count;
+procedure TXMLChildsTest.Count;
 begin
   CheckEquals(
     2,
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group'
     )
     .Childs
@@ -362,13 +361,13 @@ begin
   );
 end;
 
-{ TXavierAttributeTest }
+{ TXMLAttributeTest }
 
-procedure TXavierAttributeTest.Name;
+procedure TXMLAttributeTest.Name;
 begin
   CheckEquals(
-    XavierString('Value'),
-    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
+    TXMLString('Value'),
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
     .Attrs
@@ -377,11 +376,11 @@ begin
   );
 end;
 
-procedure TXavierAttributeTest.GetValue;
+procedure TXMLAttributeTest.GetValue;
 begin
   CheckEquals(
-    XavierString('xavier'),
-    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
+    TXMLString('xavier'),
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
     .Attrs
@@ -390,14 +389,14 @@ begin
   );
 end;
 
-procedure TXavierAttributeTest.SetValue;
+procedure TXMLAttributeTest.SetValue;
 var
-  S: XavierString;
+  S: TXMLString;
 begin
   S := 'cyclop';
   CheckEquals(
     S,
-    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
     .Attrs
@@ -407,11 +406,11 @@ begin
   );
 end;
 
-procedure TXavierAttributeTest.Node;
+procedure TXMLAttributeTest.Node;
 begin
   CheckEquals(
-    XavierString('Name'),
-    TXavierPack.New(TXMLFileForTest.New.Stream).Node(
+    TXMLString('Name'),
+    TXMLPack.New(TXMLFileForTest.New.Stream).Node(
       '/CONFIG/Package/Name'
     )
     .Attrs
@@ -421,13 +420,13 @@ begin
   );
 end;
 
-{ TXavierAttributesTest }
+{ TXMLAttributesTest }
 
-procedure TXavierAttributesTest.Add;
+procedure TXMLAttributesTest.Add;
 begin
   CheckEquals(
-    XavierString('1'),
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLString('1'),
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
     .Attrs
@@ -436,11 +435,11 @@ begin
   );
 end;
 
-procedure TXavierAttributesTest.ItemByIndex;
+procedure TXMLAttributesTest.ItemByIndex;
 begin
   CheckEquals(
-    XavierString('1'),
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLString('1'),
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
     .Attrs
@@ -449,11 +448,11 @@ begin
   );
 end;
 
-procedure TXavierAttributesTest.ItemByName;
+procedure TXMLAttributesTest.ItemByName;
 begin
   CheckEquals(
-    XavierString('1'),
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLString('1'),
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
     .Attrs
@@ -462,11 +461,11 @@ begin
   );
 end;
 
-procedure TXavierAttributesTest.Count;
+procedure TXMLAttributesTest.Count;
 begin
   CheckEquals(
     3,
-    TXavierPack.New(TXMLStreamForTest.New).Node(
+    TXMLPack.New(TXMLStreamForTest.New).Node(
       '/root/group/item'
     )
     .Attrs
@@ -475,13 +474,13 @@ begin
 end;
 
 initialization
-  TTestSuite.New('Core')
-    .Add(TTest.New(TXavierPackTest))
-    .Add(TTest.New(TXavierNodeTest))
-    .Add(TTest.New(TXavierNodesTest))
-    .Add(TTest.New(TXavierChildsTest))
-    .Add(TTest.New(TXavierAttributeTest))
-    .Add(TTest.New(TXavierAttributesTest))
+  TTestSuite.New('XML')
+    .Add(TTest.New(TXMLPackTest))
+    .Add(TTest.New(TXMLNodeTest))
+    .Add(TTest.New(TXMLNodesTest))
+    .Add(TTest.New(TXMLChildsTest))
+    .Add(TTest.New(TXMLAttributeTest))
+    .Add(TTest.New(TXMLAttributesTest))
 
 end.
 

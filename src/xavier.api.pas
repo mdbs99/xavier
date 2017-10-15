@@ -21,63 +21,42 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 }
-unit Xavier.Core.Clss;
+unit Xavier.API;
 
 {$include xavier.inc}
 
 interface
 
 uses
-  Classes, SysUtils,
-  James.Data,
-  James.Data.Clss,
-  Xavier.Core,
-  {$ifdef FPC}
-    Xavier.Core.FPC
-  {$else}
-    Xavier.Core.Delphi
-  {$endif}
-  ;
+  SysUtils,
+  Xavier.XML,
+  Xavier.XML.Clss;
 
 type
-  TXavierAttribute = TXAttribute;
-  TXavierAttributes = TXAttributes;
-  TXavierNode = TXNode;
-  TXavierNodes = TXNodes;
-  TXavierChilds = TXChilds;
 
-  TXavierPack = class(TXPack)
-  public
-    class function New(Stream: IDataStream): IXavierPack; overload;
-    class function New(const RootName: XavierString): IXavierPack; overload;
-  end;
+{ XML Module }
+
+  // Types
+  TXMLString = TXString;
+
+  // Exceptions
+  EXMLError = EXError;
+
+  // Interfaces
+  IXMLAttribute = IXAttribute;
+  IXMLAttributes = IXAttributes;
+  IXMLNode = IXNode;
+  IXMLNodes = IXNodes;
+  IXMLPack = IXPack;
+
+  // Classes
+  TXMLAttribute = TXAttribute;
+  TXMLAttributes = TXAttributes;
+  TXMLNode = TXNode;
+  TXMLNodes = TXNodes;
+  TXMLPack = TXPack;
 
 implementation
 
-{ TXavierPack }
-
-class function TXavierPack.New(Stream: IDataStream): IXavierPack;
-var
-  Buf: TMemoryStream;
-begin
-  Buf := TMemoryStream.Create;
-  try
-    Stream.Save(Buf);
-    Result := Create(Buf);
-  finally
-    Buf.Free;
-  end;
-end;
-
-class function TXavierPack.New(const RootName: XavierString): IXavierPack;
-begin
-  Result := New(
-    TDataStream.New(
-      Format(
-        '<?xml version="1.0" encoding="UTF-8"?><%s />', [RootName]
-      )
-    )
-  );
-end;
-
 end.
+

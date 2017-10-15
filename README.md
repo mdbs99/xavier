@@ -34,21 +34,21 @@ We want to write elegant, clean, and maintainable code using OOP.
 ### Load Stream
 
 ```pascal
-TXavierPack.New(
+TXMLPack.New(
   TDataStream.New(TheStream)
 );
 ```
 ### Load File
 
 ```pascal
-TXavierPack.New(TFile.New('file.xml').Stream);
+TXMLPack.New(TFile.New('file.xml').Stream);
 ```
 
 ### Add Node
 
 ```pascal
 // add a new node: name="item" value="a"
-TXavierPack.New(TFile.New('file.xml').Stream)
+TXMLPack.New(TFile.New('file.xml').Stream)
   .Node('/root')
   .Add('item')
   .Value('a')
@@ -57,7 +57,7 @@ TXavierPack.New(TFile.New('file.xml').Stream)
 
 ```pascal
 // How many childs
-TXavierPack.New(TFile.New('file.xml').Stream)
+TXMLPack.New(TFile.New('file.xml').Stream)
   .Node('/root')
   .Childs
   .Count
@@ -66,7 +66,7 @@ TXavierPack.New(TFile.New('file.xml').Stream)
 
 ```pascal
 // Find by name
-TXavierPack.New(TFile.New('file.xml').Stream)
+TXMLPack.New(TFile.New('file.xml').Stream)
   .Node('/root')
   .Attrs
   .Item('id')
@@ -75,7 +75,7 @@ TXavierPack.New(TFile.New('file.xml').Stream)
 
 ```pascal
 // Add an attribute: name="foo" value="bar"
-TXavierPack.New(TFile.New('file.xml').Stream)
+TXMLPack.New(TFile.New('file.xml').Stream)
   .Node('/root')
   .Attrs
   .Add('foo', 'bar')
