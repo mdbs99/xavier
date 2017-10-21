@@ -33,24 +33,20 @@ uses
   Xavier.XML.Clss;
 
 type
-{
-  XML Module
-  It provides the basics XML Objects.
-}
-  // Types
+  // XML Types
   TXMLString = TXString;
 
-  // Exceptions
+  // XML Exceptions
   EXMLError = EXError;
 
-  // Interfaces
+  // XML Interfaces
   IXMLAttribute = IXAttribute;
   IXMLAttributes = IXAttributes;
   IXMLNode = IXNode;
   IXMLNodes = IXNodes;
   IXMLPack = IXPack;
 
-  // Classes
+  // XML Classes
   TXMLAttribute = TXAttribute;
   TXMLAttributes = TXAttributes;
   TXMLNode = TXNode;
