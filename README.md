@@ -24,27 +24,45 @@ We want to write elegant, clean, and maintainable code using OOP.
 
 ## Quick Start
 
-- [Load Stream](#load-stream)
-- [Load File](#load-file)
+- [Find a Node](#find-a-node)
 - [Add Node](#add-node)
 - [Childs Count](#childs-count)
 - [Find Attribute](#find-attribute)
 - [Add Attribute](#add-attribute)
 
-### Load Stream
+### Find a Node
+
+Take this XML for example:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <foo a1="f1" a2="f2">
+    <value>foo</value>
+  </foo>
+  <bar a1="b1" a2="b2">
+    <value>bar</value>
+  </bar>
+</root>
+```
+
+If you want to find the `value` child node of `foo` node, do this:
 
 ```pascal
-TXMLPack.New(
-  TDataStream.New(TheStream)
-);
+var
+  N: IXMLNode;
+begin
+  N := TXMLPack.New(
+    TFile.New('file.xml').Stream
+  ).Node('/root/foo/value');
+  ShowMessage(N.Text); // "foo"
+end.
 ```
-### Load File
-
-```pascal
-TXMLPack.New(TFile.New('file.xml').Stream);
-```
+In fact, we don't need this variable `N`. Just call `Text` directly.
 
 ### Add Node
+
+You can add a node easily doing this:
 
 ```pascal
 // add a new node: name="item" value="a"
@@ -53,7 +71,10 @@ TXMLPack.New(TFile.New('file.xml').Stream)
   .Add('item')
   .Value('a')
 ```
+
 ### Childs Count
+
+You can count how many childs a node have doing this:
 
 ```pascal
 // How many childs
@@ -62,16 +83,22 @@ TXMLPack.New(TFile.New('file.xml').Stream)
   .Childs
   .Count
 ```
+
 ### Find Attribute
 
+You can find any attribute by name doing this:
+
 ```pascal
-// Find by name
+// Find by name "id"
 TXMLPack.New(TFile.New('file.xml').Stream)
   .Node('/root')
   .Attrs
   .Item('id')
 ```
+
 ### Add Attribute
+
+Adding an attribute is quite easy too:
 
 ```pascal
 // Add an attribute: name="foo" value="bar"
