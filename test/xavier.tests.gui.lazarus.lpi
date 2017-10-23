@@ -56,23 +56,19 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="4">
       <Item1>
-        <PackageName Value="james"/>
-        <MinVersion Minor="5" Valid="True"/>
+        <PackageName Value="xavier.tests"/>
       </Item1>
       <Item2>
-        <PackageName Value="xavier.tests"/>
+        <PackageName Value="fpcunittestrunner"/>
       </Item2>
       <Item3>
-        <PackageName Value="fpcunittestrunner"/>
+        <PackageName Value="LCL"/>
       </Item3>
       <Item4>
-        <PackageName Value="LCL"/>
-      </Item4>
-      <Item5>
         <PackageName Value="FCL"/>
-      </Item5>
+      </Item4>
     </RequiredPackages>
     <Units Count="1">
       <Unit0>

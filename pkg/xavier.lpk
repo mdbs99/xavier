@@ -46,8 +46,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."/>
     <RequiredPkgs Count="3">
       <Item1>
         <PackageName Value="james"/>
-        <MaxVersion Major="1"/>
-        <MinVersion Minor="5" Valid="True"/>
+        <MaxVersion Minor="5"/>
+        <MinVersion Minor="4" Valid="True"/>
       </Item1>
       <Item2>
         <PackageName Value="LCL"/>
