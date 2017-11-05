@@ -40,23 +40,33 @@ uses
   ;
 
 type
-  TXAttribute = TCAttribute;
-  TXAttributes = TCAttributes;
-  TXNode = TCNode;
-  TXNodes = TCNodes;
-  TXChilds = TCChilds;
+  TXMLAttribute = TCAttribute;
+  TXMLAttributeAlias = TXMLAttribute;
 
-  TXPack = class(TCPack)
+  TXMLAttributes = TCAttributes;
+  TXMLAttributesAlias = TXMLAttributes;
+
+  TXMLNode = TCNode;
+  TXMLNodeAlias = TXMLNode;
+
+  TXMLNodes = TCNodes;
+  TXMLNodesAlias = TXMLNodes;
+
+  TXMLChilds = TCChilds;
+  TXMLChildsAlias = TXMLChilds;
+
+  TXMLPack = class(TCPack)
   public
-    class function New(AStream: IDataStream): IXPack; overload;
-    class function New(const ARootName: TXString): IXPack; overload;
+    class function New(AStream: IDataStream): IXMLPack; overload;
+    class function New(const ARootName: TXMLString): IXMLPack; overload;
   end;
+  TXMLPackAlias = TXMLPack;
 
 implementation
 
-{ TXPack }
+{ TXMLPack }
 
-class function TXPack.New(AStream: IDataStream): IXPack;
+class function TXMLPack.New(AStream: IDataStream): IXMLPack;
 var
   Buf: TMemoryStream;
 begin
@@ -69,7 +79,7 @@ begin
   end;
 end;
 
-class function TXPack.New(const ARootName: TXString): IXPack;
+class function TXMLPack.New(const ARootName: TXMLString): IXMLPack;
 begin
   Result := New(
     TDataStream.New(

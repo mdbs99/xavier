@@ -37,53 +37,60 @@ uses
   James.API;
 
 type
-  TXString = DOMString;
+  TXMLString = DOMString;
+  TXMLStringAlias = TXMLString;
 
-  EXError = class(Exception);
+  EXMLError = class(Exception);
+  EXMLErrorAlias = EXMLError;
 
-  IXNode = interface;
-  IXNodes = interface;
+  IXMLNode = interface;
+  IXMLNodes = interface;
 
-  IXAttribute = interface
+  IXMLAttribute = interface
   ['{5CEC1117-80DA-4FBC-8D55-AFED800B05ED}']
-    function Name: TXString;
-    function Text: TXString; overload;
-    function Text(const AText: TXString): IXAttribute; overload;
-    function Node: IXNode;
+    function Name: TXMLString;
+    function Text: TXMLString; overload;
+    function Text(const AText: TXMLString): IXMLAttribute; overload;
+    function Node: IXMLNode;
   end;
+  IXMLAttributeAlias = IXMLAttribute;
 
-  IXAttributes = interface
+  IXMLAttributes = interface
   ['{6D64F5F4-BF46-4A45-8014-A72DFA8E8F29}']
-    function Add(const AName, AText: TXString): IXAttribute;
-    function Item(AIndex: Integer): IXAttribute; overload;
-    function Item(const AName: TXString): IXAttribute; overload;
+    function Add(const AName, AText: TXMLString): IXMLAttribute;
+    function Item(AIndex: Integer): IXMLAttribute; overload;
+    function Item(const AName: TXMLString): IXMLAttribute; overload;
     function Count: Integer;
   end;
+  IXMLAttributesAlias = IXMLAttributes;
 
-  IXNode = interface
+  IXMLNode = interface
   ['{78CF296B-3F7E-4324-A8E2-28CA7D2A6DF5}']
-    function Name: TXString;
-    function Text: TXString; overload;
-    function Text(const AText: TXString): IXNode; overload;
-    function Attrs: IXAttributes;
-    function Add(const AName: TXString): IXNode;
-    function Childs: IXNodes;
-    function Parent: IXNode;
+    function Name: TXMLString;
+    function Text: TXMLString; overload;
+    function Text(const AText: TXMLString): IXMLNode; overload;
+    function Attrs: IXMLAttributes;
+    function Add(const AName: TXMLString): IXMLNode;
+    function Childs: IXMLNodes;
+    function Parent: IXMLNode;
   end;
+  IXMLNodeAlias = IXMLNode;
 
-  IXNodes = interface
+  IXMLNodes = interface
   ['{4AE9A045-B1FA-46C5-B90E-0FB05BAF13A4}']
-    function Item(AIndex: Integer): IXNode; overload;
-    function Item(const AName: TXString): IXNode; overload;
+    function Item(AIndex: Integer): IXMLNode; overload;
+    function Item(const AName: TXMLString): IXMLNode; overload;
     function Count: Integer;
   end;
+  IXMLNodesAlias = IXMLNodes;
 
-  IXPack = interface
+  IXMLPack = interface
   ['{35E1DA6D-6022-47BB-B7B0-E651E209F12A}']
-    function Nodes(const AXPath: TXString): IXNodes;
-    function Node(const AXPath: TXString): IXNode;
+    function Nodes(const AXPath: TXMLString): IXMLNodes;
+    function Node(const AXPath: TXMLString): IXMLNode;
     function Stream: IDataStream;
   end;
+  IXMLPackAlias = IXMLPack;
 
 implementation
 
