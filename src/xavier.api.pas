@@ -33,25 +33,24 @@ uses
   Xavier.XML.Clss;
 
 type
-  // XML Types
-  TXMLString = TXString;
 
-  // XML Exceptions
-  EXMLError = EXError;
+  { XML }
 
-  // XML Interfaces
-  IXMLAttribute = IXAttribute;
-  IXMLAttributes = IXAttributes;
-  IXMLNode = IXNode;
-  IXMLNodes = IXNodes;
-  IXMLPack = IXPack;
+  TXMLString = TXMLStringAlias;
 
-  // XML Classes
-  TXMLAttribute = TXAttribute;
-  TXMLAttributes = TXAttributes;
-  TXMLNode = TXNode;
-  TXMLNodes = TXNodes;
-  TXMLPack = TXPack;
+  EXMLError = EXMLErrorAlias;
+
+  IXMLAttribute  = IXMLAttributeAlias;
+  IXMLAttributes = IXMLAttributesAlias;
+  IXMLNode       = IXMLNodeAlias;
+  IXMLNodes      = IXMLNodesAlias;
+  IXMLPack       = IXMLPackAlias;
+
+  TXMLAttribute  = TXMLAttributeAlias;
+  TXMLAttributes = TXMLAttributesAlias;
+  TXMLNode       = TXMLNodeAlias;
+  TXMLNodes      = TXMLNodesAlias;
+  TXMLPack       = TXMLPackAlias;
 
 implementation
 
