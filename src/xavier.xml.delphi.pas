@@ -30,8 +30,7 @@ interface
 uses
   Classes, SysUtils,
   xmlDoc, xmlIntf, xmlDom,
-  James.Data,
-  James.Data.Clss,
+  James.API,
   Xavier.XML;
 
 type

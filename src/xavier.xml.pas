@@ -34,7 +34,7 @@ uses
   {$else}
     XMLDOM,
   {$endif}
-  James.Data;
+  James.API;
 
 type
   TXString = DOMString;

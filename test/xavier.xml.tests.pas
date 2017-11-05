@@ -28,10 +28,7 @@ unit Xavier.XML.Tests;
 interface
 
 uses
-  James.Data,
-  James.Data.Clss,
-  James.IO,
-  James.IO.Clss,
+  James.API,
   James.Testing.Clss,
   Xavier.API;
 
