@@ -67,6 +67,7 @@ type
     function Name: TXMLString;
     function Text: TXMLString; overload;
     function Text(const AText: TXMLString): IXMLNode; overload;
+    function Text(const AText: string): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Add(const AName: TXMLString): IXMLNode;
     function Childs: IXMLNodes;
@@ -214,7 +215,13 @@ begin
   FNode.NodeValue := AText;
 end;
 
-function TCNode.Attrs: ributes;
+function TCNode.Text(const AText: string): IXMLNode;
+begin
+  Result := Self;
+  Text(TXMLString(AText));
+end;
+
+function TCNode.Attrs: IXMLAttributes;
 begin
   Result := TCAttributes.New(FNode);
 end;
