@@ -113,32 +113,7 @@ TXMLPack.New(TFile.New('file.xml').Stream)
 Internally, this project uses other built-in XML library for each compiler.
 Besides that, we are using other packages:
 
-* [James](https://github.com/mdbs99/james) — is a collection of classes and interfaces for truly object-oriented projects.
-
-## How to contribute?
-
-To contribute we suggest following these steps:
-
-1. Fork this project (Click on **Fork** button)
-2. Clone your forked project to your local machine
-3. Create a new issue describing about the problem or enhancement that you are going to make
-4. Create a new branch related to this issue. We suggest to use a name like `issue-10` — 10 is the issue's ID
-5. Make all the changes necessary and commit
-6. Push the new branch to your Github repository
-7. Go to Xavier Github project and click on **Compare & Pull Request**
-
-**Important:**
-
-- It is important for you create a new branch for each PR. We might need to request some further changes in your work, and having the original PR's code to make these changes is better than working with the whole code.
-- Each PR needs to work only in one issue, respecting the [single responsibility principle](https://en.wikipedia.org/wiki/Single_responsibility_principle).
-- Make sure your branch builds without any warnings/issues.
-
-If you have questions or general suggestions, don't hesitate to submit a new [Github issue](https://github.com/mdbs99/xavier/issues/new).
-
-## Contributors
-
-  - [@mdbs99](https://github.com/mdbs99) as Marcos Douglas B. Santos ([Blog](http://mdbs99.com/))
-  - [@nunopicado](https://github.com/nunopicado) as Nuno Picado
+- [James 1.0](https://github.com/mdbs99/james) — is a collection of classes and interfaces for truly object-oriented projects.
   
 ## License (MIT)
 
