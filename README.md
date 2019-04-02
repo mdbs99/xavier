@@ -6,31 +6,75 @@ Xavier is an object-oriented library for working with XML.
 
 **ATTENTION:** We're still in a very early alpha version, the API may and will change frequently. Please, use it at your own risk, until we release version 1.0.
 
-This API is being written in [Free Pascal](https://freepascal.org/) and [Lazarus](http://www.lazarus-ide.org/). However, it is compatible with [Delphi](https://www.embarcadero.com/products/delphi) too.
+# Table of Contents
 
-**Why**. Nowadays, all XML libraries are very complex. Each class has so many methods that could be hard to use and understand them. These implementations are very procedural too.
+- [Overview](#overview)
+- [Concepts](#concepts)
+- [Installing](#installing)
+  - [On Lazarus](#on-lazarus)
+  - [On Delphi](#on-delphi)
+- [Dependencies](#dependencies)
+- [Getting Started](#getting-started)
+  - [Find a Node](#find-a-node)
+  - [Add Node](#add-node)
+  - [Childs Count](#childs-count)
+  - [Find Attribute](#find-attribute)
+  - [Add Attribute](#add-attribute)
+- [License](#license)
+
+# Overview
+
+This API is being written in [Free Pascal](https://freepascal.org/) and [Lazarus](http://www.lazarus-ide.org/). However, it is also compatible with [Delphi](https://www.embarcadero.com/products/delphi).
+
+# Concepts
+
+Nowadays, all XML libraries are very complex. Each class has so many methods that could be hard to use and understand them. These implementations are very procedural too.
 
 The major goal of this project is to replace common procedural code in our projects, which could have so many conditionals and variables, to a declarative and object-oriented code to work more easily with XML.
 
 We want to write elegant, clean, and maintainable code using OOP.
 
-**Principles**. The code has some design principles:
+This project has some design principles:
 
 * Fully interface-based
 * Memory is released automatically
 * No usage of `nil`/`NULL` in arguments or returns
 * No type casting or reflection
-* No procedures or functions, only Interfaces and Objects
+* No procedures or functions, only interfaces and objects
 
-## Quick Start
+# Installing
 
-- [Find a Node](#find-a-node)
-- [Add Node](#add-node)
-- [Childs Count](#childs-count)
-- [Find Attribute](#find-attribute)
-- [Add Attribute](#add-attribute)
+- Clone the repository in some directory in your computer.
+- For each project you just need to setup the paths, which depends on your platform are you using.
+- See [Dependencies](#dependencies) below too
 
-### Find a Node
+## On Lazarus
+
+In your project, you must include these paths:
+
+- Other unit files (-Fu)
+  - include `/src` and `/src/fpc`
+- Include files (-Fi)
+  - include only `/src`
+
+## On Delphi
+
+In your project, you must include these paths:
+
+- Search Path
+  - include `/src` and `/src/delphi`
+
+# Dependencies
+
+Internally, this project uses other built-in XML library for each compiler.
+Besides that, we are using other libraries:
+
+- [James](https://github.com/mdbs99/james) — is a collection of classes and interfaces for truly object-oriented projects.
+- [mORMot](https://github.com/synopse/mORMot) — client-server ORM SOA MVC framework for Delphi 6 up to latest Delphi and FPC
+
+# Getting Started
+
+## Find a Node
 
 Take this XML for example:
 
@@ -60,7 +104,7 @@ end.
 ```
 In fact, we don't need this variable `N`. Just call `Text` directly.
 
-### Add Node
+## Add Node
 
 You can add a node easily doing this:
 
@@ -72,7 +116,7 @@ TXMLPack.New(TFile.New('file.xml').Stream)
   .Value('a')
 ```
 
-### Childs Count
+## Childs Count
 
 You can count how many childs a node have doing this:
 
@@ -84,7 +128,7 @@ TXMLPack.New(TFile.New('file.xml').Stream)
   .Count
 ```
 
-### Find Attribute
+## Find Attribute
 
 You can find any attribute by name doing this:
 
@@ -96,7 +140,7 @@ TXMLPack.New(TFile.New('file.xml').Stream)
   .Item('id')
 ```
 
-### Add Attribute
+## Add Attribute
 
 Adding an attribute is quite easy too:
 
@@ -108,31 +152,6 @@ TXMLPack.New(TFile.New('file.xml').Stream)
   .Add('foo', 'bar')
 ```
 
-## Dependencies
+# License (MIT)
 
-Internally, this project uses other built-in XML library for each compiler.
-Besides that, we are using other packages:
-
-- [James 1.0](https://github.com/mdbs99/james) — is a collection of classes and interfaces for truly object-oriented projects.
-  
-## License (MIT)
-
-Copyright (c) 2017 Marcos Douglas B. Santos
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This project is released under MIT license. See [LICENSE](LICENSE).
