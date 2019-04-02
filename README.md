@@ -55,7 +55,7 @@ Considering `<xavier>` as the path where you have saved the sources, your projec
 - Other unit files (-Fu)
   - include `<xavier>\src;<xavier>\src\fpc`
 - Include files (-Fi)
-  - include only `<xavier>\src;<xavier>\src\fpc`
+  - include `<xavier>\src;<xavier>\src\fpc`
 
 ## On Delphi
 

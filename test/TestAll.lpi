@@ -111,7 +111,7 @@
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <DebugInfoType Value="dsDwarf2Set"/>
+        <DebugInfoType Value="dsDwarf2"/>
         <UseHeaptrc Value="True"/>
         <TrashVariables Value="True"/>
         <UseExternalDbgSyms Value="True"/>
@@ -126,7 +126,6 @@
       <CompilerMessages>
         <IgnoredMessages idx6058="True"/>
       </CompilerMessages>
-      <CompilerPath Value="W:\md\dev\proj\cremerj\ide\lazarus\fpc\3.1.1\bin\i386-win32\fpc.exe"/>
     </Other>
   </CompilerOptions>
   <Debugging>
