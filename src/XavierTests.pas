@@ -41,7 +41,6 @@ type
   TXMLFileForTest = class(TDataFile)
   public
     constructor Create; reintroduce;
-    function Ref: IDataFile;
   end;
 
   TXMLStreamForTest = class(TDataStream)
@@ -108,11 +107,6 @@ implementation
 constructor TXMLFileForTest.Create;
 begin
   inherited Create('..\pkg\James.Pack.lpk');
-end;
-
-function TXMLFileForTest.Ref: IDataFile;
-begin
-  result := self;
 end;
 
 { TXMLStreamForTest }
