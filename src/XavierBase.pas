@@ -29,6 +29,7 @@ interface
 
 uses
   SysUtils,
+  SynCommons,
   {$ifdef FPC}
     DOM,
   {$else}
@@ -37,53 +38,55 @@ uses
   JamesDataBase;
 
 type
-  TXMLString = DOMString;
+  TXavierString = DOMString;
 
-  EXMLError = class(Exception);
+  EXavierException = class(ESynException);
+
+  EXMLError = class(EXavierException);
 
   IXMLNode = interface;
   IXMLNodes = interface;
 
   IXMLAttribute = interface
   ['{5CEC1117-80DA-4FBC-8D55-AFED800B05ED}']
-    function Name: TXMLString;
-    function Text: TXMLString; overload;
-    function Text(const AText: TXMLString): IXMLAttribute; overload;
+    function Name: TXavierString;
+    function Text: TXavierString; overload;
+    function Text(const aText: TXavierString): IXMLAttribute; overload;
     function Node: IXMLNode;
   end;
 
   IXMLAttributes = interface
   ['{6D64F5F4-BF46-4A45-8014-A72DFA8E8F29}']
-    function Add(const AName, AText: TXMLString): IXMLAttribute;
-    function Item(AIndex: Integer): IXMLAttribute; overload;
-    function Item(const AName: TXMLString): IXMLAttribute; overload;
+    function Add(const aName, aText: TXavierString): IXMLAttribute;
+    function Item(aIndex: Integer): IXMLAttribute; overload;
+    function Item(const aName: TXavierString): IXMLAttribute; overload;
     function Count: Integer;
   end;
 
   IXMLNode = interface
   ['{78CF296B-3F7E-4324-A8E2-28CA7D2A6DF5}']
-    function Name: TXMLString;
-    function Text: TXMLString; overload;
-    function Text(const AText: TXMLString): IXMLNode; overload;
-    function Text(const AText: string): IXMLNode; overload;
+    function Name: TXavierString;
+    function Text: TXavierString; overload;
+    function Text(const aText: TXavierString): IXMLNode; overload;
+    function Text(const aText: string): IXMLNode; overload;
     function Attrs: IXMLAttributes;
-    function Add(const AName: TXMLString): IXMLNode;
+    function Add(const aName: TXavierString): IXMLNode;
     function Childs: IXMLNodes;
     function Parent: IXMLNode;
   end;
 
   IXMLNodes = interface
   ['{4AE9A045-B1FA-46C5-B90E-0FB05BAF13A4}']
-    function Item(AIndex: Integer): IXMLNode; overload;
-    function Item(const AName: TXMLString): IXMLNode; overload;
+    function Item(aIndex: Integer): IXMLNode; overload;
+    function Item(const aName: TXavierString): IXMLNode; overload;
     function Count: Integer;
   end;
 
   IXMLPack = interface
   ['{35E1DA6D-6022-47BB-B7B0-E651E209F12A}']
-    function Nodes(const XPath: TXMLString): IXMLNodes;
-    function Node(const XPath: TXMLString): IXMLNode; overload;
-    function Node(const XPath: TXMLString; const Def: IXMLNode): IXMLNode; overload;
+    function Nodes(const XPath: TXavierString): IXMLNodes;
+    function Node(const XPath: TXavierString): IXMLNode; overload;
+    function Node(const XPath: TXavierString; const aDefault: IXMLNode): IXMLNode; overload;
     function Stream: IDataStream;
   end;
 

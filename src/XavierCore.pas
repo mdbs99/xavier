@@ -42,113 +42,111 @@ type
   TXMLNodes = TCNodes;
   TXMLChilds = TCChilds;
 
-  TXMLPack = class(TCPack)
+  TXMLPack = class(TCPack, IXMLPack)
   public
-    class function New(const AStream: IDataStream): IXMLPack; overload;
-    class function New(const ARootName: TXMLString): IXMLPack; overload;
+    constructor Create(const aStream: IDataStream); overload;
+    constructor Create(const aRootName: TXavierString); overload;
+    function Ref: IXMLPack;
   end;
 
-  TXMLNodeAsDefault = class(TInterfacedObject, IXMLNode)
+  TXMLNodeDefault = class(TInterfacedObject, IXMLNode)
   private
-    FName: TXMLString;
-    FText: TXMLString;
+    fName: TXavierString;
+    fText: TXavierString;
   public
-    constructor Create(const Name, Text: TXMLString);
-    class function New(const Name, Text: TXMLString): IXMLNode;
-    function Name: TXMLString;
-    function Text: TXMLString; overload;
-    function Text(const AText: TXMLString): IXMLNode; overload;
-    function Text(const AText: string): IXMLNode; overload;
+    constructor Create(const aName, aText: TXavierString);
+    function Name: TXavierString;
+    function Text: TXavierString; overload;
+    function Text(const aText: TXavierString): IXMLNode; overload;
+    function Text(const aText: string): IXMLNode; overload;
     function Attrs: IXMLAttributes;
-    function Add(const {%H-}AName: TXMLString): IXMLNode;
+    function Add(const aName: TXavierString): IXMLNode;
     function Childs: IXMLNodes;
     function Parent: IXMLNode;
   end;
 
 implementation
 
-{ TXMLNodeAsDefault }
+{ TXMLPack }
 
-constructor TXMLNodeAsDefault.Create(const Name, Text: TXMLString);
+constructor TXMLPack.Create(const aStream: IDataStream);
+var
+  mem: TMemoryStream;
+begin
+  mem := TMemoryStream.Create;
+  try
+    aStream.Save(mem);
+    Create(mem);
+  finally
+    mem.Free;
+  end;
+end;
+
+constructor TXMLPack.Create(const aRootName: TXavierString);
+begin
+  Create(
+    TDataStream.New(
+      Format(
+        '<?xml version="1.0" encoding="UTF-8"?><%s />', [aRootName]
+      )
+    )
+  );
+end;
+
+function TXMLPack.Ref: IXMLPack;
+begin
+  result := self;
+end;
+
+{ TXMLNodeDefault }
+
+constructor TXMLNodeDefault.Create(const aName, aText: TXavierString);
 begin
   inherited Create;
-  FName := Name;
-  FText := Text;
+  fName := aName;
+  fText := aText;
 end;
 
-class function TXMLNodeAsDefault.New(const Name, Text: TXMLString): IXMLNode;
+function TXMLNodeDefault.Name: TXavierString;
 begin
-  Result := Create(Name, Text);
+  result := fName;
 end;
 
-function TXMLNodeAsDefault.Name: TXMLString;
+function TXMLNodeDefault.Text: TXavierString;
 begin
-  Result := FName;
+  result := fText;
 end;
 
-function TXMLNodeAsDefault.Text: TXMLString;
+function TXMLNodeDefault.Text(const aText: TXavierString): IXMLNode;
 begin
-  Result := FText;
+  result := self;
+  fText := aText;
 end;
 
-function TXMLNodeAsDefault.Text(const AText: TXMLString): IXMLNode;
+function TXMLNodeDefault.Text(const aText: string): IXMLNode;
 begin
-  Result := Self;
-  FText := AText;
+  result := self;
+  Text(TXavierString(aText));
 end;
 
-function TXMLNodeAsDefault.Text(const AText: string): IXMLNode;
-begin
-  Result := Self;
-  Text(TXMLString(AText));
-end;
-
-{$warnings off}
-function TXMLNodeAsDefault.Attrs: IXMLAttributes;
+function TXMLNodeDefault.Attrs: IXMLAttributes;
 begin
   raise EXMLError.Create('Attributes not allowed.');
 end;
 
-function TXMLNodeAsDefault.Add(const AName: TXMLString): IXMLNode;
+function TXMLNodeDefault.Add(const aName: TXavierString): IXMLNode;
 begin
   raise EXMLError.Create('Add not allowed.');
 end;
 
-function TXMLNodeAsDefault.Childs: IXMLNodes;
+function TXMLNodeDefault.Childs: IXMLNodes;
 begin
   raise EXMLError.Create('Childs not allowed.');
 end;
-{$warnings on}
 
-function TXMLNodeAsDefault.Parent: IXMLNode;
+function TXMLNodeDefault.Parent: IXMLNode;
 begin
-  Result := Self;
-end;
-
-{ TXMLPack }
-
-class function TXMLPack.New(const AStream: IDataStream): IXMLPack;
-var
-  Buf: TMemoryStream;
-begin
-  Buf := TMemoryStream.Create;
-  try
-    AStream.Save(Buf);
-    Result := Create(Buf);
-  finally
-    Buf.Free;
-  end;
-end;
-
-class function TXMLPack.New(const ARootName: TXMLString): IXMLPack;
-begin
-  Result := New(
-    TDataStream.New(
-      Format(
-        '<?xml version="1.0" encoding="UTF-8"?><%s />', [ARootName]
-      )
-    )
-  );
+  result := self;
 end;
 
 end.
