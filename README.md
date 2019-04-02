@@ -50,19 +50,19 @@ This project has some design principles:
 
 ## On Lazarus
 
-In your project, you must include these paths:
+Considering `<xavier>` as the path where you have saved the sources, your project must include these paths:
 
 - Other unit files (-Fu)
-  - include `/src` and `/src/fpc`
+  - include `<xavier>\src;<xavier>\src\fpc`
 - Include files (-Fi)
-  - include only `/src`
+  - include only `<xavier>\src;<xavier>\src\fpc`
 
 ## On Delphi
 
-In your project, you must include these paths:
+Considering `<xavier>` as the path where you have saved the sources, your project must include these paths:
 
 - Search Path
-  - include `/src` and `/src/delphi`
+  - include `<xavier>\src;<xavier>\src\delphi`
 
 # Dependencies
 
