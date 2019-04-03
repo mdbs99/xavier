@@ -105,7 +105,7 @@ begin
 end.
 ```
 
-In fact, we don't need variables `pack or `n`. Just call directly:
+In fact, we don't need variables `pack` or `n`. Just call directly:
 
 ```pascal
 begin
