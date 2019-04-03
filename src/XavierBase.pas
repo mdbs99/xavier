@@ -68,7 +68,6 @@ type
     function Name: TXavierString;
     function Text: TXavierString; overload;
     function Text(const aText: TXavierString): IXMLNode; overload;
-    function Text(const aText: string): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Add(const aName: TXavierString): IXMLNode;
     function Childs: IXMLNodes;
@@ -85,8 +84,7 @@ type
   IXMLPack = interface
   ['{35E1DA6D-6022-47BB-B7B0-E651E209F12A}']
     function Nodes(const XPath: TXavierString): IXMLNodes;
-    function Node(const XPath: TXavierString): IXMLNode; overload;
-    function Node(const XPath: TXavierString; const aDefault: IXMLNode): IXMLNode; overload;
+    function Node(const XPath: TXavierString; const aDefault: IXMLNode = nil): IXMLNode;
     function Stream: IDataStream;
   end;
 

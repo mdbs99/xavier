@@ -73,7 +73,6 @@ type
     function Name: TXavierString;
     function Text: TXavierString; overload;
     function Text(const aText: TXavierString): IXMLNode; overload;
-    function Text(const aText: string): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Add(const aName: TXavierString): IXMLNode;
     function Childs: IXMLNodes;
@@ -109,8 +108,7 @@ type
     constructor Create(aStream: TStream); reintroduce;
     destructor Destroy; override;
     function Nodes(const XPath: TXavierString): IXMLNodes;
-    function Node(const XPath: TXavierString): IXMLNode; overload;
-    function Node(const XPath: TXavierString; const aDefault: IXMLNode): IXMLNode; overload;
+    function Node(const XPath: TXavierString; const aDefault: IXMLNode = nil): IXMLNode;
     function Stream: IDataStream;
   end;
 
@@ -224,12 +222,6 @@ function TCNode.Text(const aText: TXavierString): IXMLNode;
 begin
   result := self;
   fNode.TextContent := aText;
-end;
-
-function TCNode.Text(const aText: string): IXMLNode;
-begin
-  result := self;
-  Text(TXavierString(aText));
 end;
 
 function TCNode.Attrs: IXMLAttributes;
@@ -364,16 +356,6 @@ begin
   end;
 end;
 
-function TCPack.Node(const XPath: TXavierString): IXMLNode;
-var
-  l: IXMLNodes;
-begin
-  l := Nodes(XPath);
-  if l.Count = 0 then
-    raise EXMLError.CreateFmt('Node "%s" not found.', [XPath]);
-  result := l.Item(0);
-end;
-
 function TCPack.Node(const XPath: TXavierString;
   const aDefault: IXMLNode): IXMLNode;
 var
@@ -381,7 +363,12 @@ var
 begin
   l := Nodes(XPath);
   if l.Count = 0 then
-    result := aDefault
+  begin
+    if assigned(aDefault) then
+      result := aDefault
+    else
+      raise EXMLError.CreateFmt('Node "%s" not found.', [XPath]);
+  end
   else
     result := l.Item(0);
 end;

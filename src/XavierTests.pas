@@ -171,7 +171,6 @@ begin
   Check(nodes.Count = 2, 'nodes.count for @a');
   nodes := pack.Nodes('/root/group/item[@xpto=''otpx'']');
   Check(nodes.Count = 0, 'nodes.count empty');
-
 end;
 
 procedure TCoreTests.XMLChilds;

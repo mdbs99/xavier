@@ -58,7 +58,6 @@ type
     function Name: TXavierString;
     function Text: TXavierString; overload;
     function Text(const aText: TXavierString): IXMLNode; overload;
-    function Text(const aText: string): IXMLNode; overload;
     function Attrs: IXMLAttributes;
     function Add(const aName: TXavierString): IXMLNode;
     function Childs: IXMLNodes;
@@ -121,12 +120,6 @@ function TXMLNodeDefault.Text(const aText: TXavierString): IXMLNode;
 begin
   result := self;
   fText := aText;
-end;
-
-function TXMLNodeDefault.Text(const aText: string): IXMLNode;
-begin
-  result := self;
-  Text(TXavierString(aText));
 end;
 
 function TXMLNodeDefault.Attrs: IXMLAttributes;
