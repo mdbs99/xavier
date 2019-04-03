@@ -97,7 +97,7 @@ var
   pack: IXMLPack;
   n: IXMLNode;
 begin
-  p := TXMLPack.Create(
+  pack := TXMLPack.Create(
     TFile.New('file.xml').Stream
   );
   n := pack.Node('/root/foo/value');
