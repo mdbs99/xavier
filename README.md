@@ -132,7 +132,7 @@ begin
     .Ref
     .Node('/root')
     .Add('item')
-    .Value('a')
+    .Text('a')
 end;
 ```
 
