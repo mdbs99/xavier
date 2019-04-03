@@ -29,7 +29,7 @@ uses
   Interfaces,
   Forms,
   GuiTestRunner,
-  XavierTests;
+  XavierTests in '..\src\XavierTests.pas';
 
 {$R *.res}
 
