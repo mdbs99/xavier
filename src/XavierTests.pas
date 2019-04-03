@@ -30,475 +30,233 @@ interface
 uses
   Classes,
   SysUtils,
-  JamesDataBase,
-  JamesDataCore,
   JamesTestCore,
   JamesTestPlatform,
   XavierBase,
   XavierCore;
   
 type
-  TXMLFileForTest = class(TDataFile)
+  TCoreTests = class(TTestCase)
   public
-    constructor Create; reintroduce;
-  end;
-
-  TXMLStreamForTest = class(TDataStream)
-  public
-    constructor Create; reintroduce;
-  end;
-
-  TXMLPackTest = class(TTestCase)
+    function NewPack: IXMLPack;
   published
-    procedure TestNew;
-    procedure TestLoad;
-    procedure TestNode;
-    procedure TestNodes;
-  end;
-
-  TXMLNodeTest = class(TTestCase)
-  published
-    procedure TestName;
-    procedure TestGetValue;
-    procedure TestSetValue;
-    procedure TestAttrsNotNull;
-    procedure TestAdd;
-    procedure TestAddTwoLevels;
-    procedure TestChildsNotNull;
-    procedure TestParent;
-    procedure TestDefault;
-  end;
-
-  TXMLNodesTest = class(TTestCase)
-  published
-    procedure TestItemByIndex;
-    procedure TestItemByName;
-    procedure TestCount;
-    procedure TestEmpty;
-  end;
-
-  TXMLChildsTest = class(TTestCase)
-  published
-    procedure TestItemByIndex;
-    procedure TestItemByName;
-    procedure TestCount;
-  end;
-
-  TXMLAttributeTest = class(TTestCase)
-  published
-    procedure TestName;
-    procedure TestGetValue;
-    procedure TestSetValue;
-    procedure TestNode;
-  end;
-
-  TXMLAttributesTest = class(TTestCase)
-  published
-    procedure TestAdd;
-    procedure TestItemByIndex;
-    procedure TestItemByName;
-    procedure TestCount;
+    procedure XMLPack;
+    procedure XMLNode;
+    procedure XMLNodes;
+    procedure XMLChilds;
+    procedure XMLAttribute;
+    procedure XMLAttributes;
   end;
 
 implementation
 
-{ TXMLFileForTest }
+{ TCoreTests }
 
-constructor TXMLFileForTest.Create;
+function TCoreTests.NewPack: IXMLPack;
 begin
-  inherited Create('..\pkg\James.Pack.lpk');
-end;
-
-{ TXMLStreamForTest }
-
-constructor TXMLStreamForTest.Create;
-var
-  mem: TStringStream;
-begin
-  mem := TStringStream.Create(
-      '<?xml version="1.0" encoding="UTF-8"?>'
-    + '<root>'
-    + '  <group>'
-    + '    <item id="1" a="1" b="2">'
-    + '      <name>foo</name>'
-    + '      <value>bar</value>'
-    + '    </item>'
-    + '    <item id="2" a="1" b="2">'
-    + '      <name>foo2</name>'
-    + '      <value>bar2</value>'
-    + '    </item>'
-    + '  </group>'
-    + '  <footer>'
-    + '    <name>foo</name>'
-    + '  </footer>'
-    + '</root>'
-  );
-  try
-    inherited Create(mem);
-  finally
-    mem.Free;
+  result := TXMLPack.Create('root');
+  with result.Node('/root') do
+  begin
+    with Add('group') do
+    begin
+      with Add('item') do
+      begin
+        with Attrs do
+        begin
+          Add('a', '1');
+          Add('b', '2');
+          Add('c', '3');
+        end;
+        Add('name').Text('foo');
+        Add('value').Text('bar');
+      end;
+      with Add('item') do
+      begin
+        with Attrs do
+        begin
+          Add('id', '2');
+          Add('a', '1');
+          Add('b', '2');
+        end;
+        Add('name').Text('foo2');
+        Add('value').Text('bar2');
+      end;
+    end;
+    Add('empty');
+    with Add('footer') do
+      Add('name').Text('foo');
   end;
 end;
 
-{ TXMLPackTest }
-
-procedure TXMLPackTest.TestNew;
+procedure TCoreTests.XMLPack;
 var
-  N: TXavierString;
+  pack: IXMLPack;
 begin
-  N := 'root';
-  CheckEquals(N, TXMLPack.Create(N).Ref.Node('/' + N).Name);
+  pack := NewPack;
+  Check(pack.Node('/root').Name = 'root');
+  Check(pack.Node('/root/group').Name = 'group');
+  Check(pack.Node('/root/group').Childs.Count = 2);
+  Check(assigned(pack.Node('/root/group/item/name')));
+  Check(assigned(pack.Node('/root/footer/name')));
 end;
 
-procedure TXMLPackTest.TestLoad;
-begin
-  CheckNotNull(TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Stream);
-end;
-
-procedure TXMLPackTest.TestNode;
-begin
-  CheckNotNull(
-    TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Node(
-      '/CONFIG/Package/CompilerOptions'
-    )
-  );
-end;
-
-procedure TXMLPackTest.TestNodes;
-begin
-  CheckEquals(
-    4,
-    TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Nodes(
-      '/CONFIG/Package/CompilerOptions/*'
-    )
-    .Count
-  );
-end;
-
-{ TXMLNodeTest }
-
-procedure TXMLNodeTest.TestName;
-begin
-  CheckEquals(
-    TXavierString('CompilerOptions'),
-    TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Node(
-      '/CONFIG/Package/CompilerOptions'
-    )
-    .Name
-  );
-end;
-
-procedure TXMLNodeTest.TestGetValue;
-begin
-  CheckEquals(
-    TXavierString('foo'),
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group/item/name'
-    )
-    .Text
-  );
-end;
-
-procedure TXMLNodeTest.TestSetValue;
+procedure TCoreTests.XMLNode;
 var
-  S: TXavierString;
+  pack: IXMLPack;
+  node: IXMLNode;
 begin
-  S := 'xavier';
-  CheckEquals(
-    S,
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group/item/name'
-    )
-    .Text(S)
-    .Text
-  );
+  pack := NewPack;
+  with pack.Node('/root/group/item/name') do
+  begin
+    Check(Name = 'name');
+    Check(Text = 'foo');
+  end;
+  with pack.Node('/root/group/item/value') do
+  begin
+    Check(Name = 'value');
+    Check(Text = 'bar');
+  end;
+  with pack.Node('/root/group/item/name') do
+  begin
+    Text('jeff');
+    Check(Text = 'jeff');
+    with Add('new') do
+    begin
+      Text('abc');
+      Check(Text = 'abc');
+    end;
+  end;
+  with pack.Node('/root/group') do
+  begin
+    with Add('new') do
+    begin
+      with Add('a').Add('b') do
+      begin
+       Check(Parent.Name = 'a', 'b parent');
+      end;
+      Check(Childs.Count = 1, 'new child');
+      Check(pack.Node('/root/group/new/a').Childs.Count = 1, 'a child');
+      Check(assigned(pack.Node('/root/group/new/a/b')), 'a/b level');
+    end;
+  end;
+  node := pack.Node('/root/default', TXMLNodeDefault.Create('def', 'text'));
+  Check(assigned(node), 'node default');
+  Check(node.Name = 'def', 'default name');
+  Check(node.Text = 'text', 'default text');
 end;
 
-procedure TXMLNodeTest.TestAttrsNotNull;
-begin
-  CheckEquals(
-    0,
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/footer'
-    )
-    .Attrs
-    .Count
-  );
-end;
-
-procedure TXMLNodeTest.TestAdd;
+procedure TCoreTests.XMLNodes;
 var
-  N: IXMLNode;
-  C: Integer;
+  pack: IXMLPack;
+  nodes: IXMLNodes;
 begin
-  N := TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node('/root/group/item');
-  C := N.Childs.Count;
-  CheckEquals(
-    C + 2,
-    N.Add('item').Parent
-      .Add('item').Parent
-      .Childs
-      .Count
-  );
+  pack := NewPack;
+  nodes := pack.Nodes('/root/group/*');
+  Check(nodes.Count = 2);
+  Check(assigned(nodes.Item('item'))); // by name, get the first
+  Check(assigned(nodes.Item(0)));
+  Check(assigned(nodes.Item(1)));
+  with pack.Node('/root/group') do
+  begin
+    Add('new').Text('foo');
+    Check(nodes.Count = 2); // have not changed nodes list - correct
+    Check(pack.Nodes('/root/group/*').Count = 3); // new list
+  end;
+  nodes := pack.Nodes('/root/group/item[@b=''2'']');
+  Check(assigned(nodes), 'nodes by @id');
+  Check(nodes.Count > 0, 'nodes count');
+  Check(assigned(nodes.Item(0)), 'nodes has item');
+  Check(nodes.Item(0).Attrs.Count = 3, 'nodes.attrs.count');
+  nodes := pack.Nodes('/root/group/item[@a=''1'']');
+  Check(nodes.Count = 2, 'nodes.count for @a');
+  nodes := pack.Nodes('/root/group/item[@xpto=''otpx'']');
+  Check(nodes.Count = 0, 'nodes.count empty');
+
 end;
 
-procedure TXMLNodeTest.TestAddTwoLevels;
+procedure TCoreTests.XMLChilds;
 var
-  P: IXMLPack;
+  pack: IXMLPack;
+  node: IXMLNode;
 begin
-  P := TXMLPack.Create('root');
-  P.Node('/root')
-    .Add('level-1')
-    .Add('level-2');
-  CheckNotNull(P.Node('/root/level-1/level-2'));
+  pack := NewPack;
+  node := pack.Node('/root/group/item');
+  Check(node.Childs.Count = 2);
+  Check(assigned(node.Childs.Item('name'))); // by name
+  Check(assigned(node.Childs.Item('value')));
+  with pack.Node('/root/empty') do
+  begin
+    Check(assigned(Childs), 'empty childs');
+    Check(Childs.Count = 0, 'empty childs count');
+  end;
+  with pack.Node('/root/footer') do
+  begin
+    Check(assigned(Childs), 'footer childs');
+    Check(Childs.Count = 1, 'footer childs count');
+  end;
 end;
 
-procedure TXMLNodeTest.TestChildsNotNull;
-begin
-  CheckNotNull(
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group'
-    )
-    .Childs
-  );
-end;
-
-procedure TXMLNodeTest.TestParent;
-begin
-  CheckEquals(
-    TXavierString('Package'),
-    TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Node(
-      '/CONFIG/Package/CompilerOptions'
-    )
-    .Parent
-    .Name
-  );
-end;
-
-procedure TXMLNodeTest.TestDefault;
-begin
-  CheckEquals(
-    'foo',
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group/xpto',
-      TXMLNodeDefault.Create('foo', '')
-    )
-    .Name
-  );
-end;
-
-{ TXMLNodesTest }
-
-procedure TXMLNodesTest.TestItemByIndex;
-begin
-  CheckEquals(
-    3,
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Nodes(
-      '/root/group/item[@id=''1'']'
-    )
-    .Item(0)
-    .Attrs
-    .Count
-  );
-end;
-
-procedure TXMLNodesTest.TestItemByName;
-begin
-  CheckEquals(
-    TXavierString('item'),
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Nodes(
-      '/root/group/item[@id=''1'']'
-    )
-    .Item('item')
-    .Name
-  );
-end;
-
-procedure TXMLNodesTest.TestCount;
-begin
-  CheckEquals(
-    2,
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Nodes(
-      '/root/group/item[@a=''1'']'
-    )
-    .Count
-  );
-end;
-
-procedure TXMLNodesTest.TestEmpty;
-begin
-  CheckEquals(
-    0,
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Nodes(
-      '/root/group/item[@xpto=''otpx'']'
-    )
-    .Count
-  );
-end;
-
-{ TXMLChildsTest }
-
-procedure TXMLChildsTest.TestItemByIndex;
-begin
-  CheckEquals(
-    TXavierString('foo2'),
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group'
-    )
-    .Childs
-      .Item(1)
-      .Childs
-        .Item(0)
-        .Text
-  );
-end;
-
-procedure TXMLChildsTest.TestItemByName;
-begin
-  CheckEquals(
-    TXavierString('item'),
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group'
-    )
-    .Childs
-    .Item('item')
-    .Name
-  );
-end;
-
-procedure TXMLChildsTest.TestCount;
-begin
-  CheckEquals(
-    2,
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group'
-    )
-    .Childs
-    .Count
-  );
-end;
-
-{ TXMLAttributeTest }
-
-procedure TXMLAttributeTest.TestName;
-begin
-  CheckEquals(
-    TXavierString('Value'),
-    TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Node(
-      '/CONFIG/Package/Name'
-    )
-    .Attrs
-    .Item(0)
-    .Name
-  );
-end;
-
-procedure TXMLAttributeTest.TestGetValue;
-begin
-  CheckEquals(
-    TXavierString('James.Pack'),
-    TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Node(
-      '/CONFIG/Package/Name'
-    )
-    .Attrs
-    .Item(0)
-    .Text
-  );
-end;
-
-procedure TXMLAttributeTest.TestSetValue;
+procedure TCoreTests.XMLAttribute;
 var
-  S: TXavierString;
+  pack: IXMLPack;
+  node: IXMLNode;
 begin
-  S := 'cyclop';
-  CheckEquals(
-    S,
-    TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Node(
-      '/CONFIG/Package/Name'
-    )
-    .Attrs
-    .Item(0)
-    .Text(S)
-    .Text
-  );
+  pack := NewPack;
+  node := pack.Node('/root/group/item');
+  Check(assigned(node.Attrs));
+  with node.Attrs do
+  begin
+    Check(Count = 3);
+    with Item(0) do
+    begin
+      Check(Name = 'a', 'a name');
+      Check(Text = '1', 'a text');
+    end;
+    with Item(1) do
+    begin
+      Check(Name = 'b', 'b name');
+      Check(Text = '2', 'b text');
+    end;
+    with Item(2) do
+    begin
+      Check(Name = 'c', 'c name');
+      Check(Text = '3', 'c text');
+    end;
+  end;
 end;
 
-procedure TXMLAttributeTest.TestNode;
+procedure TCoreTests.XMLAttributes;
+var
+  pack: IXMLPack;
+  node: IXMLNode;
 begin
-  CheckEquals(
-    TXavierString('Name'),
-    TXMLPack.Create(TXMLFileForTest.Create.Ref.Stream).Ref.Node(
-      '/CONFIG/Package/Name'
-    )
-    .Attrs
-    .Item(0) // goto item
-    .Node    // and return to owner TestNode
-    .Name
-  );
-end;
+  pack := NewPack;
+  node := pack.Node('/root/footer');
+  Check(assigned(node.Attrs));
+  with node.Attrs do
+  begin
+    Check(Count = 0, 'footer: count 0');
+    Add('a','1');
+    Add('b','2');
+    Check(Count = 2, 'footer: count 2');
+    with Item(0) do
+    begin
+      Check(Name = 'a', 'footer a name');
+      Check(Text = '1', 'footer a text');
+    end;
+    with Item(1) do
+    begin
+      Check(Name = 'b', 'footer b name');
+      Check(Text = '2', 'footer b value');
+    end;
+  end;
 
-{ TXMLAttributesTest }
-
-procedure TXMLAttributesTest.TestAdd;
-begin
-  CheckEquals(
-    TXavierString('1'),
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group/item'
-    )
-    .Attrs
-    .Add('foo', '1')
-    .Text
-  );
-end;
-
-procedure TXMLAttributesTest.TestItemByIndex;
-begin
-  CheckEquals(
-    TXavierString('1'),
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group/item'
-    )
-    .Attrs
-    .Item(0)
-    .Text
-  );
-end;
-
-procedure TXMLAttributesTest.TestItemByName;
-begin
-  CheckEquals(
-    TXavierString('1'),
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group/item'
-    )
-    .Attrs
-    .Item('id')
-    .Text
-  );
-end;
-
-procedure TXMLAttributesTest.TestCount;
-begin
-  CheckEquals(
-    3,
-    TXMLPack.Create(TXMLStreamForTest.Create).Ref.Node(
-      '/root/group/item'
-    )
-    .Attrs
-    .Count
-  );
 end;
 
 initialization
   TTestSuite.Create('Core')
     .Ref
-    .Add(TTest.Create(TXMLPackTest))
-    .Add(TTest.Create(TXMLNodeTest))
-    .Add(TTest.Create(TXMLNodesTest))
-    .Add(TTest.Create(TXMLChildsTest))
-    .Add(TTest.Create(TXMLAttributeTest))
-    .Add(TTest.Create(TXMLAttributesTest))
+    .Add(TTest.Create(TCoreTests))
 
 end.
 
