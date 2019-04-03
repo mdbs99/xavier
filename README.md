@@ -94,15 +94,32 @@ If you want to find the `value` child node of `foo` node, do this:
 
 ```pascal
 var
-  N: IXMLNode;
+  pack: IXMLPack;
+  n: IXMLNode;
 begin
-  N := TXMLPack.New(
+  p := TXMLPack.Create(
     TFile.New('file.xml').Stream
-  ).Node('/root/foo/value');
-  ShowMessage(N.Text); // "foo"
+  );
+  n := pack.Node('/root/foo/value');
+  ShowMessage(n.Text); // "foo"
 end.
 ```
-In fact, we don't need this variable `N`. Just call `Text` directly.
+
+In fact, we don't need variables `pack or `n`. Just call directly:
+
+```pascal
+begin
+  ShowMessage(
+    TXMLPack.Create(
+      TFile.New('file.xml').Stream
+    )
+    .Ref
+    .Node('/root/foo/value')
+    .Text
+  ); // "foo"
+end.
+```
+
 
 ## Add Node
 
@@ -110,10 +127,13 @@ You can add a node easily doing this:
 
 ```pascal
 // add a new node: name="item" value="a"
-TXMLPack.New(TFile.New('file.xml').Stream)
-  .Node('/root')
-  .Add('item')
-  .Value('a')
+begin
+  TXMLPack.Create(TFile.New('file.xml').Stream)
+    .Ref
+    .Node('/root')
+    .Add('item')
+    .Value('a')
+end;
 ```
 
 ## Childs Count
@@ -122,10 +142,13 @@ You can count how many childs a node have doing this:
 
 ```pascal
 // How many childs
-TXMLPack.New(TFile.New('file.xml').Stream)
-  .Node('/root')
-  .Childs
-  .Count
+begin
+  TXMLPack.Create(TFile.New('file.xml').Stream)
+    .Ref
+    .Node('/root')
+    .Childs
+    .Count
+end;
 ```
 
 ## Find Attribute
@@ -134,10 +157,13 @@ You can find any attribute by name doing this:
 
 ```pascal
 // Find by name "id"
-TXMLPack.New(TFile.New('file.xml').Stream)
-  .Node('/root')
-  .Attrs
-  .Item('id')
+begin
+  TXMLPack.New(TFile.New('file.xml').Stream)
+    .Ref
+    .Node('/root')
+    .Attrs
+    .Item('id')
+end;
 ```
 
 ## Add Attribute
@@ -146,10 +172,13 @@ Adding an attribute is quite easy too:
 
 ```pascal
 // Add an attribute: name="foo" value="bar"
-TXMLPack.New(TFile.New('file.xml').Stream)
-  .Node('/root')
-  .Attrs
-  .Add('foo', 'bar')
+begin
+  TXMLPack.New(TFile.New('file.xml').Stream)
+    .Ref
+    .Node('/root')
+    .Attrs
+    .Add('foo', 'bar')
+end;
 ```
 
 # License (MIT)
