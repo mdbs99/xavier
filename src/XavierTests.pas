@@ -93,11 +93,11 @@ var
   pack: IXMLPack;
 begin
   pack := NewPack;
-  Check(pack.Node('/root').Name = 'root');
-  Check(pack.Node('/root/group').Name = 'group');
-  Check(pack.Node('/root/group').Childs.Count = 2);
-  Check(assigned(pack.Node('/root/group/item/name')));
-  Check(assigned(pack.Node('/root/footer/name')));
+  check(pack.Node('/root').Name = 'root');
+  check(pack.Node('/root/group').Name = 'group');
+  check(pack.Node('/root/group').Childs.Count = 2);
+  check(assigned(pack.Node('/root/group/item/name')));
+  check(assigned(pack.Node('/root/footer/name')));
 end;
 
 procedure TCoreTests.XMLNode;
@@ -108,22 +108,22 @@ begin
   pack := NewPack;
   with pack.Node('/root/group/item/name') do
   begin
-    Check(Name = 'name');
-    Check(Text = 'foo');
+    check(Name = 'name');
+    check(Text = 'foo');
   end;
   with pack.Node('/root/group/item/value') do
   begin
-    Check(Name = 'value');
-    Check(Text = 'bar');
+    check(Name = 'value');
+    check(Text = 'bar');
   end;
   with pack.Node('/root/group/item/name') do
   begin
     Text('jeff');
-    Check(Text = 'jeff');
+    check(Text = 'jeff');
     with Add('new') do
     begin
       Text('abc');
-      Check(Text = 'abc');
+      check(Text = 'abc');
     end;
   end;
   with pack.Node('/root/group') do
@@ -132,17 +132,17 @@ begin
     begin
       with Add('a').Add('b') do
       begin
-       Check(Parent.Name = 'a', 'b parent');
+       check(Parent.Name = 'a', 'b parent');
       end;
-      Check(Childs.Count = 1, 'new child');
-      Check(pack.Node('/root/group/new/a').Childs.Count = 1, 'a child');
-      Check(assigned(pack.Node('/root/group/new/a/b')), 'a/b level');
+      check(Childs.Count = 1, 'new child');
+      check(pack.Node('/root/group/new/a').Childs.Count = 1, 'a child');
+      check(assigned(pack.Node('/root/group/new/a/b')), 'a/b level');
     end;
   end;
   node := pack.Node('/root/default', TXMLNodeDefault.Create('def', 'text'));
-  Check(assigned(node), 'node default');
-  Check(node.Name = 'def', 'default name');
-  Check(node.Text = 'text', 'default text');
+  check(assigned(node), 'node default');
+  check(node.Name = 'def', 'default name');
+  check(node.Text = 'text', 'default text');
 end;
 
 procedure TCoreTests.XMLNodes;
@@ -152,25 +152,27 @@ var
 begin
   pack := NewPack;
   nodes := pack.Nodes('/root/group/*');
-  Check(nodes.Count = 2);
-  Check(assigned(nodes.Item('item'))); // by name, get the first
-  Check(assigned(nodes.Item(0)));
-  Check(assigned(nodes.Item(1)));
+  check(nodes.Count = 2);
+  check(assigned(nodes.Item('item'))); // by name, get the first
+  check(assigned(nodes.Item(0)));
+  check(assigned(nodes.Item(1)));
   with pack.Node('/root/group') do
   begin
     Add('new').Text('foo');
-    Check(nodes.Count = 2); // have not changed nodes list - correct
-    Check(pack.Nodes('/root/group/*').Count = 3); // new list
+    check(nodes.Count = 2); // have not changed nodes list - correct
+    check(pack.Nodes('/root/group/*').Count = 3); // new list
   end;
   nodes := pack.Nodes('/root/group/item[@b=''2'']');
-  Check(assigned(nodes), 'nodes by @id');
-  Check(nodes.Count > 0, 'nodes count');
-  Check(assigned(nodes.Item(0)), 'nodes has item');
-  Check(nodes.Item(0).Attrs.Count = 3, 'nodes.attrs.count');
+  check(assigned(nodes), 'nodes by @id');
+  check(nodes.Count > 0, 'nodes count');
+  check(assigned(nodes.Item(0)), 'nodes has item');
+  check(nodes.Item(0).Attrs.Count = 3, 'nodes.attrs.count');
   nodes := pack.Nodes('/root/group/item[@a=''1'']');
-  Check(nodes.Count = 2, 'nodes.count for @a');
+  check(nodes.Count = 2, 'nodes.count for @a');
   nodes := pack.Nodes('/root/group/item[@xpto=''otpx'']');
-  Check(nodes.Count = 0, 'nodes.count empty');
+  check(nodes.Count = 0, 'nodes.count empty');
+  nodes := pack.Nodes('/root/group//item'); // it gets all item nodes
+  check(nodes.Count = 2, 'all items');
 end;
 
 procedure TCoreTests.XMLChilds;
@@ -180,18 +182,18 @@ var
 begin
   pack := NewPack;
   node := pack.Node('/root/group/item');
-  Check(node.Childs.Count = 2);
-  Check(assigned(node.Childs.Item('name'))); // by name
-  Check(assigned(node.Childs.Item('value')));
+  check(node.Childs.Count = 2);
+  check(assigned(node.Childs.Item('name'))); // by name
+  check(assigned(node.Childs.Item('value')));
   with pack.Node('/root/empty') do
   begin
-    Check(assigned(Childs), 'empty childs');
-    Check(Childs.Count = 0, 'empty childs count');
+    check(assigned(Childs), 'empty childs');
+    check(Childs.Count = 0, 'empty childs count');
   end;
   with pack.Node('/root/footer') do
   begin
-    Check(assigned(Childs), 'footer childs');
-    Check(Childs.Count = 1, 'footer childs count');
+    check(assigned(Childs), 'footer childs');
+    check(Childs.Count = 1, 'footer childs count');
   end;
 end;
 
@@ -202,24 +204,24 @@ var
 begin
   pack := NewPack;
   node := pack.Node('/root/group/item');
-  Check(assigned(node.Attrs));
+  check(assigned(node.Attrs));
   with node.Attrs do
   begin
-    Check(Count = 3);
+    check(Count = 3);
     with Item(0) do
     begin
-      Check(Name = 'a', 'a name');
-      Check(Text = '1', 'a text');
+      check(Name = 'a', 'a name');
+      check(Text = '1', 'a text');
     end;
     with Item(1) do
     begin
-      Check(Name = 'b', 'b name');
-      Check(Text = '2', 'b text');
+      check(Name = 'b', 'b name');
+      check(Text = '2', 'b text');
     end;
     with Item(2) do
     begin
-      Check(Name = 'c', 'c name');
-      Check(Text = '3', 'c text');
+      check(Name = 'c', 'c name');
+      check(Text = '3', 'c text');
     end;
   end;
 end;
@@ -231,22 +233,22 @@ var
 begin
   pack := NewPack;
   node := pack.Node('/root/footer');
-  Check(assigned(node.Attrs));
+  check(assigned(node.Attrs));
   with node.Attrs do
   begin
-    Check(Count = 0, 'footer: count 0');
+    check(Count = 0, 'footer: count 0');
     Add('a','1');
     Add('b','2');
-    Check(Count = 2, 'footer: count 2');
+    check(Count = 2, 'footer: count 2');
     with Item(0) do
     begin
-      Check(Name = 'a', 'footer a name');
-      Check(Text = '1', 'footer a text');
+      check(Name = 'a', 'footer a name');
+      check(Text = '1', 'footer a text');
     end;
     with Item(1) do
     begin
-      Check(Name = 'b', 'footer b name');
-      Check(Text = '2', 'footer b value');
+      check(Name = 'b', 'footer b name');
+      check(Text = '2', 'footer b value');
     end;
   end;
 
