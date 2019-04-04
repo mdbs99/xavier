@@ -84,7 +84,7 @@ end;
 constructor TXMLPack.Create(const aRootName: TXavierString);
 begin
   Create(
-    TDataStream.New(
+    TDataStream.Create(
       Format(
         '<?xml version="1.0" encoding="UTF-8"?><%s />', [aRootName]
       )

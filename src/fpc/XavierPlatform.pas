@@ -380,7 +380,7 @@ begin
   mem := TMemoryStream.Create;
   try
     WriteXMLFile(fDocument, mem);
-    result := TDataStream.New(mem);
+    result := TDataStream.Create(mem);
   finally
     mem.Free;
   end;
