@@ -98,7 +98,7 @@ var
   n: IXMLNode;
 begin
   pack := TXMLPack.Create(
-    TFile.New('file.xml').Stream
+    TDataFile.New('file.xml').Stream
   );
   n := pack.Node('/root/foo/value');
   ShowMessage(n.Text); // "foo"
@@ -111,7 +111,7 @@ In fact, we don't need variables `pack` or `n`. Just call directly:
 begin
   ShowMessage(
     TXMLPack.Create(
-      TFile.New('file.xml').Stream
+      TDataFile.New('file.xml').Stream
     )
     .Ref
     .Node('/root/foo/value')
@@ -128,7 +128,7 @@ You can add a node easily doing this:
 ```pascal
 // add a new node: name="item" value="a"
 begin
-  TXMLPack.Create(TFile.New('file.xml').Stream)
+  TXMLPack.Create(TDataFile.New('file.xml').Stream)
     .Ref
     .Node('/root')
     .Add('item')
@@ -143,7 +143,7 @@ You can count how many childs a node have doing this:
 ```pascal
 // How many childs
 begin
-  TXMLPack.Create(TFile.New('file.xml').Stream)
+  TXMLPack.Create(TDataFile.New('file.xml').Stream)
     .Ref
     .Node('/root')
     .Childs
@@ -158,7 +158,7 @@ You can find any attribute by name doing this:
 ```pascal
 // Find by name "id"
 begin
-  TXMLPack.New(TFile.New('file.xml').Stream)
+  TXMLPack.New(TDataFile.New('file.xml').Stream)
     .Ref
     .Node('/root')
     .Attrs
@@ -173,7 +173,7 @@ Adding an attribute is quite easy too:
 ```pascal
 // Add an attribute: name="foo" value="bar"
 begin
-  TXMLPack.New(TFile.New('file.xml').Stream)
+  TXMLPack.New(TDataFile.New('file.xml').Stream)
     .Ref
     .Node('/root')
     .Attrs
