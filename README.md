@@ -74,6 +74,10 @@ Besides that, we are using other libraries:
 
 # Getting Started
 
+You can find some examples to use Xavier in its own source. Just take a look into `Xavier*Tests` units.
+
+Additionally, below you can find the basics to start.
+
 ## Find a Node
 
 Take this XML for example:
