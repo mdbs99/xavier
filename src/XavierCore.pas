@@ -30,23 +30,19 @@ interface
 uses
   Classes, 
   SysUtils,
-  JamesDataBase,
-  JamesDataCore,
-  XavierBase,
-  XavierPlatform;
+  SynCommons,
+  XavierBase;
 
 type
-  TXMLAttribute = TCAttribute;
-  TXMLAttributes = TCAttributes;
-  TXMLNode = TCNode;
-  TXMLNodes = TCNodes;
-  TXMLChilds = TCChilds;
-
-  TXMLPack = class(TCPack, IXMLPack)
+  TXMLNodes = class(TInterfacedObject, IXMLNodes)
+  private
+    fList: IInterfaceList;
   public
-    constructor Create(const aStream: IDataStream); overload;
-    constructor Create(const aRootName: TXavierString); overload;
-    function Ref: IXMLPack;
+    constructor Create(const aList: IInterfaceList);
+    function Ref: IXMLNodes;
+    function Item(aIndex: Integer): IXMLNode; overload;
+    function Item(const aName: TXavierString): IXMLNode; overload;
+    function Count: Integer;
   end;
 
   TXMLNodeDefault = class(TInterfacedObject, IXMLNode)
@@ -66,35 +62,44 @@ type
 
 implementation
 
-{ TXMLPack }
+{ TXMLNodes }
 
-constructor TXMLPack.Create(const aStream: IDataStream);
-var
-  mem: TMemoryStream;
+constructor TXMLNodes.Create(const aList: IInterfaceList);
 begin
-  mem := TMemoryStream.Create;
-  try
-    aStream.Save(mem);
-    Create(mem);
-  finally
-    mem.Free;
-  end;
+  inherited Create;
+  fList := aList;
 end;
 
-constructor TXMLPack.Create(const aRootName: TXavierString);
-begin
-  Create(
-    TDataStream.Create(
-      Format(
-        '<?xml version="1.0" encoding="UTF-8"?><%s />', [aRootName]
-      )
-    )
-  );
-end;
-
-function TXMLPack.Ref: IXMLPack;
+function TXMLNodes.Ref: IXMLNodes;
 begin
   result := self;
+end;
+
+function TXMLNodes.Item(aIndex: Integer): IXMLNode;
+begin
+  result := fList.Items[AIndex] as IXMLNode;
+end;
+
+function TXMLNodes.Item(const aName: TXavierString): IXMLNode;
+var
+  i: Integer;
+  n: IXMLNode;
+begin
+  for i := 0 to fList.Count -1 do
+  begin
+    n := Item(i);
+    if n.Name = aName then
+    begin
+      result := n;
+      Exit;
+    end;
+  end;
+  raise EXMLError.CreateFmt('Node "%s" not found.', [aName]);
+end;
+
+function TXMLNodes.Count: Integer;
+begin
+  result := fList.Count;
 end;
 
 { TXMLNodeDefault }

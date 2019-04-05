@@ -33,7 +33,8 @@ uses
   JamesTestCore,
   JamesTestPlatform,
   XavierBase,
-  XavierCore;
+  XavierCore,
+  XavierCorePlatform;
   
 type
   TCoreTests = class(TTestCase)
