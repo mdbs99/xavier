@@ -38,7 +38,7 @@ uses
   JamesDataBase;
 
 type
-  TXavierString = DOMString;
+  TXavierString = UnicodeString;
 
   EXavierException = class(ESynException);
 
