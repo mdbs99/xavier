@@ -30,15 +30,10 @@ interface
 uses
   SysUtils,
   SynCommons,
-  {$ifdef FPC}
-    DOM,
-  {$else}
-    XMLDOM,
-  {$endif}
   JamesDataBase;
 
 type
-  TXavierString = UnicodeString;
+  TXavierString = type UnicodeString;
 
   EXavierException = class(ESynException);
 
