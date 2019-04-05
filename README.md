@@ -66,7 +66,8 @@ Considering `<xavier>` as the path where you have saved the sources, your projec
 
 # Dependencies
 
-Internally, this project uses other built-in XML library for each compiler.
+Internally, this project uses the built-in XML library for each compiler.
+
 Besides that, we are using other libraries:
 
 - [James](https://github.com/mdbs99/james) — is a collection of classes and interfaces for truly object-oriented projects.
