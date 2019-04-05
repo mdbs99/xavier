@@ -330,14 +330,14 @@ end;
 
 function TXMLPack.Stream: IDataStream;
 var
-  mem: TStream;
+  m: TStream;
 begin
-  mem := TMemoryStream.Create;
+  m := TMemoryStream.Create;
   try
-    fDocument.SaveToStream(mem);
-    result := TDataStream.New(mem);
+    fDocument.SaveToStream(m);
+    result := TDataStream.New(m);
   finally
-    mem.Free;
+    m.Free;
   end;
 end;
 

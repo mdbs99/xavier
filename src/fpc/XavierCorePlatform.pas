@@ -343,14 +343,14 @@ end;
 
 function TXMLPack.Stream: IDataStream;
 var
-  mem: TStream;
+  m: TStream;
 begin
-  mem := TMemoryStream.Create;
+  m := TMemoryStream.Create;
   try
-    WriteXMLFile(fDocument, mem);
-    result := TDataStream.Create(mem);
+    WriteXMLFile(fDocument, m);
+    result := TDataStream.Create(m);
   finally
-    mem.Free;
+    m.Free;
   end;
 end;
 
