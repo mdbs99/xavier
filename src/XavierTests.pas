@@ -133,7 +133,7 @@ begin
     begin
       with Add('a').Add('b') do
       begin
-       check(Parent.Name = 'a', 'b parent');
+        check(Parent.Name = 'a', 'b parent');
       end;
       check(Childs.Count = 1, 'new child');
       check(pack.Node('/root/group/new/a').Childs.Count = 1, 'a child');
@@ -164,15 +164,18 @@ begin
     check(pack.Nodes('/root/group/*').Count = 3); // new list
   end;
   nodes := pack.Nodes('/root/group/item[@b=''2'']');
-  check(assigned(nodes), 'nodes by @id');
-  check(nodes.Count > 0, 'nodes count');
+  check(assigned(nodes), 'xpath @b');
+  check(nodes.Count = 2, 'xpath @b count');
+  nodes := pack.Nodes('/root/group/item[@id=''2'']');
+  check(assigned(nodes), 'xpath @id');
+  check(nodes.Count = 1, 'xpath @id count');
   check(assigned(nodes.Item(0)), 'nodes has item');
   check(nodes.Item(0).Attrs.Count = 3, 'nodes.attrs.count');
   nodes := pack.Nodes('/root/group/item[@a=''1'']');
   check(nodes.Count = 2, 'nodes.count for @a');
   nodes := pack.Nodes('/root/group/item[@xpto=''otpx'']');
-  check(nodes.Count = 0, 'nodes.count empty');
-  nodes := pack.Nodes('/root/group//item'); // it gets all item nodes
+  check(nodes.Count = 0, 'nodes.count for @xpto');
+  nodes := pack.Nodes('/root/group//item'); // it gets all "item" nodes
   check(nodes.Count = 2, 'all items');
 end;
 
