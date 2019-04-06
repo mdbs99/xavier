@@ -2,14 +2,13 @@
 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/mdbs99/xavier/blob/master/README.md)
 
-Xavier is an object-oriented library for working with XML.
+Xavier is a small XML library, object-oriented, and cross-platform that simplifies the work with XML files and streams.
 
 **ATTENTION:** We're still in a very early alpha version, the API may and will change frequently. Please, use it at your own risk, until we release version 1.0.
 
 # Table of Contents
 
 - [Overview](#overview)
-- [Concepts](#concepts)
 - [Installing](#installing)
   - [On Lazarus](#on-lazarus)
   - [On Delphi](#on-delphi)
@@ -26,21 +25,9 @@ Xavier is an object-oriented library for working with XML.
 
 This API is being written in [Free Pascal](https://freepascal.org/) and [Lazarus](http://www.lazarus-ide.org/). However, it is also compatible with [Delphi](https://www.embarcadero.com/products/delphi).
 
-# Concepts
-
 Nowadays, all XML libraries are very complex. Each class has so many methods that could be hard to use and understand them. These implementations are very procedural too.
 
 The major goal of this project is to replace common procedural code in our projects, which could have so many conditionals and variables, to a declarative and object-oriented code to work more easily with XML.
-
-We want to write elegant, clean, and maintainable code using OOP.
-
-This project has some design principles:
-
-* Fully interface-based
-* Memory is released automatically
-* No usage of `nil`/`NULL` in arguments or returns
-* No type casting or reflection
-* No procedures or functions, only interfaces and objects
 
 # Installing
 
