@@ -60,6 +60,8 @@ Besides that, we are using other libraries:
 - [James](https://github.com/mdbs99/james) — is a collection of classes and interfaces for truly object-oriented projects.
 - [mORMot](https://github.com/synopse/mORMot) — client-server ORM SOA MVC framework for Delphi 6 up to latest Delphi and FPC
 
+Take a look into [James dependencies](https://github.com/mdbs99/james#dependencies) which will show and explain about these dependencies and how to install.
+
 # Getting Started
 
 You can find some examples to use Xavier in its own source. Just take a look into `Xavier*Tests` units.
