@@ -33,7 +33,8 @@ uses
   Forms,
   JamesTestPlatform,
   GuiTestRunner,
-  XavierTests in '..\src\XavierTests.pas';
+  XavierTests in '..\src\XavierTests.pas',
+  MSXML2_TLB in '..\src\delphi\MSXML2_TLB.pas';
 
 {$R *.res}
 
