@@ -202,13 +202,13 @@ end;
 
 function TXMLNode.Text: TXavierString;
 begin
-  result := fNode.nodeValue;
+  result := fNode.text;
 end;
 
 function TXMLNode.Text(const aText: TXavierString): IXMLNode;
 begin
   result := self;
-  fNode.NodeValue := aText;
+  fNode.text := aText;
 end;
 
 function TXMLNode.Text(const aText: string): IXMLNode;
