@@ -163,17 +163,17 @@ begin
     check(nodes.Count = 2); // have not changed nodes list - correct
     check(pack.Nodes('/root/group/*').Count = 3); // new list
   end;
-  nodes := pack.Nodes('/root/group/item[@b=''2'']');
+  nodes := pack.Nodes('/root/group/item[@b="2"]');
   check(assigned(nodes), 'xpath @b');
   check(nodes.Count = 2, 'xpath @b count');
-  nodes := pack.Nodes('/root/group/item[@id=''2'']');
+  nodes := pack.Nodes('/root/group/item[@id="2"]');
   check(assigned(nodes), 'xpath @id');
   check(nodes.Count = 1, 'xpath @id count');
   check(assigned(nodes.Item(0)), 'nodes has item');
   check(nodes.Item(0).Attrs.Count = 3, 'nodes.attrs.count');
-  nodes := pack.Nodes('/root/group/item[@a=''1'']');
+  nodes := pack.Nodes('/root/group/item[@a="1"]');
   check(nodes.Count = 2, 'nodes.count for @a');
-  nodes := pack.Nodes('/root/group/item[@xpto=''otpx'']');
+  nodes := pack.Nodes('/root/group/item[@xpto="otpx"]');
   check(nodes.Count = 0, 'nodes.count for @xpto');
   nodes := pack.Nodes('/root/group//item'); // it gets all "item" nodes
   check(nodes.Count = 2, 'all items');
