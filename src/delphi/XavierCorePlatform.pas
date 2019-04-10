@@ -49,7 +49,6 @@ type
     function Name: TXavierString;
     function Text: TXavierString; overload;
     function Text(const aText: TXavierString): IXMLAttribute; overload;
-    function Node: IXMLNode;
   end;
 
   TXMLAttributes = class(TInterfacedObject, IXMLAttributes)
@@ -134,9 +133,6 @@ begin
   fNode.NodeValue := aText;
 end;
 
-function TXMLAttribute.Node: IXMLNode;
-begin
-  result := TXMLNode.Create(fNode.ParentNode);
 end;
 
 { TXMLAttributes }

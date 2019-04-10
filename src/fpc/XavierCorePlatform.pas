@@ -44,15 +44,13 @@ uses
 type
   TXMLAttribute = class(TInterfacedObject, IXMLAttribute)
   private
-    fParent: TDOMNode;
     fAttr: TDOMNode;
   public
-    constructor Create(aParent, aAttr: TDOMNode);
+    constructor Create(aAttr: TDOMNode);
     function Ref: IXMLAttribute;
     function Name: TXavierString;
     function Text: TXavierString; overload;
     function Text(const aText: TXavierString): IXMLAttribute; overload;
-    function Node: IXMLNode;
   end;
 
   TXMLAttributes = class(TInterfacedObject, IXMLAttributes)
@@ -109,12 +107,9 @@ implementation
 
 { TXMLAttribute }
 
-constructor TXMLAttribute.Create(aParent, aAttr: TDOMNode);
+constructor TXMLAttribute.Create(aAttr: TDOMNode);
 begin
   inherited Create;
-  // it is needed to keep the ParentNode and the Attribute itself
-  // do not know why, but using Attr.ParentNode does not work
-  fParent := AParent;
   fAttr := AAttr;
 end;
 
@@ -137,11 +132,6 @@ function TXMLAttribute.Text(const aText: TXavierString): IXMLAttribute;
 begin
   result := self;
   fAttr.NodeValue := aText;
-end;
-
-function TXMLAttribute.Node: IXMLNode;
-begin
-  result := TXMLNode.Create(fParent);
 end;
 
 { TXMLAttributes }
@@ -170,7 +160,7 @@ begin
   n := fNode.Attributes.Item[aIndex];
   if not Assigned(n) then
     raise EXMLError.CreateFmt('Node not found on index %d.', [aIndex]);
-  result := TXMLAttribute.Create(fNode, n);
+  result := TXMLAttribute.Create(n);
 end;
 
 function TXMLAttributes.Item(const aName: TXavierString): IXMLAttribute;
@@ -180,7 +170,7 @@ begin
   a := fNode.Attributes.GetNamedItem(aName);
   if not Assigned(a) then
     raise EXMLError.CreateFmt('Node "%s" not found.', [aName]);
-  result := TXMLAttribute.Create(fNode, a);
+  result := TXMLAttribute.Create(a);
 end;
 
 function TXMLAttributes.Count: Integer;

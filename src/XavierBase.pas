@@ -47,7 +47,6 @@ type
     function Name: TXavierString;
     function Text: TXavierString; overload;
     function Text(const aText: TXavierString): IXMLAttribute; overload;
-    function Node: IXMLNode;
   end;
 
   IXMLAttributes = interface
