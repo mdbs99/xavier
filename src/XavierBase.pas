@@ -33,7 +33,7 @@ uses
   JamesDataBase;
 
 type
-  TXavierString = type UnicodeString;
+  TXavierString = type SynUnicode;
 
   EXavierException = class(ESynException);
 
