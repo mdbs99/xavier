@@ -96,7 +96,7 @@ begin
   pack := NewPack;
   check(pack.Node('/root').Name = 'root');
   check(pack.Node('/root/group').Name = 'group');
-  check(pack.Node('/root/group').Childs.Count = 2);
+  check(pack.Node('/root/group').Childs.Count = 2, 'count');
   check(assigned(pack.Node('/root/group/item/name')));
   check(assigned(pack.Node('/root/footer/name')));
 end;
