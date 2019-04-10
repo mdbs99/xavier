@@ -91,7 +91,8 @@ end;
 
 procedure TCoreTests.XMLPack;
 var
-  pack: IXMLPack;
+  pack, pack2: IXMLPack;
+  mem: TMemoryStream;
 begin
   pack := NewPack;
   check(pack.Node('/root').Name = 'root');
@@ -99,6 +100,14 @@ begin
   check(pack.Node('/root/group').Childs.Count = 2, 'count');
   check(assigned(pack.Node('/root/group/item/name')));
   check(assigned(pack.Node('/root/footer/name')));
+  mem := TMemoryStream.Create;
+  try
+    pack.Stream.Save(mem);
+    pack2 := TXMLPack.Create(mem);
+    check(pack.Stream.AsString = pack2.Stream.AsString, 'streams not equal');
+  finally
+    mem.Free;
+  end;
 end;
 
 procedure TCoreTests.XMLNode;

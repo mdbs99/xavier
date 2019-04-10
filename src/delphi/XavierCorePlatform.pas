@@ -337,16 +337,8 @@ begin
 end;
 
 function TXMLPack.Stream: IDataStream;
-var
-  m: TStream;
 begin
-  m := TMemoryStream.Create;
-  try
-    fDocument.SaveToStream(m);
-    result := TDataStream.Create(m);
-  finally
-    m.Free;
-  end;
+  result := TDataStream.Create(fDocument.xml);
 end;
 
 end.
