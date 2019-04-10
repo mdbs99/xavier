@@ -42,9 +42,9 @@ uses
 type
   TXMLAttribute = class(TInterfacedObject, IXMLAttribute)
   private
-    fNode: IXMLDomNode;                                 
+    fAttr: IXMLDOMAttribute;
   public
-    constructor Create(ANode: IXMLDomNode);
+    constructor Create(const aAttr: IXMLDOMAttribute);
     function Ref: IXMLAttribute;
     function Name: TXavierString;
     function Text: TXavierString; overload;
@@ -55,7 +55,7 @@ type
   private
     fNode: IXMLDomNode;
   public
-    constructor Create(aNode: IXMLDomNode);
+    constructor Create(const aNode: IXMLDomNode);
     function Ref: IXMLAttributes;
     function Add(const aName, aText: TXavierString): IXMLAttribute;
     function Item(aIndex: Integer): IXMLAttribute; overload;
@@ -67,7 +67,7 @@ type
   private
     fNode: IXMLDomNode;
   public
-    constructor Create(aNode: IXMLDomNode);
+    constructor Create(const aNode: IXMLDomNode);
     function Ref: IXMLNode;
     function Name: TXavierString;
     function Text: TXavierString; overload;
@@ -83,7 +83,7 @@ type
   private
     fNode: IXMLDomNode;
   public
-    constructor Create(aNode: IXMLDomNode);
+    constructor Create(const aNode: IXMLDomNode);
     function Ref: IXMLNodes;
     function Item(aIndex: Integer): IXMLNode; overload;
     function Item(const aName: TXavierString): IXMLNode; overload;
@@ -106,10 +106,10 @@ implementation
 
 { TXMLAttribute }
 
-constructor TXMLAttribute.Create(ANode: IXMLDomNode);
+constructor TXMLAttribute.Create(const aAttr: IXMLDOMAttribute);
 begin
   inherited Create;
-  fNode := ANode;
+  fAttr := aAttr;
 end;
 
 function TXMLAttribute.Ref: IXMLAttribute;
@@ -119,25 +119,23 @@ end;
 
 function TXMLAttribute.Name: TXavierString;
 begin
-  result := fNode.NodeName;
+  result := fAttr.name;
 end;
 
 function TXMLAttribute.Text: TXavierString;
 begin
-  result := fNode.NodeValue;
+  result := fAttr.value;
 end;
 
 function TXMLAttribute.Text(const aText: TXavierString): IXMLAttribute;
 begin
   result := self;
-  fNode.NodeValue := aText;
-end;
-
+  fAttr.value := aText;
 end;
 
 { TXMLAttributes }
 
-constructor TXMLAttributes.Create(aNode: IXMLDomNode);
+constructor TXMLAttributes.Create(const aNode: IXMLDomNode);
 begin
   inherited Create;
   fNode := aNode;
@@ -149,8 +147,13 @@ begin
 end;
 
 function TXMLAttributes.Add(const aName, aText: TXavierString): IXMLAttribute;
+var
+  attr: IXMLDOMAttribute;
 begin
-  // todo
+  attr := fNode.ownerDocument.createAttribute(aName);
+  attr.value := aText;
+  fNode.attributes.setNamedItem(attr);
+  result := TXMLAttribute.Create(attr);
 end;
 
 function TXMLAttributes.Item(aIndex: Integer): IXMLAttribute;
@@ -160,7 +163,7 @@ begin
   n := fNode.Attributes.Item[aIndex];
   if not Assigned(n) then
     raise EXMLError.CreateFmt('Node not found on index %d.', [aIndex]);
-  result := TXMLAttribute.Create(n);
+  result := TXMLAttribute.Create(n as IXMLDOMAttribute);
 end;
 
 function TXMLAttributes.Item(const aName: TXavierString): IXMLAttribute;
@@ -170,7 +173,7 @@ begin
   n := fNode.Attributes.GetNamedItem(aName);
   if not Assigned(n) then
     raise EXMLError.CreateFmt('Node "%s" not found.', [aName]);
-  result := TXMLAttribute.Create(n);
+  result := TXMLAttribute.Create(n as IXMLDOMAttribute);
 end;
 
 function TXMLAttributes.Count: Integer;
@@ -180,7 +183,7 @@ end;
 
 { TXMLNode }
 
-constructor TXMLNode.Create(aNode: IXMLDomNode);
+constructor TXMLNode.Create(const aNode: IXMLDomNode);
 begin
   inherited Create;
   fNode := aNode;
@@ -239,7 +242,7 @@ end;
 
 { TXMLChilds }
 
-constructor TXMLChilds.Create(aNode: IXMLDomNode);
+constructor TXMLChilds.Create(const aNode: IXMLDomNode);
 begin
   inherited Create;
   fNode := ANode;
