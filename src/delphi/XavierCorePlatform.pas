@@ -30,12 +30,11 @@ interface
 uses
   Classes, 
   SysUtils,
-  xmlDoc, 
-  xmlIntf,
-  xmlDom,
+  MSXML2_TLB,
   SynCommons,
   JamesDataBase,
   JamesDataCore,
+  JamesDataAdapters,
   XavierBase,
   XavierCore,
   XavierAdapters;
@@ -261,8 +260,13 @@ begin
 end;
 
 function TXMLChilds.Item(const aName: TXavierString): IXMLNode;
+var
+  n: IXMLDOMNode;
 begin
-  // todo
+  n := fNode.selectSingleNode(aName);
+  if not assigned(n) then
+    raise EXMLError.CreateFmt('Node "%s" not found.', [aName]);
+  result := TXMLNode.Create(n);
 end;
 
 function TXMLChilds.Count: Integer;
@@ -299,8 +303,16 @@ begin
 end;
 
 function TXMLPack.Nodes(const XPath: TXavierString): IXMLNodes;
+var
+  i: Integer;
+  l: IInterfaceList;
+  nodes: IXMLDomNodeList;
 begin
-  raise EXMLError.Create('Not implemented yet');
+  l := TInterfaceList.Create;
+  nodes := fDocument.selectNodes(XPath);
+  for i := 0 to nodes.length -1 do
+    l.Add(TXMLNode.Create(nodes.item[i]));
+  result := TXMLNodes.Create(l);
 end;
 
 function TXMLPack.Node(const XPath: TXavierString): IXMLNode;
