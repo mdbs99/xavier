@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/mdbs99/xavier/blob/master/README.md)
 
-Xavier is a small XML library, object-oriented, and cross-platform that simplifies the work with XML files and streams.
+Xavier is a small XML library, object-oriented, and cross-platform that simplifies the work with XML files and streams using [XPath](https://www.w3schools.com/xml/xml_xpath.asp).
 
 **ATTENTION:** We're still in a very early alpha version, the API may and will change frequently. Please, use it at your own risk, until we release version 1.0.
 
