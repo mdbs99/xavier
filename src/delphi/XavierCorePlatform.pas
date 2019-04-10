@@ -31,7 +31,7 @@ uses
   Classes, 
   SysUtils,
   xmlDoc, 
-  xmlIntf, 
+  xmlIntf,
   xmlDom,
   SynCommons,
   JamesDataBase,
@@ -137,7 +137,7 @@ end;
 
 function TXMLAttribute.Node: IXMLNode;
 begin
-  result := TCNode.New(fNode.ParentNode);
+  result := TXMLNode.Create(fNode.ParentNode);
 end;
 
 { TXMLAttributes }
@@ -155,8 +155,7 @@ end;
 
 function TXMLAttributes.Add(const aName, aText: TXavierString): IXMLAttribute;
 begin
-  TDOMElement(fNode).SetAttribute(aName, aText);
-  result := Item(aName);
+  // todo
 end;
 
 function TXMLAttributes.Item(aIndex: Integer): IXMLAttribute;
@@ -166,7 +165,7 @@ begin
   n := fNode.Attributes.Item[aIndex];
   if not Assigned(n) then
     raise EXMLError.CreateFmt('Node not found on index %d.', [aIndex]);
-  result := TCAttribute.New(n);
+  result := TXMLAttribute.Create(n);
 end;
 
 function TXMLAttributes.Item(const aName: TXavierString): IXMLAttribute;
@@ -176,7 +175,7 @@ begin
   n := fNode.Attributes.GetNamedItem(aName);
   if not Assigned(n) then
     raise EXMLError.CreateFmt('Node "%s" not found.', [aName]);
-  result := TCAttribute.New(n);
+  result := TXMLAttribute.Create(n);
 end;
 
 function TXMLAttributes.Count: Integer;
@@ -194,7 +193,7 @@ end;
 
 function TXMLNode.Ref: IXMLNode;
 begin
-  result := Create(ANode);
+  result := self;
 end;
 
 function TXMLNode.Name: TXavierString;
@@ -221,12 +220,12 @@ end;
 
 function TXMLNode.Attrs: IXMLAttributes;
 begin
-  result := TCAttributes.New(fNode);
+  result := TXMLAttributes.Create(fNode);
 end;
 
 function TXMLNode.Add(const aName: TXavierString): IXMLNode;
 begin
-  result := TXMLNode.New(
+  result := TXMLNode.Create(
     fNode.AppendChild(
       fNode.OwnerDocument.CreateElement(TXavierString(aName))
     )
@@ -235,12 +234,12 @@ end;
 
 function TXMLNode.Childs: IXMLNodes;
 begin
-  result := TCNodes.New(fNode);
+  // todo
 end;
 
 function TXMLNode.Parent: IXMLNode;
 begin
-  result := TXMLNode.New(fNode.ParentNode);
+  result := TXMLNode.Create(fNode.ParentNode);
 end;
 
 { TXMLChilds }
@@ -258,17 +257,12 @@ end;
 
 function TXMLChilds.Item(aIndex: Integer): IXMLNode;
 begin
-  result := TCNode.New(fNode.ChildNodes.Item[aIndex]);
+  result := TXMLNode.Create(fNode.ChildNodes.Item[aIndex]);
 end;
 
 function TXMLChilds.Item(const aName: TXavierString): IXMLNode;
-var
-  n: IDOMNode;
 begin
-  n := fNode.FindNode(aName);
-  if not Assigned(n) then
-    raise EXMLError.CreateFmt('Node "%s" not found.', [aName]);
-  result := TCNode.New(n);
+  // todo
 end;
 
 function TXMLChilds.Count: Integer;
@@ -335,7 +329,7 @@ begin
   m := TMemoryStream.Create;
   try
     fDocument.SaveToStream(m);
-    result := TDataStream.New(m);
+    result := TDataStream.Create(m);
   finally
     m.Free;
   end;
