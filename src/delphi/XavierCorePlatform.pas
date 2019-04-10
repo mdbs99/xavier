@@ -43,9 +43,9 @@ uses
 type
   TXMLAttribute = class(TInterfacedObject, IXMLAttribute)
   private
-    fNode: IDOMNode;
+    fNode: IXMLDomNode;                                 
   public
-    constructor Create(ANode: IDOMNode);
+    constructor Create(ANode: IXMLDomNode);
     function Ref: IXMLAttribute;
     function Name: TXavierString;
     function Text: TXavierString; overload;
@@ -55,9 +55,9 @@ type
 
   TXMLAttributes = class(TInterfacedObject, IXMLAttributes)
   private
-    fNode: IDOMNode;
+    fNode: IXMLDomNode;
   public
-    constructor Create(aNode: IDOMNode);
+    constructor Create(aNode: IXMLDomNode);
     function Ref: IXMLAttributes;
     function Add(const aName, aText: TXavierString): IXMLAttribute;
     function Item(aIndex: Integer): IXMLAttribute; overload;
@@ -67,9 +67,9 @@ type
 
   TXMLNode = class(TInterfacedObject, IXMLNode)
   private
-    fNode: IDOMNode;
+    fNode: IXMLDomNode;
   public
-    constructor Create(aNode: IDOMNode);
+    constructor Create(aNode: IXMLDomNode);
     function Ref: IXMLNode;
     function Name: TXavierString;
     function Text: TXavierString; overload;
@@ -83,9 +83,9 @@ type
 
   TXMLChilds = class(TInterfacedObject, IXMLNodes)
   private
-    fNode: IDOMNode;
+    fNode: IXMLDomNode;
   public
-    constructor Create(aNode: IDOMNode);
+    constructor Create(aNode: IXMLDomNode);
     function Ref: IXMLNodes;
     function Item(aIndex: Integer): IXMLNode; overload;
     function Item(const aName: TXavierString): IXMLNode; overload;
@@ -94,7 +94,7 @@ type
 
   TXMLPack = class(TInterfacedObject, IXMLPack)
   private
-    fDocument: IXMLDocument;
+    fDocument: IXMLDOMDocument3;
   public
     constructor Create(aStream: TStream); reintroduce; overload;
     constructor Create(const aRootName: RawUTF8); overload;
@@ -108,7 +108,7 @@ implementation
 
 { TXMLAttribute }
 
-constructor TXMLAttribute.Create(ANode: IDOMNode);
+constructor TXMLAttribute.Create(ANode: IXMLDomNode);
 begin
   inherited Create;
   fNode := ANode;
@@ -142,7 +142,7 @@ end;
 
 { TXMLAttributes }
 
-constructor TXMLAttributes.Create(aNode: IDOMNode);
+constructor TXMLAttributes.Create(aNode: IXMLDomNode);
 begin
   inherited Create;
   fNode := aNode;
@@ -160,7 +160,7 @@ end;
 
 function TXMLAttributes.Item(aIndex: Integer): IXMLAttribute;
 var
-  n: IDOMNode;
+  n: IXMLDomNode;
 begin
   n := fNode.Attributes.Item[aIndex];
   if not Assigned(n) then
@@ -170,7 +170,7 @@ end;
 
 function TXMLAttributes.Item(const aName: TXavierString): IXMLAttribute;
 var
-  n: IDOMNode;
+  n: IXMLDomNode;
 begin
   n := fNode.Attributes.GetNamedItem(aName);
   if not Assigned(n) then
@@ -185,7 +185,7 @@ end;
 
 { TXMLNode }
 
-constructor TXMLNode.Create(aNode: IDOMNode);
+constructor TXMLNode.Create(aNode: IXMLDomNode);
 begin
   inherited Create;
   fNode := aNode;
@@ -234,7 +234,7 @@ end;
 
 function TXMLNode.Childs: IXMLNodes;
 begin
-  // todo
+  result := TXMLChilds.Create(fNode);
 end;
 
 function TXMLNode.Parent: IXMLNode;
@@ -244,7 +244,7 @@ end;
 
 { TXMLChilds }
 
-constructor TXMLChilds.Create(aNode: IDOMNode);
+constructor TXMLChilds.Create(aNode: IXMLDomNode);
 begin
   inherited Create;
   fNode := ANode;
@@ -273,11 +273,14 @@ end;
 { TXMLPack }
 
 constructor TXMLPack.Create(aStream: TStream);
+var
+  sa: TDataStreamAdapter;
 begin
   inherited Create;
-  fDocument := TXMLDocument.Create(nil);
-  AStream.Position := 0;
-  fDocument.LoadFromStream(aStream);
+  aStream.Position := 0;
+  sa.Init(TDataStream.Create(aStream));
+  fDocument := MSXML2_TLB.CoDOMDocument60.Create;
+  fDocument.load(sa.AsOleVariant);
 end;
 
 constructor TXMLPack.Create(const aRootName: RawUTF8);
