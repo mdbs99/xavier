@@ -68,9 +68,7 @@ You can find some examples to use Xavier in its own source. Just take a look int
 
 Additionally, below you can find the basics to start.
 
-## Find a Node
-
-Take this XML for example:
+Take this XML for all examples below:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -83,6 +81,8 @@ Take this XML for example:
   </bar>
 </root>
 ```
+
+## Find a Node
 
 If you want to find the `value` child node of `foo` node, do this:
 
