@@ -30,6 +30,7 @@ interface
 uses
   Classes,
   SysUtils,
+  Variants,
   JamesDataBase,
   JamesDataCore,
   JamesTestCore,
