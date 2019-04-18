@@ -41,12 +41,17 @@ type
   public
     function NewPack: IXMLPack;
   published
-    procedure XMLPack;
-    procedure XMLNode;
-    procedure XMLNodes;
-    procedure XMLChilds;
-    procedure XMLAttribute;
-    procedure XMLAttributes;
+    procedure TestPack;
+    procedure TestNode;
+    procedure TestNodes;
+    procedure TestChilds;
+    procedure TestAttribute;
+    procedure TestAttributes;
+  end;
+
+  TXMLNodeChildsAdapterTests = class(TTestCase)
+  published
+    //procedure
   end;
 
 implementation
@@ -89,7 +94,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.XMLPack;
+procedure TCoreTests.TestPack;
 var
   pack, pack2: IXMLPack;
   mem: TMemoryStream;
@@ -110,7 +115,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.XMLNode;
+procedure TCoreTests.TestNode;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -155,7 +160,7 @@ begin
   check(node.Text = 'text', 'default text');
 end;
 
-procedure TCoreTests.XMLNodes;
+procedure TCoreTests.TestNodes;
 var
   pack: IXMLPack;
   nodes: IXMLNodes;
@@ -188,7 +193,7 @@ begin
   check(nodes.Count = 2, 'all items');
 end;
 
-procedure TCoreTests.XMLChilds;
+procedure TCoreTests.TestChilds;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -210,7 +215,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.XMLAttribute;
+procedure TCoreTests.TestAttribute;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -239,7 +244,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.XMLAttributes;
+procedure TCoreTests.TestAttributes;
 var
   pack: IXMLPack;
   node: IXMLNode;
