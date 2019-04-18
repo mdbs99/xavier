@@ -104,7 +104,7 @@ begin
   try
     pack.Stream.Save(mem);
     pack2 := TXMLPack.Create(mem);
-    check(pack.Stream.AsString = pack2.Stream.AsString, 'streams not equal');
+    check(pack.Stream.AsRawByteString = pack2.Stream.AsRawByteString, 'streams not equal');
   finally
     mem.Free;
   end;
