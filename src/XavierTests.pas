@@ -30,11 +30,14 @@ interface
 uses
   Classes,
   SysUtils,
+  JamesDataBase,
+  JamesDataCore,
   JamesTestCore,
   JamesTestPlatform,
   XavierBase,
   XavierCore,
-  XavierCorePlatform;
+  XavierCorePlatform,
+  XavierAdapters;
   
 type
   TCoreTests = class(TTestCase)
@@ -50,8 +53,10 @@ type
   end;
 
   TXMLNodeChildsAdapterTests = class(TTestCase)
+  private
+    function NewPack: IXMLPack;
   published
-    //procedure
+    procedure TestDataParams;
   end;
 
 implementation
@@ -272,10 +277,46 @@ begin
 
 end;
 
+{ TXMLNodeChildsAdapterTests }
+
+function TXMLNodeChildsAdapterTests.NewPack: IXMLPack;
+begin
+  result := TXMLPack.Create('products');
+  with result.Node('/products') do
+  begin
+    with Add('product') do
+    begin
+      Add('name').Text('orange');
+      Add('price').Text('1.00');
+    end;
+    with Add('product') do
+    begin
+      Add('name').Text('apple');
+      Add('price').Text('1.10');
+    end;
+  end;
+end;
+
+procedure TXMLNodeChildsAdapterTests.TestDataParams;
+var
+  pack: IXMLPack;
+  params: IDataParams;
+  a: TXMLNodeChildsAdapter;
+begin
+  pack := NewPack;
+  params := TDataParams.Create;
+  params.Add(TDataParam.Create('name', NULL));
+  params.Add(TDataParam.Create('price', NULL));
+  a.Init(pack.Node('/products/product'));
+  a.ToDataParams(params);
+  check(params.Get('name').AsString = 'orange', '1 name');
+  check(params.Get('price').AsString = '1.00', '1 price');
+end;
+
 initialization
-  TTestSuite.Create('Core')
-    .Ref
+  TTestSuite.Create('Core').Ref
     .Add(TTest.Create(TCoreTests))
+    .Add(TTest.Create(TXMLNodeChildsAdapterTests))
 
 end.
 

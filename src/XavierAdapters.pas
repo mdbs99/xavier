@@ -29,8 +29,11 @@ interface
 
 uses
   Classes,
+  DB,
+  Variants,
   SysUtils,
   SynCommons,
+  XavierBase,
   JamesDataBase,
   JamesDataCore;
 
@@ -42,6 +45,14 @@ type
     procedure Init(const aRootName: RawUTF8);
     function AsDataStream: IDataStream;
     procedure ToStream(const aDest: TStream);
+  end;
+
+  TXMLNodeChildsAdapter = {$ifdef UNICODE}record{$else}object{$endif}
+  private
+    fOrigin: IXMLNode;
+  public
+    procedure Init(const aOrigin: IXMLNode);
+    procedure ToDataParams(const aDest: IDataParams);
   end;
 
 implementation
@@ -65,5 +76,31 @@ begin
   AsDataStream.Save(aDest);
 end;
 
-end.
+{ TXMLNodeChildsAdapter }
 
+procedure TXMLNodeChildsAdapter.Init(const aOrigin: IXMLNode);
+begin
+  fOrigin := aOrigin;
+end;
+
+procedure TXMLNodeChildsAdapter.ToDataParams(const aDest: IDataParams);
+var
+  i: Integer;
+  n: IXMLNode;
+  p: TParam;
+begin
+  for i := 0 to fOrigin.Childs.Count -1 do
+  begin
+    n := fOrigin.Childs.Item(i);
+    if aDest.Exists(SynUnicodeToUtf8(n.Name)) then
+    begin
+      p := aDest.Get(SynUnicodeToUtf8(n.Name)).AsParam;
+      if n.Text = '' then
+        p.Value := NULL
+      else
+        p.Value := n.Text;
+    end;
+  end;
+end;
+
+end.
