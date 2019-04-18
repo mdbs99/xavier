@@ -38,20 +38,29 @@ uses
   JamesDataCore;
 
 type
+  /// object to adapt a XMLRootName into other types
   TXMLRootNameAdapter = {$ifdef UNICODE}record{$else}object{$endif}
   private
     fRootName: RawUTF8;
   public
+    /// initialize the instance
     procedure Init(const aRootName: RawUTF8);
+    /// return as DataParams
     function AsDataStream: IDataStream;
+    /// adapt to TStream
+    // - aDest should exist
     procedure ToStream(const aDest: TStream);
   end;
 
+  /// object to adapt a XMLNode into other types
   TXMLNodeChildsAdapter = {$ifdef UNICODE}record{$else}object{$endif}
   private
     fOrigin: IXMLNode;
   public
+    /// initialize the instance
     procedure Init(const aOrigin: IXMLNode);
+    /// adapt to DataParams
+    // - aDest should exist
     procedure ToDataParams(const aDest: IDataParams);
   end;
 
@@ -89,6 +98,8 @@ var
   n: IXMLNode;
   p: TParam;
 begin
+  if not assigned(aDest) then
+    exit;
   for i := 0 to fOrigin.Childs.Count -1 do
   begin
     n := fOrigin.Childs.Item(i);
