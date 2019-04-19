@@ -52,15 +52,16 @@ type
     procedure ToStream(const aDest: TStream);
   end;
 
-  /// object to adapt a XMLNode into other types
+  /// object to adapt a Node Childs into other types
   TXMLNodeChildsAdapter = {$ifdef UNICODE}record{$else}object{$endif}
   private
     fOrigin: IXMLNode;
   public
     /// initialize the instance
     procedure Init(const aOrigin: IXMLNode);
-    /// adapt to DataParams
+    /// adapt childs to DataParams
     // - aDest should exist
+    // - the params list should have items with the same name of node childs
     procedure ToDataParams(const aDest: IDataParams);
   end;
 
