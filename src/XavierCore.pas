@@ -41,21 +41,21 @@ type
     constructor Create(const aList: IInterfaceList);
     function Ref: IXMLNodes;
     function Item(aIndex: Integer): IXMLNode; overload;
-    function Item(const aName: TXavierString): IXMLNode; overload;
+    function Item(const aName: SynUnicode): IXMLNode; overload;
     function Count: Integer;
   end;
 
   TXMLNodeDefault = class(TInterfacedObject, IXMLNode)
   private
-    fName: TXavierString;
-    fText: TXavierString;
+    fName: SynUnicode;
+    fText: SynUnicode;
   public
-    constructor Create(const aName, aText: TXavierString);
-    function Name: TXavierString;
-    function Text: TXavierString; overload;
-    function Text(const aText: TXavierString): IXMLNode; overload;
+    constructor Create(const aName, aText: SynUnicode);
+    function Name: SynUnicode;
+    function Text: SynUnicode; overload;
+    function Text(const aText: SynUnicode): IXMLNode; overload;
     function Attrs: IXMLAttributes;
-    function Add(const aName: TXavierString): IXMLNode;
+    function Add(const aName: SynUnicode): IXMLNode;
     function Childs: IXMLNodes;
     function Parent: IXMLNode;
   end;
@@ -80,7 +80,7 @@ begin
   result := fList.Items[AIndex] as IXMLNode;
 end;
 
-function TXMLNodes.Item(const aName: TXavierString): IXMLNode;
+function TXMLNodes.Item(const aName: SynUnicode): IXMLNode;
 var
   i: Integer;
   n: IXMLNode;
@@ -104,24 +104,24 @@ end;
 
 { TXMLNodeDefault }
 
-constructor TXMLNodeDefault.Create(const aName, aText: TXavierString);
+constructor TXMLNodeDefault.Create(const aName, aText: SynUnicode);
 begin
   inherited Create;
   fName := aName;
   fText := aText;
 end;
 
-function TXMLNodeDefault.Name: TXavierString;
+function TXMLNodeDefault.Name: SynUnicode;
 begin
   result := fName;
 end;
 
-function TXMLNodeDefault.Text: TXavierString;
+function TXMLNodeDefault.Text: SynUnicode;
 begin
   result := fText;
 end;
 
-function TXMLNodeDefault.Text(const aText: TXavierString): IXMLNode;
+function TXMLNodeDefault.Text(const aText: SynUnicode): IXMLNode;
 begin
   result := self;
   fText := aText;
@@ -132,7 +132,7 @@ begin
   raise EXMLError.Create('Attributes not allowed.');
 end;
 
-function TXMLNodeDefault.Add(const aName: TXavierString): IXMLNode;
+function TXMLNodeDefault.Add(const aName: SynUnicode): IXMLNode;
 begin
   raise EXMLError.Create('Add not allowed.');
 end;

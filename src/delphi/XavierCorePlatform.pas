@@ -46,9 +46,9 @@ type
   public
     constructor Create(const aAttr: IXMLDOMAttribute);
     function Ref: IXMLAttribute;
-    function Name: TXavierString;
-    function Text: TXavierString; overload;
-    function Text(const aText: TXavierString): IXMLAttribute; overload;
+    function Name: SynUnicode;
+    function Text: SynUnicode; overload;
+    function Text(const aText: SynUnicode): IXMLAttribute; overload;
   end;
 
   TXMLAttributes = class(TInterfacedObject, IXMLAttributes)
@@ -57,9 +57,9 @@ type
   public
     constructor Create(const aNode: IXMLDomNode);
     function Ref: IXMLAttributes;
-    function Add(const aName, aText: TXavierString): IXMLAttribute;
+    function Add(const aName, aText: SynUnicode): IXMLAttribute;
     function Item(aIndex: Integer): IXMLAttribute; overload;
-    function Item(const aName: TXavierString): IXMLAttribute; overload;
+    function Item(const aName: SynUnicode): IXMLAttribute; overload;
     function Count: Integer;
   end;
 
@@ -69,11 +69,11 @@ type
   public
     constructor Create(const aNode: IXMLDomNode);
     function Ref: IXMLNode;
-    function Name: TXavierString;
-    function Text: TXavierString; overload;
-    function Text(const aText: TXavierString): IXMLNode; overload;
+    function Name: SynUnicode;
+    function Text: SynUnicode; overload;
+    function Text(const aText: SynUnicode): IXMLNode; overload;
     function Attrs: IXMLAttributes;
-    function Add(const aName: TXavierString): IXMLNode;
+    function Add(const aName: SynUnicode): IXMLNode;
     function Childs: IXMLNodes;
     function Parent: IXMLNode;
   end;
@@ -85,7 +85,7 @@ type
     constructor Create(const aNode: IXMLDomNode);
     function Ref: IXMLNodes;
     function Item(aIndex: Integer): IXMLNode; overload;
-    function Item(const aName: TXavierString): IXMLNode; overload;
+    function Item(const aName: SynUnicode): IXMLNode; overload;
     function Count: Integer;
   end;
 
@@ -95,9 +95,9 @@ type
   public
     constructor Create(aStream: TStream); reintroduce; overload;
     constructor Create(const aRootName: RawUTF8); overload;
-    function Nodes(const XPath: TXavierString): IXMLNodes;
-    function Node(const XPath: TXavierString): IXMLNode; overload;
-    function Node(const XPath: TXavierString; const aDefault: IXMLNode): IXMLNode; overload;
+    function Nodes(const XPath: SynUnicode): IXMLNodes;
+    function Node(const XPath: SynUnicode): IXMLNode; overload;
+    function Node(const XPath: SynUnicode; const aDefault: IXMLNode): IXMLNode; overload;
     function Stream: IDataStream;
   end;
 
@@ -116,17 +116,17 @@ begin
   result := self;
 end;
 
-function TXMLAttribute.Name: TXavierString;
+function TXMLAttribute.Name: SynUnicode;
 begin
   result := fAttr.name;
 end;
 
-function TXMLAttribute.Text: TXavierString;
+function TXMLAttribute.Text: SynUnicode;
 begin
   result := fAttr.value;
 end;
 
-function TXMLAttribute.Text(const aText: TXavierString): IXMLAttribute;
+function TXMLAttribute.Text(const aText: SynUnicode): IXMLAttribute;
 begin
   result := self;
   fAttr.value := aText;
@@ -145,7 +145,7 @@ begin
   result := self;
 end;
 
-function TXMLAttributes.Add(const aName, aText: TXavierString): IXMLAttribute;
+function TXMLAttributes.Add(const aName, aText: SynUnicode): IXMLAttribute;
 var
   attr: IXMLDOMAttribute;
 begin
@@ -165,7 +165,7 @@ begin
   result := TXMLAttribute.Create(n as IXMLDOMAttribute);
 end;
 
-function TXMLAttributes.Item(const aName: TXavierString): IXMLAttribute;
+function TXMLAttributes.Item(const aName: SynUnicode): IXMLAttribute;
 var
   n: IXMLDomNode;
 begin
@@ -193,17 +193,17 @@ begin
   result := self;
 end;
 
-function TXMLNode.Name: TXavierString;
+function TXMLNode.Name: SynUnicode;
 begin
   result := fNode.NodeName;
 end;
 
-function TXMLNode.Text: TXavierString;
+function TXMLNode.Text: SynUnicode;
 begin
   result := fNode.text;
 end;
 
-function TXMLNode.Text(const aText: TXavierString): IXMLNode;
+function TXMLNode.Text(const aText: SynUnicode): IXMLNode;
 begin
   result := self;
   fNode.text := aText;
@@ -214,11 +214,11 @@ begin
   result := TXMLAttributes.Create(fNode);
 end;
 
-function TXMLNode.Add(const aName: TXavierString): IXMLNode;
+function TXMLNode.Add(const aName: SynUnicode): IXMLNode;
 begin
   result := TXMLNode.Create(
     fNode.AppendChild(
-      fNode.OwnerDocument.CreateElement(TXavierString(aName))
+      fNode.OwnerDocument.CreateElement(SynUnicode(aName))
     )
   );
 end;
@@ -251,7 +251,7 @@ begin
   result := TXMLNode.Create(fNode.ChildNodes.Item[aIndex]);
 end;
 
-function TXMLChilds.Item(const aName: TXavierString): IXMLNode;
+function TXMLChilds.Item(const aName: SynUnicode): IXMLNode;
 var
   n: IXMLDOMNode;
 begin
@@ -294,7 +294,7 @@ begin
   end;
 end;
 
-function TXMLPack.Nodes(const XPath: TXavierString): IXMLNodes;
+function TXMLPack.Nodes(const XPath: SynUnicode): IXMLNodes;
 var
   i: Integer;
   l: IInterfaceList;
@@ -307,7 +307,7 @@ begin
   result := TXMLNodes.Create(l);
 end;
 
-function TXMLPack.Node(const XPath: TXavierString): IXMLNode;
+function TXMLPack.Node(const XPath: SynUnicode): IXMLNode;
 var
   l: IXMLNodes;
 begin
@@ -317,7 +317,7 @@ begin
   result := l.Item(0);
 end;
 
-function TXMLPack.Node(const XPath: TXavierString;
+function TXMLPack.Node(const XPath: SynUnicode;
   const aDefault: IXMLNode): IXMLNode;
 var
   l: IXMLNodes;
