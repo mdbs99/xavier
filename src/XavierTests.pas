@@ -184,19 +184,19 @@ begin
     check(pack.Nodes('/root/group/*').Count = 3); // new list
   end;
   nodes := pack.Nodes('/root/group/item[@b="2"]');
-  check(assigned(nodes), 'xpath @b');
-  check(nodes.Count = 2, 'xpath @b count');
+  check(assigned(nodes), 'xpath attr=@b');
+  check(nodes.Count = 2, 'xpath attr=@b count=2');
   nodes := pack.Nodes('/root/group/item[@id="2"]');
-  check(assigned(nodes), 'xpath @id');
-  check(nodes.Count = 1, 'xpath @id count');
-  check(assigned(nodes.Item(0)), 'nodes has item');
-  check(nodes.Item(0).Attrs.Count = 3, 'nodes.attrs.count');
+  check(assigned(nodes), 'xpath attr=@id');
+  check(nodes.Count = 1, 'count=1 attr=@id');
+  check(assigned(nodes.Item(0)), 'no items');
+  check(nodes.Item(0).Attrs.Count = 3, 'attrs.count=3');
   nodes := pack.Nodes('/root/group/item[@a="1"]');
-  check(nodes.Count = 2, 'nodes.count for @a');
+  check(nodes.Count = 2, 'count=2 attr=@a');
   nodes := pack.Nodes('/root/group/item[@xpto="otpx"]');
-  check(nodes.Count = 0, 'nodes.count for @xpto');
-  nodes := pack.Nodes('/root/group//item'); // it gets all "item" nodes
-  check(nodes.Count = 2, 'all items');
+  check(nodes.Count = 0, 'count=0 attr=@xpto');
+  nodes := pack.Nodes('/root/group//item'); // "//" gets all "item" nodes
+  check(nodes.Count = 2, 'count=2');
 end;
 
 procedure TCoreTests.TestChilds;
