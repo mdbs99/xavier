@@ -1,6 +1,7 @@
 # Xavier
 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/mdbs99/xavier/blob/master/README.md)
+[![Hits-of-Code](https://hitsofcode.com/github/mdbs99/xavier)](https://hitsofcode.com/view/github.com/mdbs99/xavier)
 
 Xavier is a small XML library, object-oriented, and cross-platform that simplifies the work with XML files and streams using [XPath](https://www.w3schools.com/xml/xml_xpath.asp).
 
