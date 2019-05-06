@@ -42,16 +42,16 @@ uses
   XavierAdapters;
   
 type
-  TCoreTests = class(TTestCase)
+  TXMLTests = class(TTestCase)
   public
     function NewPack: IXMLPack;
   published
-    procedure TestXMLTextAsDataStream;
-    procedure TestXMLPack;
-    procedure TestXMLNode;
-    procedure TestXMLNodes;
-    procedure TestXMLChilds;
-    procedure TestXMLAttribute;
+    procedure TestTextAsDataStream;
+    procedure TestPack;
+    procedure TestNode;
+    procedure TestNodes;
+    procedure TestChilds;
+    procedure TestAttribute;
     procedure TestXLMAttributes;
   end;
 
@@ -64,9 +64,9 @@ type
 
 implementation
 
-{ TCoreTests }
+{ TXMLTests }
 
-function TCoreTests.NewPack: IXMLPack;
+function TXMLTests.NewPack: IXMLPack;
 begin
   result := TXMLPack.Create('root');
   with result.Node('/root') do
@@ -102,7 +102,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.TestXMLTextAsDataStream;
+procedure TXMLTests.TestTextAsDataStream;
 var
   stream: IDataStreamOf;
   s1, s2: RawByteString;
@@ -119,7 +119,7 @@ begin
   check(s1 = s2, 'xml');
 end;
 
-procedure TCoreTests.TestXMLPack;
+procedure TXMLTests.TestPack;
 var
   pack, pack2: IXMLPack;
   mem: TMemoryStream;
@@ -140,7 +140,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.TestXMLNode;
+procedure TXMLTests.TestNode;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -185,7 +185,7 @@ begin
   check(node.Text = 'text', 'default text');
 end;
 
-procedure TCoreTests.TestXMLNodes;
+procedure TXMLTests.TestNodes;
 var
   pack: IXMLPack;
   nodes: IXMLNodes;
@@ -218,7 +218,7 @@ begin
   check(nodes.Count = 2, 'count=2');
 end;
 
-procedure TCoreTests.TestXMLChilds;
+procedure TXMLTests.TestChilds;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -240,7 +240,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.TestXMLAttribute;
+procedure TXMLTests.TestAttribute;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -269,7 +269,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.TestXLMAttributes;
+procedure TXMLTests.TestXLMAttributes;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -335,7 +335,7 @@ end;
 
 initialization
   TTestSuite.Create('Core').Ref
-    .Add(TTest.Create(TCoreTests))
+    .Add(TTest.Create(TXMLTests))
     .Add(TTest.Create(TXMLNodeChildsAdapterTests))
 
 end.
