@@ -34,24 +34,9 @@ uses
   SysUtils,
   SynCommons,
   XavierBase,
-  JamesDataBase,
-  JamesDataCore;
+  JamesDataBase;
 
 type
-  /// object to adapt a XMLRootName into other types
-  TXMLRootNameAdapter = {$ifdef UNICODE}record{$else}object{$endif}
-  private
-    fRootName: RawUTF8;
-  public
-    /// initialize the instance
-    procedure Init(const aRootName: RawUTF8);
-    /// return as DataParams
-    function AsDataStream: IDataStream;
-    /// adapt to TStream
-    // - aDest should exist
-    procedure ToStream(const aDest: TStream);
-  end;
-
   /// object to adapt a Node Childs into other types
   TXMLNodeChildsAdapter = {$ifdef UNICODE}record{$else}object{$endif}
   private
@@ -66,25 +51,6 @@ type
   end;
 
 implementation
-
-{ TXMLRootNameAdapter }
-
-procedure TXMLRootNameAdapter.Init(const aRootName: RawUTF8);
-begin
-  fRootName := aRootName;
-end;
-
-function TXMLRootNameAdapter.AsDataStream: IDataStream;
-begin
-  result := TDataStream.Create(
-    FormatUTF8('<?xml version="1.0" encoding="UTF-8"?><% />', [fRootName])
-  )
-end;
-
-procedure TXMLRootNameAdapter.ToStream(const aDest: TStream);
-begin
-  AsDataStream.Save(aDest);
-end;
 
 { TXMLNodeChildsAdapter }
 
