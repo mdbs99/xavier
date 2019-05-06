@@ -31,6 +31,7 @@ uses
   Classes,
   SysUtils,
   Variants,
+  SynCommons,
   JamesDataBase,
   JamesDataCore,
   JamesTestCore,
