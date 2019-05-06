@@ -104,7 +104,6 @@ end;
 procedure TCoreTests.TestXMLTextAsDataStream;
 var
   stream: IDataStreamOf;
-  pack: IXMLPack;
   s1, s2: RawByteString;
 begin
   with TXMLTextAsDataStream.Create('main') do
