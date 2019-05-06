@@ -36,8 +36,7 @@ uses
   JamesDataCore,
   JamesDataAdapters,
   XavierBase,
-  XavierCore,
-  XavierAdapters;
+  XavierCore;
 
 type
   TXMLAttribute = class(TInterfacedObject, IXMLAttribute)
@@ -281,13 +280,13 @@ end;
 
 constructor TXMLPack.Create(const aRootName: RawUTF8);
 var
-  a: TXMLRootNameAdapter;
+  text: IDataStreamOf;
   m: TStream;
 begin
   m := TMemoryStream.Create;
   try
-    a.Init(aRootName);
-    a.ToStream(m);
+    text := TXMLTextAsDataStream.Create(aRootName);
+    text.Value.ToStream(m);
     Create(m);
   finally
     m.Free;

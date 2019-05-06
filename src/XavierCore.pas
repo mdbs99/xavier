@@ -31,9 +31,24 @@ uses
   Classes, 
   SysUtils,
   SynCommons,
+  JamesDataBase,
+  JamesDataCore,
   XavierBase;
 
 type
+  TXMLTextAsDataStream = class(TInterfacedObject, IDataStreamOf)
+  private
+    fRootName: RawUTF8;
+    fVersion: RawUTF8;
+    fEncoding: RawUTF8;
+  public
+    constructor Create(const aRootName: RawUTF8);
+    function Ref: IDataStreamOf;
+    function Value: IDataStream;
+    property Version: RawUTF8 read fVersion write fVersion;
+    property Encoding: RawUTF8 read fEncoding write fEncoding;
+  end;
+
   TXMLNodes = class(TInterfacedObject, IXMLNodes)
   private
     fList: IInterfaceList;
@@ -61,6 +76,29 @@ type
   end;
 
 implementation
+
+{ TXMLTextAsDataStream }
+
+constructor TXMLTextAsDataStream.Create(const aRootName: RawUTF8);
+begin
+  inherited Create;
+  fRootName := aRootName;
+  fVersion := '1.0';
+  fEncoding := 'UTF-8';
+end;
+
+function TXMLTextAsDataStream.Ref: IDataStreamOf;
+begin
+  result := self;
+end;
+
+function TXMLTextAsDataStream.Value: IDataStream;
+begin
+  result := TDataStream.Create(
+    FormatUTF8('<?xml version="%" encoding="%"?><% />', [
+      fVersion, fEncoding, fRootName])
+  );
+end;
 
 { TXMLNodes }
 

@@ -45,12 +45,13 @@ type
   public
     function NewPack: IXMLPack;
   published
-    procedure TestPack;
-    procedure TestNode;
-    procedure TestNodes;
-    procedure TestChilds;
-    procedure TestAttribute;
-    procedure TestAttributes;
+    procedure TestXMLTextAsDataStream;
+    procedure TestXMLPack;
+    procedure TestXMLNode;
+    procedure TestXMLNodes;
+    procedure TestXMLChilds;
+    procedure TestXMLAttribute;
+    procedure TestXLMAttributes;
   end;
 
   TXMLNodeChildsAdapterTests = class(TTestCase)
@@ -100,7 +101,25 @@ begin
   end;
 end;
 
-procedure TCoreTests.TestPack;
+procedure TCoreTests.TestXMLTextAsDataStream;
+var
+  stream: IDataStreamOf;
+  pack: IXMLPack;
+  s1, s2: RawByteString;
+begin
+  with TXMLTextAsDataStream.Create('main') do
+  begin
+    // default values
+    check(Version = '1.0', 'version');
+    check(Encoding = 'UTF-8', 'encoding');
+    stream := Ref;
+  end;
+  s1 := stream.Value.AsRawByteString;
+  s2 := '<?xml version="1.0" encoding="UTF-8"?><main />';
+  check(s1 = s2, 'xml');
+end;
+
+procedure TCoreTests.TestXMLPack;
 var
   pack, pack2: IXMLPack;
   mem: TMemoryStream;
@@ -113,7 +132,7 @@ begin
   check(assigned(pack.Node('/root/footer/name')));
   mem := TMemoryStream.Create;
   try
-    pack.Stream.Save(mem);
+    pack.Stream.ToStream(mem);
     pack2 := TXMLPack.Create(mem);
     check(pack.Stream.AsRawByteString = pack2.Stream.AsRawByteString, 'streams not equal');
   finally
@@ -121,7 +140,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.TestNode;
+procedure TCoreTests.TestXMLNode;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -166,7 +185,7 @@ begin
   check(node.Text = 'text', 'default text');
 end;
 
-procedure TCoreTests.TestNodes;
+procedure TCoreTests.TestXMLNodes;
 var
   pack: IXMLPack;
   nodes: IXMLNodes;
@@ -199,7 +218,7 @@ begin
   check(nodes.Count = 2, 'count=2');
 end;
 
-procedure TCoreTests.TestChilds;
+procedure TCoreTests.TestXMLChilds;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -221,7 +240,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.TestAttribute;
+procedure TCoreTests.TestXMLAttribute;
 var
   pack: IXMLPack;
   node: IXMLNode;
@@ -250,7 +269,7 @@ begin
   end;
 end;
 
-procedure TCoreTests.TestAttributes;
+procedure TCoreTests.TestXLMAttributes;
 var
   pack: IXMLPack;
   node: IXMLNode;
