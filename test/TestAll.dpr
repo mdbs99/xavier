@@ -31,9 +31,9 @@ uses
     Interfaces,
   {$endif}
   Forms,
-  JamesTestPlatform,
   GuiTestRunner,
-  XavierTests in '..\src\XavierTests.pas';
+  JamesTestPlatform,
+  XavierTests;
 
 {$R *.res}
 
