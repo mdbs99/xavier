@@ -11,9 +11,9 @@ Xavier is a small XML library, object-oriented, and cross-platform that simplifi
 
 - [Overview](#overview)
 - [Installing](#installing)
+  - [Dependencies](#dependencies)
   - [On Lazarus](#on-lazarus)
   - [On Delphi](#on-delphi)
-- [Dependencies](#dependencies)
 - [Getting Started](#getting-started)
   - [Find a Node](#find-a-node)
   - [Add Node](#add-node)
@@ -34,25 +34,7 @@ The code follows a restrict rules about naming and style, as prefixes and suffix
 
 # Installing
 
-- Clone the repository in some directory in your computer.
-- For each project you just need to setup the paths, which depends on your platform are you using.
-- See [Dependencies](#dependencies) below too
-
-## On Lazarus
-
-Considering `<xavier>` as the path where you have saved the sources, your project must include these paths:
-
-- Other unit files (-Fu)
-  - include `<xavier>\src;<xavier>\src\fpc`
-- Include files (-Fi)
-  - include `<xavier>\src;<xavier>\src\fpc`
-
-## On Delphi
-
-Considering `<xavier>` as the path where you have saved the sources, your project must include these paths:
-
-- Search Path
-  - include `<xavier>\src;<xavier>\src\delphi`
+Clone the repository in some directory in your computer.
 
 # Dependencies
 
@@ -63,7 +45,26 @@ Besides that, we are using other libraries:
 - [James](https://github.com/mdbs99/james) — is a collection of classes and interfaces for truly object-oriented projects.
 - [mORMot](https://github.com/synopse/mORMot) — client-server ORM SOA MVC framework for Delphi 6 up to latest Delphi and FPC
 
-Take a look into [James dependencies](https://github.com/mdbs99/james#dependencies) which will show and explain about these dependencies and how to install.
+## On Lazarus
+
+It has been tested using these versions:
+- *FPC* 3.1.1 revision 40491
+- *Lazarus* 2.1.0 revision 59757
+
+To install on *Lazarus*:
+- Make sure that you have `JamesLib.lpk`, and `mormot_base.lpk` available - see dependencies
+- Open the package in `/pkg/XavierLib.lpk`
+- Compile it
+- That's all.
+
+The IDE will be aware about *XavierLib* Package to use in any project.
+
+Considering `<xavier>` as the path where you have saved the sources, your project must include these paths:
+
+## On Delphi
+
+Considering `<xavier>` as the path where you have saved the sources, you must include these paths in your project:
+- Search Path `<xavier>\src;<xavier>\src\delphi`
 
 # Getting Started
 
