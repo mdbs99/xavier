@@ -33,46 +33,58 @@ uses
   Variants,
   SysUtils,
   SynCommons,
-  XavierBase,
-  JamesDataBase;
+  JamesDataBase,
+  XavierBase;
 
 type
   /// object to adapt a Node Childs into other types
-  TXMLNodeChildsAdapter = {$ifdef UNICODE}record{$else}object{$endif}
+  TXMLNodesAdapterForDataParams = class(TInterfacedObject, IDataAdapterFor)
   private
     fOrigin: IXMLNode;
+    fDest: IDataParams;
+    fParamsMustExist: Boolean;
+    fAcceptDuplicatedNames: Boolean;
   public
     /// initialize the instance
-    procedure Init(const aOrigin: IXMLNode);
+    constructor Create(const aOrigin: IXMLNode; const aDest: IDataParams); reintroduce;
     /// adapt childs to DataParams
     // - aDest should exist
-    // - the params list should have items with the same name of node childs
-    procedure ToDataParams(const aDest: IDataParams);
+    procedure Adapt;
+    /// if True, destination items should exist to match with the same name as XML nodes
+    // - default is True
+    property ParamsMustExist: boolean read fParamsMustExist write fParamsMustExist;
+    /// if True, it will accept duplicated names in params
+    // - if True, ParamsMustExist will be ignored
+    // - default is False
+    property AcceptDuplicatedNames: boolean read fAcceptDuplicatedNames write fAcceptDuplicatedNames;
   end;
 
 implementation
 
-{ TXMLNodeChildsAdapter }
+{ TXMLNodesAdapterForDataParams }
 
-procedure TXMLNodeChildsAdapter.Init(const aOrigin: IXMLNode);
+constructor TXMLNodesAdapterForDataParams.Create(const aOrigin: IXMLNode; const aDest: IDataParams);
 begin
+  inherited Create;
   fOrigin := aOrigin;
+  fDest := aDest;
+  fParamsMustExist := true;
 end;
 
-procedure TXMLNodeChildsAdapter.ToDataParams(const aDest: IDataParams);
+procedure TXMLNodesAdapterForDataParams.Adapt;
 var
   i: Integer;
   n: IXMLNode;
   p: TParam;
 begin
-  if not assigned(aDest) then
+  if not assigned(fDest) then
     exit;
   for i := 0 to fOrigin.Childs.Count -1 do
   begin
     n := fOrigin.Childs.Item(i);
-    if aDest.Exists(SynUnicodeToUtf8(n.Name)) then
+    if fDest.Exists(SynUnicodeToUtf8(n.Name)) then
     begin
-      p := aDest.Get(SynUnicodeToUtf8(n.Name)).AsParam;
+      p := fDest.Get(SynUnicodeToUtf8(n.Name)).AsParam;
       if n.Text = '' then
         p.Value := NULL
       else
