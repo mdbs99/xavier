@@ -34,19 +34,20 @@ uses
   SysUtils,
   SynCommons,
   JamesDataBase,
+  JamesDataCore,
   XavierBase;
 
 type
-  /// object to adapt a Node Childs into other types
+  /// object to adapt nodes into other types
   TXMLNodesAdapterForDataParams = class(TInterfacedObject, IDataAdapterFor)
   private
-    fOrigin: IXMLNode;
+    fOrigin: IXMLNodes;
     fDest: IDataParams;
     fParamsMustExist: Boolean;
     fAcceptDuplicatedNames: Boolean;
   public
     /// initialize the instance
-    constructor Create(const aOrigin: IXMLNode; const aDest: IDataParams); reintroduce;
+    constructor Create(const aOrigin: IXMLNodes; const aDest: IDataParams); reintroduce;
     function Ref: IDataAdapterFor;
     /// adapt childs to DataParams
     // - aDest should exist
@@ -64,7 +65,7 @@ implementation
 
 { TXMLNodesAdapterForDataParams }
 
-constructor TXMLNodesAdapterForDataParams.Create(const aOrigin: IXMLNode; const aDest: IDataParams);
+constructor TXMLNodesAdapterForDataParams.Create(const aOrigin: IXMLNodes; const aDest: IDataParams);
 begin
   inherited Create;
   fOrigin := aOrigin;
@@ -81,20 +82,29 @@ procedure TXMLNodesAdapterForDataParams.Adapt;
 var
   i: Integer;
   n: IXMLNode;
-  p: TParam;
+  p: IDataParam;
+  v: Variant;
 begin
   if not assigned(fDest) then
     exit;
-  for i := 0 to fOrigin.Childs.Count -1 do
+  for i := 0 to fOrigin.Count -1 do
   begin
-    n := fOrigin.Childs.Item(i);
-    if fDest.Exists(SynUnicodeToUtf8(n.Name)) then
+    n := fOrigin.Item(i);
+    if n.Text = '' then
+      v := NULL
+    else
+      v := n.Text;
+    if fAcceptDuplicatedNames then
     begin
-      p := fDest.Get(SynUnicodeToUtf8(n.Name)).AsParam;
-      if n.Text = '' then
-        p.Value := NULL
-      else
-        p.Value := n.Text;
+      p := TDataParam.Create(SynUnicodeToUtf8(n.Name), v);
+      fDest.Add(p);
+    end
+    else
+    begin
+      if fParamsMustExist then
+        if not fDest.Exists(SynUnicodeToUtf8(n.Name)) then
+          continue;
+      fDest.Get(SynUnicodeToUtf8(n.Name)).AsParam.Value := v;
     end;
   end;
 end;
