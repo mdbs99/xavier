@@ -47,6 +47,7 @@ type
   public
     /// initialize the instance
     constructor Create(const aOrigin: IXMLNode; const aDest: IDataParams); reintroduce;
+    function Ref: IDataAdapterFor;
     /// adapt childs to DataParams
     // - aDest should exist
     procedure Adapt;
@@ -69,6 +70,11 @@ begin
   fOrigin := aOrigin;
   fDest := aDest;
   fParamsMustExist := true;
+end;
+
+function TXMLNodesAdapterForDataParams.Ref: IDataAdapterFor;
+begin
+  result := self;
 end;
 
 procedure TXMLNodesAdapterForDataParams.Adapt;
