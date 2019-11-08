@@ -42,7 +42,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE. "/>
     <Version Major="1"/>
-    <Files Count="3">
+    <Files Count="4">
       <Item1>
         <Filename Value="..\..\src\XavierAdapters.pas"/>
         <UnitName Value="XavierAdapters"/>
@@ -55,6 +55,10 @@
         <Filename Value="..\..\src\XavierCore.pas"/>
         <UnitName Value="XavierCore"/>
       </Item3>
+      <Item4>
+        <Filename Value="..\..\src\fpc\XavierCorePlatform.pas"/>
+        <UnitName Value="XavierCorePlatform"/>
+      </Item4>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

@@ -55,7 +55,7 @@ type
     procedure TestXLMAttributes;
   end;
 
-  TXMLNodeChildsAdapterTests = class(TTestCase)
+  TXMLNodesAdapterForDataParamsTests = class(TTestCase)
   private
     function NewPack: IXMLPack;
   published
@@ -297,9 +297,9 @@ begin
 
 end;
 
-{ TXMLNodeChildsAdapterTests }
+{ TXMLNodesAdapterForDataParamsTests }
 
-function TXMLNodeChildsAdapterTests.NewPack: IXMLPack;
+function TXMLNodesAdapterForDataParamsTests.NewPack: IXMLPack;
 begin
   result := TXMLPack.Create('products');
   with result.Node('/products') do
@@ -317,18 +317,18 @@ begin
   end;
 end;
 
-procedure TXMLNodeChildsAdapterTests.TestDataParams;
+procedure TXMLNodesAdapterForDataParamsTests.TestDataParams;
 var
   pack: IXMLPack;
   params: IDataParams;
-  a: TXMLNodeChildsAdapter;
+  a: IDataAdapterFor;
 begin
   pack := NewPack;
   params := TDataParams.Create;
   params.Add(TDataParam.Create('name', NULL));
   params.Add(TDataParam.Create('price', NULL));
-  a.Init(pack.Node('/products/product'));
-  a.ToDataParams(params);
+  a := TXMLNodesAdapterForDataParams.Create(pack.Node('/products/product'), params);
+  a.Adapt;
   check(params.Get('name').AsString = 'orange', '1 name');
   check(params.Get('price').AsString = '1.00', '1 price');
 end;
@@ -336,7 +336,7 @@ end;
 initialization
   TTestSuite.Create('Core').Ref
     .Add(TTest.Create(TXMLTests))
-    .Add(TTest.Create(TXMLNodeChildsAdapterTests))
+    .Add(TTest.Create(TXMLNodesAdapterForDataParamsTests))
 
 end.
 
