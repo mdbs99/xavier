@@ -32,6 +32,7 @@ uses
   SysUtils,
   MSXML2_TLB,
   SynCommons,
+  JamesBase,
   JamesDataBase,
   JamesDataCore,
   JamesDataAdapters,
@@ -269,13 +270,13 @@ end;
 
 constructor TXMLPack.Create(aStream: TStream);
 var
-  sa: TDataStreamAdapter;
+  adapt: IVariantOf;
 begin
   inherited Create;
   aStream.Position := 0;
-  sa.Init(TDataStream.Create(aStream));
+  adapt := TDataStreamAsOleVariant.Create(TDataStream.Create(aStream));
   fDocument := MSXML2_TLB.CoDOMDocument60.Create;
-  fDocument.load(sa.AsOleVariant);
+  fDocument.load(adapt.Value);
 end;
 
 constructor TXMLPack.Create(const aRootName: RawUTF8);
