@@ -93,7 +93,8 @@ type
   private
     fDocument: IXMLDOMDocument3;
   public
-    constructor Create(aStream: TStream); reintroduce; overload;
+    constructor Create(const aStream: IDataStream); reintroduce; overload;
+    constructor Create(aStream: TStream); overload;
     constructor Create(const aRootName: RawUTF8); overload;
     function Nodes(const XPath: SynUnicode): IXMLNodes;
     function Node(const XPath: SynUnicode): IXMLNode; overload;
@@ -268,15 +269,20 @@ end;
 
 { TXMLPack }
 
-constructor TXMLPack.Create(aStream: TStream);
+constructor TXMLPack.Create(const aStream: IDataStream);
 var
   adapt: IVariantOf;
 begin
   inherited Create;
-  aStream.Position := 0;
-  adapt := TDataStreamAsOleVariant.Create(TDataStream.Create(aStream));
+  adapt := TDataStreamAsOleVariant.Create(aStream);
   fDocument := MSXML2_TLB.CoDOMDocument60.Create;
   fDocument.load(adapt.Value);
+end;
+
+constructor TXMLPack.Create(aStream: TStream);
+begin
+  aStream.Position := 0;
+  Create(TDataStream.Create(aStream));
 end;
 
 constructor TXMLPack.Create(const aRootName: RawUTF8);
@@ -335,4 +341,3 @@ begin
 end;
 
 end.
-
