@@ -327,7 +327,7 @@ begin
   params := TDataParams.Create;
   params.Add(TDataParam.Create('name', NULL));
   params.Add(TDataParam.Create('price', NULL));
-  a := TXMLNodesAdapterForDataParams.Create(pack.Node('/products/product'), params);
+  a := TXMLNodesAdapterForDataParams.Create(pack.Node('/products/product').Childs, params);
   a.Adapt;
   check(params.Get('name').AsString = 'orange', '1 name');
   check(params.Get('price').AsString = '1.00', '1 price');

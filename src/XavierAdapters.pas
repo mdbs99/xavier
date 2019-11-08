@@ -38,7 +38,7 @@ uses
   XavierBase;
 
 type
-  /// object to adapt nodes into other types
+  /// object to adapt nodes into IDataParams
   TXMLNodesAdapterForDataParams = class(TInterfacedObject, IDataAdapterFor)
   private
     fOrigin: IXMLNodes;
